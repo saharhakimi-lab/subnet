@@ -64,7 +64,7 @@ body {
   padding-bottom: 60px;
 }
 
-/* תיקון נחרץ של בעיות RTL/LTR עבור פרפיקסים, כתובות וסלאשים */
+/* תיקון RTL/LTR עבור פרפיקסים, כתובות וסלאשים */
 .ltr-inline {
   direction: ltr !important;
   display: inline-block !important;
@@ -449,7 +449,7 @@ header p.subtitle {
   color: var(--text);
 }
 
-/* ============ BINARY & ANDing DISPLAY TABLES ============ */
+/* ============ BINARY & ANDing TABLES ============ */
 .binary-table {
   width: 100%;
   border-collapse: collapse;
@@ -470,19 +470,7 @@ header p.subtitle {
   font-weight: 800;
 }
 
-.binary-table td.net-part {
-  background: rgba(14, 116, 144, 0.15);
-  color: var(--cyan);
-  font-weight: 800;
-}
-
-.binary-table td.host-part {
-  background: rgba(180, 83, 9, 0.15);
-  color: var(--amber);
-  font-weight: 800;
-}
-
-/* ============ QUIZ & REFLECTION STYLES ============ */
+/* ============ QUIZ STYLES ============ */
 .quiz-question {
   margin-bottom: 22px;
   padding: 18px;
@@ -547,10 +535,77 @@ header p.subtitle {
   line-height: 1.5;
 }
 
-.quiz-feedback.show {
-  display: block;
+.quiz-feedback.show { display: block; }
+
+/* ============ TEACHER BOX STYLES ============ */
+.teacher-container {
+  margin-top: 35px;
+  padding: 22px;
+  background: var(--bg);
+  border: 2px dashed var(--cyan);
+  border-radius: 16px;
+  text-align: center;
 }
 
+.teacher-btn {
+  font-family: 'Rubik', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  padding: 12px 28px;
+  background: linear-gradient(135deg, #0e7490, #0284c7);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(14, 116, 144, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.teacher-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(14, 116, 144, 0.45);
+}
+
+.teacher-answers-box {
+  display: none;
+  margin-top: 20px;
+  text-align: right;
+  background: var(--card);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--panel-border);
+  box-shadow: var(--shadow);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.teacher-answers-box h4 {
+  margin-top: 0;
+  color: var(--cyan);
+  font-family: 'Rubik', sans-serif;
+  font-size: 18px;
+  border-bottom: 1px solid var(--panel-border);
+  padding-bottom: 8px;
+}
+
+.teacher-answers-box ol {
+  margin: 0;
+  padding-right: 20px;
+  line-height: 1.8;
+  font-size: 14.5px;
+  font-weight: 700;
+}
+
+.teacher-answers-box li {
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.teacher-answers-box li span {
+  color: var(--green);
+  font-weight: 800;
+}
+
+/* ============ REFLECTION STYLES ============ */
 .reflection-box textarea {
   width: 100%;
   min-height: 110px;
@@ -565,9 +620,7 @@ header p.subtitle {
   margin-top: 8px;
 }
 
-.reflection-box textarea:focus {
-  outline: 2px solid var(--cyan);
-}
+.reflection-box textarea:focus { outline: 2px solid var(--cyan); }
 
 .submit-btn {
   font-family: 'Rubik', sans-serif;
@@ -585,7 +638,7 @@ header p.subtitle {
 
 .submit-btn:hover { transform: translateY(-2px); }
 
-/* ============ כפתור מצב תצוגה ============ */
+/* ============ DARK MODE BUTTON ============ */
 .darkBtn {
   position: fixed;
   top: 22px;
@@ -609,7 +662,7 @@ header p.subtitle {
 
 .darkBtn:hover { transform: scale(1.1); }
 
-/* ============ עוזר הפרויקט הצף ============ */
+/* ============ BOT WIDGET ============ */
 .bot-widget {
     position: fixed;
     bottom: 13px;
@@ -691,9 +744,7 @@ header p.subtitle {
     flex-shrink: 0;
 }
 
-.bot-body {
-    padding: 11px;
-}
+.bot-body { padding: 11px; }
 
 .bot-avatar {
     width: 50px;
@@ -794,9 +845,7 @@ footer {
   .panel { padding: 18px 12px; }
   .hero-image img { width: 100px; height: 100px; }
   .tab-btn { width: 100%; justify-content: center; }
-
   .bot-avatar { width: 68px; height: 68px; }
-
   .bot-widget:not(.collapsed) {
     width: calc(100vw - 44px);
     max-height: 70vh;
@@ -863,7 +912,7 @@ footer {
       <button class="tab-btn" onclick="openTab(event, 'sub24_26')">🌐 <span class="ltr-inline">/24</span> עד <span class="ltr-inline">/26</span> (גדולות)</button>
       <button class="tab-btn" onclick="openTab(event, 'sub27_29')">⚡ <span class="ltr-inline">/27</span> עד <span class="ltr-inline">/29</span> (בינוניות)</button>
       <button class="tab-btn" onclick="openTab(event, 'sub30_32')">🔒 <span class="ltr-inline">/30</span> עד <span class="ltr-inline">/32</span> (נקודתיות)</button>
-      <button class="tab-btn" onclick="openTab(event, 'quiz')">📝 מבדק מטורלל (10 תרגילים)</button>
+      <button class="tab-btn" onclick="openTab(event, 'quiz')">מבדק ידע בכתובות IP</button>
       <button class="tab-btn" onclick="openTab(event, 'reflection')">🧠 רפלקציה אחוונית</button>
     </div>
 
@@ -905,7 +954,7 @@ footer {
       </div>
     </div>
 
-    <!-- TAB 2: BINARY & BITS DEEP DIVE (FIXED & EXPANDED) -->
+    <!-- TAB 2: BINARY & BITS DEEP DIVE -->
     <div id="binary_deep" class="tab-content">
       <div class="component-grid">
         <div class="comp-media">
@@ -1217,7 +1266,7 @@ footer {
 
     <!-- TAB 7: QUIZ -->
     <div id="quiz" class="tab-content">
-      <h3 class="comp-title">📝 מבדק הידע האחוואני - 10 תרגילים מטורללים במאסטרי Subnetting</h3>
+      <h3 class="comp-title">📝 מבדק ידע בכתובות IP - 10 תרגילים מטורללים במאסטרי Subnetting</h3>
       <p style="font-weight: 600; color: var(--text-muted); margin-bottom: 20px;">
         בחרו את התשובה הנכונה בכל תרגיל! לאחר הלחיצה תקבלו אינדיקציה מיידית והסבר מפורט.
       </p>
@@ -1342,6 +1391,26 @@ footer {
         <div class="quiz-feedback"></div>
       </div>
 
+      <!-- חלונית מורה -->
+      <div class="teacher-container">
+        <button class="teacher-btn" onclick="revealTeacherAnswers()">🔑 מורה</button>
+        <div class="teacher-answers-box" id="teacherAnswersBox">
+          <h4>📋 פתרון מורחב למורה (תשובות נכונות):</h4>
+          <ol>
+            <li>תרגיל 1: <span>14 כתובות</span></li>
+            <li>תרגיל 2: <span>פועל באלגוריתם ANDing בינארי בין ה-IP למסכת הרשת</span></li>
+            <li>תרגיל 3: <span>/30</span></li>
+            <li>תרגיל 4: <span>192.168.10.64</span></li>
+            <li>תרגיל 5: <span>255.255.255.224</span></li>
+            <li>תרגיל 6: <span>10.0.0.39</span></li>
+            <li>תרגיל 7: <span>עבור ממשק Loopback או חוק Firewall ממוקד ל-IP יחיד</span></li>
+            <li>תרגיל 8: <span>ל-Default Gateway (הראוטר) מכיוון שהיעד ברשת מרוחקת</span></li>
+            <li>תרגיל 9: <span>פרפיקס /27, קפיצות של 32</span></li>
+            <li>תרגיל 10: <span>/26 (מעניק 62 כתובות שמישות)</span></li>
+          </ol>
+        </div>
+      </div>
+
     </div>
 
     <!-- TAB 8: REFLECTION -->
@@ -1460,6 +1529,17 @@ function checkQuiz(btn, isCorrect, qId, explanation) {
   }
 
   feedback.classList.add('show');
+}
+
+function revealTeacherAnswers() {
+  const password = prompt("אנא הזן סיסמת מורה:");
+  if (password === "sahar") {
+    const box = document.getElementById("teacherAnswersBox");
+    box.style.display = "block";
+    box.scrollIntoView({ behavior: 'smooth' });
+  } else if (password !== null) {
+    alert("סיסמה שגויה!");
+  }
 }
 </script>
 
