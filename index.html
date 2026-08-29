@@ -662,7 +662,7 @@ header p.subtitle {
 
 .darkBtn:hover { transform: scale(1.1); }
 
-/* ============ BOT WIDGET ============ */
+/* ============ BOT WIDGET (מתוך הקובץ המקורי) ============ */
 .bot-widget {
     position: fixed;
     bottom: 13px;
@@ -872,25 +872,25 @@ footer {
     <div class="hero-text">
       <div class="statusbar">
         <span class="dot"></span>
-        <span>session: subnetting_mastery</span>
+        <span class="ltr-inline">session: subnetting_mastery</span>
         <span class="sep">//</span>
-        <span>academy.subnet.local</span>
+        <span class="ltr-inline">academy.subnet.local</span>
         <span class="sep">//</span>
-        <span>CIDR: <span class="ltr-inline">/24</span> - <span class="ltr-inline">/32</span></span>
+        <span><span class="ltr-inline">CIDR:</span> <span class="ltr-inline">/24</span> - <span class="ltr-inline">/32</span></span>
       </div>
       
       <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 4px; margin-bottom: 8px;">
         <span style="background: rgba(185, 28, 28, 0.1); color: #b91c1c; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 20px;">🔥 שיעור מטורלל: מסכות רשת משנה</span>
-        <h1 style="font-size: 22px; font-weight: 800; color: #b91c1c; margin: 0; letter-spacing: -0.3px;">למה חייבים Subnet Mask אחי?</h1>
+        <h1 style="font-size: 22px; font-weight: 800; color: #b91c1c; margin: 0; letter-spacing: -0.3px;">למה חייבים <span class="ltr-inline">Subnet Mask</span> אחי?</h1>
       </div>
 
-      <p class="subtitle" style="font-size: 14px; margin: 4px 0 16px;">מסע עומק בטאבים: איך כרטיס הרשת מחשב ביטים, מזהה את ה-Subnet ומחליט אם לשלוח לראוטר!</p>
+      <p class="subtitle" style="font-size: 14px; margin: 4px 0 16px;">מסע עומק בטאבים: איך כרטיס הרשת מחשב ביטים, מזהה את ה-<span class="ltr-inline">Subnet</span> ומחליט אם לשלוח לראוטר!</p>
       <div class="protocol-row">
-        <span class="protocol-chip">SUBNET MASK</span>
-        <span class="protocol-chip">BITWISE ANDing</span>
-        <span class="protocol-chip">DEFAULT GATEWAY</span>
-        <span class="protocol-chip">ARP VS ROUTER</span>
-        <span class="protocol-chip">CIDR NOTATION</span>
+        <span class="protocol-chip ltr-inline">SUBNET MASK</span>
+        <span class="protocol-chip ltr-inline">BITWISE ANDing</span>
+        <span class="protocol-chip ltr-inline">DEFAULT GATEWAY</span>
+        <span class="protocol-chip ltr-inline">ARP VS ROUTER</span>
+        <span class="protocol-chip ltr-inline">CIDR NOTATION</span>
       </div>
     </div>
   </div>
@@ -900,20 +900,20 @@ footer {
 
   <div class="panel">
     <div class="panel-head">
-      <h2>🧮 מעבדת Subnetting - בחרו פרפיקס/נושא ללמידה</h2>
-      <span class="panel-tag mono">SUBNET_MODULE_V4.0</span>
+      <h2>🧮 מעבדת <span class="ltr-inline">Subnetting</span> - בחרו פרפיקס/נושא ללמידה</h2>
+      <span class="panel-tag mono ltr-inline">SUBNET_MODULE_V4.0</span>
     </div>
 
     <!-- סרגל הטאבים המורחב -->
     <div class="tabs-nav">
       <button class="tab-btn active" onclick="openTab(event, 'intro')">💡 חשיבות המסכה</button>
-      <button class="tab-btn" onclick="openTab(event, 'binary_deep')">🔢 מבנה הביטים (32Bits)</button>
-      <button class="tab-btn" onclick="openTab(event, 'anding_mech')">🤖 אלגוריתם ה-ANDing והראוטר</button>
+      <button class="tab-btn" onclick="openTab(event, 'binary_deep')">🔢 מבנה הביטים (<span class="ltr-inline">32 Bits</span>)</button>
+      <button class="tab-btn" onclick="openTab(event, 'anding_mech')">🤖 אלגוריתם ה-<span class="ltr-inline">ANDing</span> והראוטר</button>
       <button class="tab-btn" onclick="openTab(event, 'sub24_26')">🌐 <span class="ltr-inline">/24</span> עד <span class="ltr-inline">/26</span> (גדולות)</button>
       <button class="tab-btn" onclick="openTab(event, 'sub27_29')">⚡ <span class="ltr-inline">/27</span> עד <span class="ltr-inline">/29</span> (בינוניות)</button>
       <button class="tab-btn" onclick="openTab(event, 'sub30_32')">🔒 <span class="ltr-inline">/30</span> עד <span class="ltr-inline">/32</span> (נקודתיות)</button>
-      <button class="tab-btn" onclick="openTab(event, 'quiz')">מבדק ידע בכתובות IP</button>
-      <button class="tab-btn" onclick="openTab(event, 'reflection')">🧠 רפלקציה טירלולית</button>
+      <button class="tab-btn" onclick="openTab(event, 'quiz')">📝 מבדק ידע בכתובות <span class="ltr-inline">IP</span></button>
+      <button class="tab-btn" onclick="openTab(event, 'reflection')">🧠 עושים סדר במחשבות</button>
     </div>
 
     <!-- TAB 1: מבוא וחשיבות -->
@@ -922,33 +922,33 @@ footer {
         <div class="comp-media">
           <img class="comp-img" src="https://lh3.googleusercontent.com/d/1ytfgyT1ELCKV1hAZrMw6Ohy0veK5VWjU" alt="Subnet Mask Concept">
           <div class="meta-box">
-            <div class="meta-item"><span class="meta-label">תפקיד המסכה:</span><span class="meta-val">הפרדת Network/Host</span></div>
-            <div class="meta-item"><span class="meta-label">גודל IP:</span><span class="meta-val">32 Bits (IPv4)</span></div>
-            <div class="meta-item"><span class="meta-label">שיטה:</span><span class="meta-val">ANDing בינארי</span></div>
-            <div class="meta-item"><span class="meta-label">ייצוג:</span><span class="meta-val">CIDR (Slash)</span></div>
+            <div class="meta-item"><span class="meta-label">תפקיד המסכה:</span><span class="meta-val">הפרדת <span class="ltr-inline">Network/Host</span></span></div>
+            <div class="meta-item"><span class="meta-label">גודל <span class="ltr-inline">IP</span>:</span><span class="meta-val"><span class="ltr-inline">32 Bits (IPv4)</span></span></div>
+            <div class="meta-item"><span class="meta-label">שיטה:</span><span class="meta-val"><span class="ltr-inline">ANDing</span> בינארי</span></div>
+            <div class="meta-item"><span class="meta-label">ייצוג:</span><span class="meta-val"><span class="ltr-inline">CIDR (Slash)</span></span></div>
           </div>
         </div>
         <div class="comp-details">
-          <h3 class="comp-title">💡 למה חייבים מסכת רשת משנה (Subnet Mask)?</h3>
+          <h3 class="comp-title">💡 למה חייבים מסכת רשת משנה (<span class="ltr-inline">Subnet Mask</span>)?</h3>
           
           <div class="section-box">
             <h4>⚡ אופן פעולה</h4>
-            <p>כתובת IP לבדה (למשל <span class="ltr-inline">192.168.1.50</span>) היא סתם מספר! היא לא אומרת למחשב או לראוטר באיזו רשת המחשב נמצא. מסכת רשת המשנה היא השריף שקובע איזה חלק בכתובת שייך ל-**Network (הרשת)** ואיזה חלק שייך ל-**Host (המארח הספציפי)**. בעזרת פעולת AND בינארית, המחשב יודע מיד אם יעד החבילה נמצא איתו באותה רשת מקומית, או שצריך לשלוח אותה ל-Default Gateway (הראוטר)!</p>
+            <p>כתובת <span class="ltr-inline">IP</span> לבדה (למשל <span class="ltr-inline">192.168.1.50</span>) היא סתם מספר! היא לא אומרת למחשב או לראוטר באיזו רשת המחשב נמצא. מסכת רשת המשנה היא השריף שקובע איזה חלק בכתובת שייך ל-**<span class="ltr-inline">Network</span> (הרשת)** ואיזה חלק שייך ל-**<span class="ltr-inline">Host</span> (המארח הספציפי)**. בעזרת פעולת <span class="ltr-inline">AND</span> בינארית, המחשב יודע מיד אם יעד החבילה נמצא איתו באותה רשת מקומית, או שצריך לשלוח אותה ל-<span class="ltr-inline">Default Gateway</span> (הראוטר)!</p>
           </div>
 
           <div class="section-box" style="border-color: var(--green);">
-            <h4 style="color: var(--green);">🛠️ יתרונות מרכזיים של חלוקה לרשתות (Subnetting)</h4>
+            <h4 style="color: var(--green);">🛠️ יתרונות מרכזיים של חלוקה לרשתות (<span class="ltr-inline">Subnetting</span>)</h4>
             <div class="spec-grid">
-              <div class="spec-card"><span>חיסכון בכתובות</span><b>מניעת בזבוז IP בעולם</b></div>
-              <div class="spec-card"><span>צמצום שידורים</span><b>הקטנת Broadcast Domains</b></div>
-              <div class="spec-card"><span>שיפור אבטחה</span><b>בידוד מחלקות ו-VLANs</b></div>
+              <div class="spec-card"><span>חיסכון בכתובות</span><b>מניעת בזבוז <span class="ltr-inline">IP</span> בעולם</b></div>
+              <div class="spec-card"><span>צמצום שידורים</span><b>הקטנת <span class="ltr-inline">Broadcast Domains</span></b></div>
+              <div class="spec-card"><span>שיפור אבטחה</span><b>בידוד מחלקות ו-<span class="ltr-inline">VLANs</span></b></div>
               <div class="spec-card"><span>ניהול וביצועים</span><b>הקטנת עומסים על הסוויטש</b></div>
             </div>
           </div>
 
           <div class="section-box" style="border-color: var(--amber);">
             <h4 style="color: var(--amber);">🔥 טיפ מטורלל של סהר</h4>
-            <p>בכל רשת משנה יש שתי כתובות שאי אפשר להגדיר למחשבים: **כתובת הרשת** (הראשונה, כל ביטי ה-Host הם <span class="ltr-inline">0</span>) ו**כתובת ה-Broadcast** (האחרונה, כל ביטי ה-Host הם <span class="ltr-inline">1</span>)! לכן נוסחת הכתובות השמישות היא תמיד: <span class="mono ltr-inline">2^Hosts - 2</span>!</p>
+            <p>בכל רשת משנה יש שתי כתובות שאי אפשר להגדיר למחשבים: **כתובת הרשת** (הראשונה, כל ביטי ה-<span class="ltr-inline">Host</span> הם <span class="ltr-inline">0</span>) ו**כתובת ה-<span class="ltr-inline">Broadcast</span>** (האחרונה, כל ביטי ה-<span class="ltr-inline">Host</span> הם <span class="ltr-inline">1</span>)! לכן נוסחת הכתובות השמישות היא תמיד: <span class="mono ltr-inline">2^Hosts - 2</span>!</p>
           </div>
         </div>
       </div>
@@ -960,14 +960,14 @@ footer {
         <div class="comp-media">
           <img class="comp-img" src="https://lh3.googleusercontent.com/d/1ytfgyT1ELCKV1hAZrMw6Ohy0veK5VWjU" alt="Binary Math">
           <div class="meta-box">
-            <div class="meta-item"><span class="meta-label">סה"כ ביטים:</span><span class="meta-val">32 Bits</span></div>
-            <div class="meta-item"><span class="meta-label">חלוקה:</span><span class="meta-val">4 אוקטטים (8 ביט)</span></div>
-            <div class="meta-item"><span class="meta-label">ביט ברשת (1):</span><span class="meta-val">Network Bit</span></div>
-            <div class="meta-item"><span class="meta-label">ביט במארח (0):</span><span class="meta-val">Host Bit</span></div>
+            <div class="meta-item"><span class="meta-label">סה"כ ביטים:</span><span class="meta-val"><span class="ltr-inline">32 Bits</span></span></div>
+            <div class="meta-item"><span class="meta-label">חלוקה:</span><span class="meta-val">4 אוקטטים (<span class="ltr-inline">8 Bits</span>)</span></div>
+            <div class="meta-item"><span class="meta-label">ביט ברשת (1):</span><span class="meta-val"><span class="ltr-inline">Network Bit</span></span></div>
+            <div class="meta-item"><span class="meta-label">ביט במארח (0):</span><span class="meta-val"><span class="ltr-inline">Host Bit</span></span></div>
           </div>
         </div>
         <div class="comp-details">
-          <h3 class="comp-title">🔢 צלילה לעומק הביטים (32-Bit Representation)</h3>
+          <h3 class="comp-title">🔢 צלילה לעומק הביטים (<span class="ltr-inline">32-Bit Representation</span>)</h3>
           
           <div class="section-box">
             <h4>⚡ איך המחשב "רואה" את מסכת הרשת?</h4>
@@ -980,7 +980,7 @@ footer {
             <table class="binary-table">
               <thead>
                 <tr>
-                  <th>פרפיקס (CIDR)</th>
+                  <th>פרפיקס (<span class="ltr-inline">CIDR</span>)</th>
                   <th>ייצוג עשרוני</th>
                   <th>ייצוג בינארי מלא (32 הביטים)</th>
                   <th>ערך באוקטט ה-4</th>
@@ -1052,27 +1052,27 @@ footer {
               <thead>
                 <tr>
                   <th>מיקום ביט</th>
-                  <th>Bit 7</th>
-                  <th>Bit 6</th>
-                  <th>Bit 5</th>
-                  <th>Bit 4</th>
-                  <th>Bit 3</th>
-                  <th>Bit 2</th>
-                  <th>Bit 1</th>
-                  <th>Bit 0</th>
+                  <th><span class="ltr-inline">Bit 0</span></th>
+                  <th><span class="ltr-inline">Bit 1</span></th>
+                  <th><span class="ltr-inline">Bit 2</span></th>
+                  <th><span class="ltr-inline">Bit 3</span></th>
+                  <th><span class="ltr-inline">Bit 4</span></th>
+                  <th><span class="ltr-inline">Bit 5</span></th>
+                  <th><span class="ltr-inline">Bit 6</span></th>
+                  <th><span class="ltr-inline">Bit 7</span></th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td><strong>ערך עשרוני</strong></td>
-                  <td class="mono">128</td>
-                  <td class="mono">64</td>
-                  <td class="mono">32</td>
-                  <td class="mono">16</td>
-                  <td class="mono">8</td>
-                  <td class="mono">4</td>
-                  <td class="mono">2</td>
-                  <td class="mono">1</td>
+                  <td class="mono"><span class="ltr-inline">1</span></td>
+                  <td class="mono"><span class="ltr-inline">2</span></td>
+                  <td class="mono"><span class="ltr-inline">4</span></td>
+                  <td class="mono"><span class="ltr-inline">8</span></td>
+                  <td class="mono"><span class="ltr-inline">16</span></td>
+                  <td class="mono"><span class="ltr-inline">32</span></td>
+                  <td class="mono"><span class="ltr-inline">64</span></td>
+                  <td class="mono"><span class="ltr-inline">128</span></td>
                 </tr>
               </tbody>
             </table>
@@ -1087,34 +1087,34 @@ footer {
         <div class="comp-media">
           <img class="comp-img" src="https://lh3.googleusercontent.com/d/1ytfgyT1ELCKV1hAZrMw6Ohy0veK5VWjU" alt="Networking Router Decision">
           <div class="meta-box">
-            <div class="meta-item"><span class="meta-label">פעולה לוגית:</span><span class="meta-val">Bitwise AND</span></div>
-            <div class="meta-item"><span class="meta-label">תנאי 1 AND 1:</span><span class="meta-val">= 1</span></div>
-            <div class="meta-item"><span class="meta-label">תנאי 1 AND 0:</span><span class="meta-val">= 0</span></div>
-            <div class="meta-item"><span class="meta-label">יעד מקומי:</span><span class="meta-val">ARP -> Direct</span></div>
-            <div class="meta-item"><span class="meta-label">יעד מרוחק:</span><span class="meta-val">Default Gateway MAC</span></div>
+            <div class="meta-item"><span class="meta-label">פעולה לוגית:</span><span class="meta-val"><span class="ltr-inline">Bitwise AND</span></span></div>
+            <div class="meta-item"><span class="meta-label">תנאי <span class="ltr-inline">1 AND 1</span>:</span><span class="meta-val"><span class="ltr-inline">= 1</span></span></div>
+            <div class="meta-item"><span class="meta-label">תנאי <span class="ltr-inline">1 AND 0</span>:</span><span class="meta-val"><span class="ltr-inline">= 0</span></span></div>
+            <div class="meta-item"><span class="meta-label">יעד מקומי:</span><span class="meta-val"><span class="ltr-inline">ARP -> Direct</span></span></div>
+            <div class="meta-item"><span class="meta-label">יעד מרוחק:</span><span class="meta-val"><span class="ltr-inline">Default Gateway MAC</span></span></div>
           </div>
         </div>
         <div class="comp-details">
-          <h3 class="comp-title">🤖 אלגוריתם ה-ANDing: איך כרטיס הרשת מחליט?</h3>
+          <h3 class="comp-title">🤖 אלגוריתם ה-<span class="ltr-inline">ANDing</span>: איך כרטיס הרשת מחליט?</h3>
           
           <div class="section-box">
-            <h4>⚡ תהליך קבלת ההחלטה בשבריר שנייה (Step-by-Step)</h4>
+            <h4>⚡ תהליך קבלת ההחלטה בשבריר שנייה (<span class="ltr-inline">Step-by-Step</span>)</h4>
             <p>כאשר מחשב א' (<span class="mono ltr-inline">192.168.1.10/24</span>) רוצה לשלוח פקטה למחשב ב' (<span class="mono ltr-inline">192.168.1.50</span> או <span class="mono ltr-inline">8.8.8.8</span>), כרטיס הרשת מבצע את האלגוריתם הבא בדיוק נמרץ:</p>
             
             <ol style="font-weight: 700; line-height: 1.8; margin-top: 10px;">
-              <li><strong>חישוב הרשת המקומית:</strong> המחשב מפעיל <span class="mono">AND</span> בין כתובת ה-IP שלו לבין ה-Subnet Mask שלו כדי לדעת באיזו רשת הוא נמצא.</li>
-              <li><strong>חישוב רשת היעד:</strong> המחשב מפעיל <span class="mono">AND</span> בין כתובת ה-IP של <u>היעד</u> לבין ה-Subnet Mask <u>של המקור</u>!</li>
+              <li><strong>חישוב הרשת המקומית:</strong> המחשב מפעיל <span class="mono ltr-inline">AND</span> בין כתובת ה-<span class="ltr-inline">IP</span> שלו לבין ה-<span class="ltr-inline">Subnet Mask</span> שלו כדי לדעת באיזו רשת הוא נמצא.</li>
+              <li><strong>חישוב רשת היעד:</strong> המחשב מפעיל <span class="mono ltr-inline">AND</span> בין כתובת ה-<span class="ltr-inline">IP</span> של <u>היעד</u> לבין ה-<span class="ltr-inline">Subnet Mask</span> <u>של המקור</u>!</li>
               <li><strong>השוואה דרמטית:</strong>
                 <ul>
-                  <li>אם תוצאת הרשת <strong>זהה</strong> ⬅️ היעד נמצא איתי באותה רשת (Local LAN)! המחשב ישלח בקשת <span class="mono">ARP Request</span> כדי למצוא את ה-MAC של היעד ויפנה אליו ישירות.</li>
-                  <li>אם תוצאת הרשת <strong>שונה</strong> ⬅️ היעד ברשת מרוחקת (Remote)! המחשב **לא פונה ליעד**, אלא עוטף את הפקטה ושולח אותה ל-MAC של ה-**Default Gateway (הראוטר)**!</li>
+                  <li>אם תוצאת הרשת <strong>זהה</strong> ⬅️ היעד נמצא איתי באותה רשת (<span class="ltr-inline">Local LAN</span>)! המחשב ישלח בקשת <span class="mono ltr-inline">ARP Request</span> כדי למצוא את ה-<span class="ltr-inline">MAC</span> של היעד ויפנה אליו ישירות.</li>
+                  <li>אם תוצאת הרשת <strong>שונה</strong> ⬅️ היעד ברשת מרוחקת (<span class="ltr-inline">Remote</span>)! המחשב **לא פונה ליעד**, אלא עוטף את הפקטה ושולח אותה ל-<span class="ltr-inline">MAC</span> של ה-**<span class="ltr-inline">Default Gateway</span> (הראוטר)**!</li>
                 </ul>
               </li>
             </ol>
           </div>
 
           <div class="section-box" style="border-color: var(--violet); background: var(--violet-soft);">
-            <h4 style="color: var(--violet);">🛠️ המחשה מעשית של ANDing</h4>
+            <h4 style="color: var(--violet);">🛠️ המחשה מעשית של <span class="ltr-inline">ANDing</span></h4>
             <p style="font-size: 13.5px; margin-bottom: 8px;"><strong>מחשב מקור:</strong> <span class="ltr-inline">192.168.1.10</span> | <strong>מסכה:</strong> <span class="ltr-inline">255.255.255.0</span> (<span class="ltr-inline">/24</span>)</p>
             <table class="binary-table">
               <thead>
@@ -1122,7 +1122,7 @@ footer {
                   <th>רכיב</th>
                   <th>כתובת / מסכה</th>
                   <th>ערך בינארי באוקטט ה-4</th>
-                  <th>תוצאת ANDing</th>
+                  <th>תוצאת <span class="ltr-inline">ANDing</span></th>
                 </tr>
               </thead>
               <tbody>
@@ -1162,8 +1162,8 @@ footer {
         <div class="comp-media">
           <img class="comp-img" src="https://lh3.googleusercontent.com/d/1ytfgyT1ELCKV1hAZrMw6Ohy0veK5VWjU" alt="Large Networks">
           <div class="meta-box">
-            <div class="meta-item"><span class="meta-label">פוקוס:</span><span class="meta-val">רשתות LAN רחבות</span></div>
-            <div class="meta-item"><span class="meta-label">טווח הוסטיים:</span><span class="meta-val">62 - 254 Hosts</span></div>
+            <div class="meta-item"><span class="meta-label">פוקוס:</span><span class="meta-val">רשתות <span class="ltr-inline">LAN</span> רחבות</span></div>
+            <div class="meta-item"><span class="meta-label">טווח הוסטיים:</span><span class="meta-val"><span class="ltr-inline">62 - 254 Hosts</span></span></div>
             <div class="meta-item"><span class="meta-label">שימוש נפוץ:</span><span class="meta-val">משרדים, בית, מחלקות</span></div>
           </div>
         </div>
@@ -1172,15 +1172,15 @@ footer {
           
           <div class="section-box">
             <h4>⚡ אופן פעולה והבדלים</h4>
-            <p>אלו הפרפיקסים הנפוצים ביותר ברשתות מקומיות (LAN). **`<span class="ltr-inline">/24</span>`** היא המסכה הביתית הסטנדרטית הנותנת אוקטט שלם למארחים. ככל שנעולים עוד ביטים ברשת המשנה (למשל `<span class="ltr-inline">/25</span>` או `<span class="ltr-inline">/26</span>`), אנחנו חוצים את הרשת לשניים או לארבעה תתי-רשתות קטנות יותר!</p>
+            <p>אלו הפרפיקסים הנפוצים ביותר ברשתות מקומיות (<span class="ltr-inline">LAN</span>). **`<span class="ltr-inline">/24</span>`** היא המסכה הביתית הסטנדרטית הנותנת אוקטט שלם למארחים. ככל שנעולים עוד ביטים ברשת המשנה (למשל `<span class="ltr-inline">/25</span>` או `<span class="ltr-inline">/26</span>`), אנחנו חוצים את הרשת לשניים או לארבעה תתי-רשתות קטנות יותר!</p>
           </div>
 
           <div class="section-box" style="border-color: var(--green);">
             <h4 style="color: var(--green);">🛠️ פירוט פרפיקסים ונתונים טכניים</h4>
             <div class="spec-grid">
-              <div class="spec-card"><span><span class="ltr-inline">/24</span> (<span class="ltr-inline">255.255.255.0</span>)</span><b>254 hosts שמישים | קפיצות של 256</b></div>
-              <div class="spec-card"><span><span class="ltr-inline">/25</span> (<span class="ltr-inline">255.255.255.128</span>)</span><b>126 hosts שמישים | 2 תתי-רשתות</b></div>
-              <div class="spec-card"><span><span class="ltr-inline">/26</span> (<span class="ltr-inline">255.255.255.192</span>)</span><b>62 hosts שמישים | 4 תתי-רשתות</b></div>
+              <div class="spec-card"><span><span class="ltr-inline">/24</span> (<span class="ltr-inline">255.255.255.0</span>)</span><b>254 <span class="ltr-inline">hosts</span> שמישים | קפיצות של 256</b></div>
+              <div class="spec-card"><span><span class="ltr-inline">/25</span> (<span class="ltr-inline">255.255.255.128</span>)</span><b>126 <span class="ltr-inline">hosts</span> שמישים | 2 תתי-רשתות</b></div>
+              <div class="spec-card"><span><span class="ltr-inline">/26</span> (<span class="ltr-inline">255.255.255.192</span>)</span><b>62 <span class="ltr-inline">hosts</span> שמישים | 4 תתי-רשתות</b></div>
             </div>
           </div>
 
@@ -1199,8 +1199,8 @@ footer {
           <img class="comp-img" src="https://lh3.googleusercontent.com/d/1ytfgyT1ELCKV1hAZrMw6Ohy0veK5VWjU" alt="Medium Networks">
           <div class="meta-box">
             <div class="meta-item"><span class="meta-label">פוקוס:</span><span class="meta-val">סגמנטים ממוקדים</span></div>
-            <div class="meta-item"><span class="meta-label">טווח הוסטיים:</span><span class="meta-val">6 - 30 Hosts</span></div>
-            <div class="meta-item"><span class="meta-label">שימוש נפוץ:</span><span class="meta-val">שרתים, מדפסות, DMZ</span></div>
+            <div class="meta-item"><span class="meta-label">טווח הוסטיים:</span><span class="meta-val"><span class="ltr-inline">6 - 30 Hosts</span></span></div>
+            <div class="meta-item"><span class="meta-label">שימוש נפוץ:</span><span class="meta-val">שרתים, מדפסות, <span class="ltr-inline">DMZ</span></span></div>
           </div>
         </div>
         <div class="comp-details">
@@ -1208,21 +1208,21 @@ footer {
           
           <div class="section-box">
             <h4>⚡ אופן פעולה והבדלים</h4>
-            <p>כאשר יש לנו צוותים קטנים, חוות שרתים (Server Farm) או סביבות מבודדות (DMZ), אין טעם לבזבז 250 כתובות. פרפיקסים אלו מאפשרים לנו לחתוך את הרשת לחלקים מדויקים, ולמנוע מזיקים מלהציף רשתות שלמות.</p>
+            <p>כאשר יש לנו צוותים קטנים, חוות שרתים (<span class="ltr-inline">Server Farm</span>) או סביבות מבודדות (<span class="ltr-inline">DMZ</span>), אין טעם לבזבז 250 כתובות. פרפיקסים אלו מאפשרים לנו לחתוך את הרשת לחלקים מדויקים, ולמנוע מזיקים מלהציף רשתות שלמות.</p>
           </div>
 
           <div class="section-box" style="border-color: var(--green);">
             <h4 style="color: var(--green);">🛠️ פירוט פרפיקסים ונתונים טכניים</h4>
             <div class="spec-grid">
-              <div class="spec-card"><span><span class="ltr-inline">/27</span> (<span class="ltr-inline">255.255.255.224</span>)</span><b>30 hosts שמישים | קפיצות של 32</b></div>
-              <div class="spec-card"><span><span class="ltr-inline">/28</span> (<span class="ltr-inline">255.255.255.240</span>)</span><b>14 hosts שמישים | קפיצות של 16</b></div>
-              <div class="spec-card"><span><span class="ltr-inline">/29</span> (<span class="ltr-inline">255.255.255.248</span>)</span><b>6 hosts שמישים | קפיצות של 8</b></div>
+              <div class="spec-card"><span><span class="ltr-inline">/27</span> (<span class="ltr-inline">255.255.255.224</span>)</span><b>30 <span class="ltr-inline">hosts</span> שמישים | קפיצות של 32</b></div>
+              <div class="spec-card"><span><span class="ltr-inline">/28</span> (<span class="ltr-inline">255.255.255.240</span>)</span><b>14 <span class="ltr-inline">hosts</span> שמישים | קפיצות של 16</b></div>
+              <div class="spec-card"><span><span class="ltr-inline">/29</span> (<span class="ltr-inline">255.255.255.248</span>)</span><b>6 <span class="ltr-inline">hosts</span> שמישים | קפיצות של 8</b></div>
             </div>
           </div>
 
           <div class="section-box" style="border-color: var(--amber);">
             <h4 style="color: var(--amber);">🔥 טיפ מטורלל של סהר</h4>
-            <p>`<span class="ltr-inline">/29</span>` מעולה לחיבור קבוצה קטנה של שרתי Web ציבוריים! אתם מקבלים בדיוק 6 כתובות IP שמישות בלי לחסל כתובות IPv4 יקרות!</p>
+            <p>`<span class="ltr-inline">/29</span>` מעולה לחיבור קבוצה קטנה של שרתי <span class="ltr-inline">Web</span> ציבוריים! אתם מקבלים בדיוק 6 כתובות <span class="ltr-inline">IP</span> שמישות בלי לחסל כתובות <span class="ltr-inline">IPv4</span> יקרות!</p>
           </div>
         </div>
       </div>
@@ -1234,8 +1234,8 @@ footer {
         <div class="comp-media">
           <img class="comp-img" src="https://lh3.googleusercontent.com/d/1ytfgyT1ELCKV1hAZrMw6Ohy0veK5VWjU" alt="Special Connections">
           <div class="meta-box">
-            <div class="meta-item"><span class="meta-label">פוקוס:</span><span class="meta-val">Point-to-Point / Loopback</span></div>
-            <div class="meta-item"><span class="meta-label">טווח הוסטיים:</span><span class="meta-val">1 - 2 Hosts</span></div>
+            <div class="meta-item"><span class="meta-label">פוקוס:</span><span class="meta-val"><span class="ltr-inline">Point-to-Point / Loopback</span></span></div>
+            <div class="meta-item"><span class="meta-label">טווח הוסטיים:</span><span class="meta-val"><span class="ltr-inline">1 - 2 Hosts</span></span></div>
             <div class="meta-item"><span class="meta-label">שימוש נפוץ:</span><span class="meta-val">לינקים בין ראוטרים, ניהול</span></div>
           </div>
         </div>
@@ -1244,15 +1244,15 @@ footer {
           
           <div class="section-box">
             <h4>⚡ אופן פעולה והבדלים</h4>
-            <p>כאן אנחנו מגיעים לטופ של היעילות! **`<span class="ltr-inline">/30</span>`** משמש חיבור נקודה-לנקודה (Point-to-Point) בין שני ראוטרים בלבד. **`<span class="ltr-inline">/31</span>`** מוגדר בתקנים חדישים (RFC 3021) לחיבור נקודתי ללא Broadcast. **`<span class="ltr-inline">/32</span>`** מייצג כתובת של הופעה אחת בלבד (Host Single) – בשימוש נרחב עבור ממשקי Loopback או חוקי Firewall ממוקדים!</p>
+            <p>כאן אנחנו מגיעים לטופ של היעילות! **`<span class="ltr-inline">/30</span>`** משמש חיבור נקודה-לנקודה (<span class="ltr-inline">Point-to-Point</span>) בין שני ראוטרים בלבד. **`<span class="ltr-inline">/31</span>`** מוגדר בתקנים חדישים (<span class="ltr-inline">RFC 3021</span>) לחיבור נקודתי ללא <span class="ltr-inline">Broadcast</span>. **`<span class="ltr-inline">/32</span>`** מייצג כתובת של הופעה אחת בלבד (<span class="ltr-inline">Host Single</span>) – בשימוש נרחב עבור ממשקי <span class="ltr-inline">Loopback</span> או חוקי <span class="ltr-inline">Firewall</span> ממוקדים!</p>
           </div>
 
           <div class="section-box" style="border-color: var(--green);">
             <h4 style="color: var(--green);">🛠️ פירוט פרפיקסים ונתונים טכניים</h4>
             <div class="spec-grid">
-              <div class="spec-card"><span><span class="ltr-inline">/30</span> (<span class="ltr-inline">255.255.255.252</span>)</span><b>2 hosts שמישים בלבד | קלאסי לראוטרים</b></div>
-              <div class="spec-card"><span><span class="ltr-inline">/31</span> (<span class="ltr-inline">255.255.255.254</span>)</span><b>2 כתובות (Point-to-Point ללא BC)</b></div>
-              <div class="spec-card"><span><span class="ltr-inline">/32</span> (<span class="ltr-inline">255.255.255.255</span>)</span><b>1 host בלבד | Loopback & FW Rules</b></div>
+              <div class="spec-card"><span><span class="ltr-inline">/30</span> (<span class="ltr-inline">255.255.255.252</span>)</span><b>2 <span class="ltr-inline">hosts</span> שמישים בלבד | קלאסי לראוטרים</b></div>
+              <div class="spec-card"><span><span class="ltr-inline">/31</span> (<span class="ltr-inline">255.255.255.254</span>)</span><b>2 כתובות (<span class="ltr-inline">Point-to-Point</span> ללא <span class="ltr-inline">BC</span>)</b></div>
+              <div class="spec-card"><span><span class="ltr-inline">/32</span> (<span class="ltr-inline">255.255.255.255</span>)</span><b>1 <span class="ltr-inline">host</span> בלבד | <span class="ltr-inline">Loopback & FW Rules</span></b></div>
             </div>
           </div>
 
@@ -1266,16 +1266,16 @@ footer {
 
     <!-- TAB 7: QUIZ -->
     <div id="quiz" class="tab-content">
-      <h3 class="comp-title">📝 מבדק ידע בכתובות IP - 10 תרגילים מטורללים במאסטרי Subnetting</h3>
+      <h3 class="comp-title">📝 מבדק ידע בכתובות <span class="ltr-inline">IP</span> - 10 תרגילים מטורללים במאסטרי <span class="ltr-inline">Subnetting</span></h3>
       <p style="font-weight: 600; color: var(--text-muted); margin-bottom: 20px;">
         בחרו את התשובה הנכונה בכל תרגיל! לאחר הלחיצה תקבלו אינדיקציה מיידית והסבר מפורט.
       </p>
 
       <!-- Q1 -->
       <div class="quiz-question" id="q1">
-        <p class="q-title">תרגיל 1: כמה כתובות IP שמישות (Usable Hosts) מספקת מסכת רשת עם פרפיקס של <span class="ltr-inline">/28</span>?</p>
+        <p class="q-title">תרגיל 1: כמה כתובות <span class="ltr-inline">IP</span> שמישות (<span class="ltr-inline">Usable Hosts</span>) מספקת מסכת רשת עם פרפיקס של <span class="ltr-inline">/28</span>?</p>
         <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q1', 'בפרפיקס /28 נותרו 4 ביטים ל-Host. סה&quot;כ 16 כתובות, אך בניתוי 2 ל-Network ו-Broadcast מקבלים 14 שמישות!')">16 כתובות</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q1', 'בפרפיקס /28 נותרו 4 ביטים ל-Host. סה&quot;כ 16 כתובות, אך בניכוי 2 ל-Network ו-Broadcast מקבלים 14 שמישות!')">16 כתובות</button>
           <button class="quiz-opt" onclick="checkQuiz(this, true, 'q1', 'נכון מאוד! 2^4 - 2 = 14 כתובות IP שמישות!')">14 כתובות</button>
           <button class="quiz-opt" onclick="checkQuiz(this, false, 'q1', '30 כתובות שמישות מתאימות לפרפיקס /27!')">30 כתובות</button>
           <button class="quiz-opt" onclick="checkQuiz(this, false, 'q1', '62 כתובות שמישות מתאימות לפרפיקס /26!')">62 כתובות</button>
@@ -1285,19 +1285,19 @@ footer {
 
       <!-- Q2 -->
       <div class="quiz-question" id="q2">
-        <p class="q-title">תרגיל 2: מה מבצע כרטיס הרשת כדי להחליט אם לשלוח את הפקטה ישירות ליעד או ל-Default Gateway?</p>
+        <p class="q-title">תרגיל 2: מה מבצע כרטיס הרשת כדי להחליט אם לשלוח את הפקטה ישירות ליעד או ל-<span class="ltr-inline">Default Gateway</span>?</p>
         <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkQuiz(this, true, 'q2', 'בול! כרטיס הרשת מבצע Bitwise AND בין ה-IP למסכה כדי לגלות את הרשת ולבחור בין ARP ישיר ל-Default Gateway.')">פועל באלגוריתם ANDing בינארי בין ה-IP למסכת הרשת</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q2', 'פינג (ICMP) אינו חלק ממנגנון הניתוב של כרטיס הרשת ברמת ה-L3!')">שולח פינג לראוטר ובודק את הזמן (TTL)</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q2', 'פורט 80 שייך לשכבת האפליקציה ולא לבדיקת סגמנט הרשת!')">בודק האם ל-IP של היעד יש פורט 80 פתוח</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q2', 'כתובת MAC מחושבת על ידי ARP ולא על פי DHCP!')">מחשב את כתובת ה-MAC לפי ה-DHCP</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, true, 'q2', 'בול! כרטיס הרשת מבצע Bitwise AND בין ה-IP למסכה כדי לגלות את הרשת ולבחור בין ARP ישיר ל-Default Gateway.')">פועל באלגוריתם <span class="ltr-inline">ANDing</span> בינארי בין ה-<span class="ltr-inline">IP</span> למסכת הרשת</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q2', 'פינג (ICMP) אינו חלק ממנגנון הניתוב של כרטיס הרשת ברמת ה-L3!')">שולח פינג לראוטר ובודק את הזמן (<span class="ltr-inline">TTL</span>)</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q2', 'פורט 80 שייך לשכבת האפליקציה ולא לבדיקת סגמנט הרשת!')">בודק האם ל-<span class="ltr-inline">IP</span> של היעד יש פורט 80 פתוח</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q2', 'כתובת MAC מחושבת על ידי ARP ולא על פי DHCP!')">מחשב את כתובת ה-<span class="ltr-inline">MAC</span> לפי ה-<span class="ltr-inline">DHCP</span></button>
         </div>
         <div class="quiz-feedback"></div>
       </div>
 
       <!-- Q3 -->
       <div class="quiz-question" id="q3">
-        <p class="q-title">תרגיל 3: איזה פרפיקס הוא האידיאלי והחסכוני ביותר לחיבור קווי ישר בין שני ראוטרים (Point-to-Point) לפי התקן הקיים?</p>
+        <p class="q-title">תרגיל 3: איזה פרפיקס הוא האידיאלי והחסכוני ביותר לחיבור קווי ישר בין שני ראוטרים (<span class="ltr-inline">Point-to-Point</span>) לפי התקן הקיים?</p>
         <div class="quiz-options">
           <button class="quiz-opt" onclick="checkQuiz(this, false, 'q3', 'פרפיקס /24 מבזבז 252 כתובות לחיבור בין שני ראוטרים בלבד!')"><span class="ltr-inline">/24</span></button>
           <button class="quiz-opt" onclick="checkQuiz(this, false, 'q3', 'פרפיקס /29 נותן 6 כתובות שמישות, מוגזם ל-2 ראוטרים!')"><span class="ltr-inline">/29</span></button>
@@ -1309,7 +1309,7 @@ footer {
 
       <!-- Q4 -->
       <div class="quiz-question" id="q4">
-        <p class="q-title">תרגיל 4: מהי כתובת ה-Network (הרשת) עבור הכתובת <span class="mono ltr-inline">192.168.10.77/26</span>?</p>
+        <p class="q-title">תרגיל 4: מהי כתובת ה-<span class="ltr-inline">Network</span> (הרשת) עבור הכתובת <span class="mono ltr-inline">192.168.10.77/26</span>?</p>
         <div class="quiz-options">
           <button class="quiz-opt" onclick="checkQuiz(this, false, 'q4', '192.168.10.0 היא כתובת הרשת של הבלוק הראשון (0-63).')"><span class="ltr-inline">192.168.10.0</span></button>
           <button class="quiz-opt" onclick="checkQuiz(this, true, 'q4', 'אלוף! בפרפיקס /26 הקפיצות הן של 64. הבלוקים הם: 0, 64, 128. המספר 77 נמצא בבלוק המתחיל ב-64!')"><span class="ltr-inline">192.168.10.64</span></button>
@@ -1321,7 +1321,7 @@ footer {
 
       <!-- Q5 -->
       <div class="quiz-question" id="q5">
-        <p class="q-title">תרגיל 5: מהי מסכת הרשת (Subnet Mask) העשרונית המקבילה לפרפיקס CIDR של <span class="ltr-inline">/27</span>?</p>
+        <p class="q-title">תרגיל 5: מהי מסכת הרשת (<span class="ltr-inline">Subnet Mask</span>) העשרונית המקבילה לפרפיקס <span class="ltr-inline">CIDR</span> של <span class="ltr-inline">/27</span>?</p>
         <div class="quiz-options">
           <button class="quiz-opt" onclick="checkQuiz(this, false, 'q5', '255.255.255.192 מציג 26 ביטים ברשת (/26).')"><span class="ltr-inline">255.255.255.192</span></button>
           <button class="quiz-opt" onclick="checkQuiz(this, true, 'q5', 'תותח! 27 ביטים דולקים פירושם 128 + 64 + 32 = 224 באוקטט האחרון!')"><span class="ltr-inline">255.255.255.224</span></button>
@@ -1333,7 +1333,7 @@ footer {
 
       <!-- Q6 -->
       <div class="quiz-question" id="q6">
-        <p class="q-title">תרגיל 6: מהי כתובת ה-Broadcast של הרשת <span class="mono ltr-inline">10.0.0.32/29</span>?</p>
+        <p class="q-title">תרגיל 6: מהי כתובת ה-<span class="ltr-inline">Broadcast</span> של הרשת <span class="mono ltr-inline">10.0.0.32/29</span>?</p>
         <div class="quiz-options">
           <button class="quiz-opt" onclick="checkQuiz(this, false, 'q6', '10.0.0.32 היא כתובת הרשת עצמה!')"><span class="ltr-inline">10.0.0.32</span></button>
           <button class="quiz-opt" onclick="checkQuiz(this, false, 'q6', '10.0.0.38 היא הכתובת השמישה האחרונה (Last Usable Host)!')"><span class="ltr-inline">10.0.0.38</span></button>
@@ -1348,9 +1348,9 @@ footer {
         <p class="q-title">תרגיל 7: לאיזה שימוש עיקרי מיועדת כתובת מסיכת רשת עם פרפיקס <span class="ltr-inline">/32</span>?</p>
         <div class="quiz-options">
           <button class="quiz-opt" onclick="checkQuiz(this, false, 'q7', 'למחלקה בת 30 עובדים מתאים פרפיקס /27.')">לחלוקת כתובות למחלקה עם 30 מחשבים</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, true, 'q7', 'פגיעה בול! /32 מייצג Host יחיד (255.255.255.255) ומשמש להגדרת ממשקי Loopback או חוקי Firewall ממוקדים ל-IP מסוים.')">עבור ממשק Loopback או חוק Firewall ממוקד ל-IP יחיד</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q7', 'עבור שני ראוטרים נדרש פרפיקס /30.')">לחיבור שני ראוטרים ברשת WAN</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q7', 'הקטנת שידורי Broadcast מבוצעת על ידי Subnetting רגיל (/25 עד /29).')">להגדלת כמות שידורי ה-Broadcast ברשת</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, true, 'q7', 'פגיעה בול! /32 מייצג Host יחיד (255.255.255.255) ומשמש להגדרת ממשקי Loopback או חוקי Firewall ממוקדים ל-IP מסוים.')">עבור ממשק <span class="ltr-inline">Loopback</span> או חוק <span class="ltr-inline">Firewall</span> ממוקד ל-<span class="ltr-inline">IP</span> יחיד</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q7', 'עבור שני ראוטרים נדרש פרפיקס /30.')">לחיבור שני ראוטרים ברשת <span class="ltr-inline">WAN</span></button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q7', 'הקטנת שידורי Broadcast מבוצעת על ידי Subnetting רגיל (/25 עד /29).')">להגדלת כמות שידורי ה-<span class="ltr-inline">Broadcast</span> ברשת</button>
         </div>
         <div class="quiz-feedback"></div>
       </div>
@@ -1359,10 +1359,10 @@ footer {
       <div class="quiz-question" id="q8">
         <p class="q-title">תרגיל 8: מחשב מקור מוגדר עם <span class="mono ltr-inline">172.16.5.10/25</span>. הוא מעוניין לשלוח פקטה לכתובת <span class="mono ltr-inline">172.16.5.130</span>. לאן תישלח הפקטה?</p>
         <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q8', 'שים לב! ב- /25 הרשת הראשונה היא 0-127 והשנייה היא 128-255. היעד נמצא ברשת מרוחקת!')">ישירות ליעד באמצעות בקשת ARP מקומית</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, true, 'q8', 'גאוני! /25 חוצה את הרשת ב-128. מחשב המקור ברשת 0 והיעד ברשת 128. היות והן רשתות שונות, הפקטה תישלח ל-Default Gateway!')">ל-Default Gateway (הראוטר) מכיוון שהיעד ברשת מרוחקת</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q8', 'שים לב! ב- /25 הרשת הראשונה היא 0-127 והשנייה היא 128-255. היעד נמצא ברשת מרוחקת!')">ישירות ליעד באמצעות בקשת <span class="ltr-inline">ARP</span> מקומית</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, true, 'q8', 'גאוני! /25 חוצה את הרשת ב-128. מחשב המקור ברשת 0 והיעד ברשת 128. היות והן רשתות שונות, הפקטה תישלח ל-Default Gateway!')">ל-<span class="ltr-inline">Default Gateway</span> (הראוטר) מכיוון שהיעד ברשת מרוחקת</button>
           <button class="quiz-opt" onclick="checkQuiz(this, false, 'q8', 'הפקטה תצא, אך תישלח דרך הראוטר ולא תישמט מראש!')">הפקטה תישרף מראש בגלל שאינה תקינה</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q8', 'שידור Broadcast מופנה ל-255, לא ליעד ספציפי בראוטינג!')">המחשב ישלח את הפקטה ב-Broadcast לכל הרשת</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q8', 'שידור Broadcast מופנה ל-255, לא ליעד ספציפי בראוטינג!')">המחשב ישלח את הפקטה ב-<span class="ltr-inline">Broadcast</span> לכל הרשת</button>
         </div>
         <div class="quiz-feedback"></div>
       </div>
@@ -1381,7 +1381,7 @@ footer {
 
       <!-- Q10 -->
       <div class="quiz-question" id="q10">
-        <p class="q-title">תרגיל 10: ארגון זקוק ל-50 כתובות IP שמישות עבור סגמנט שרתים. מהו הפרפיקס הקטן והחסכוני ביותר שיספק מענה לדרישה זו?</p>
+        <p class="q-title">תרגיל 10: ארגון זקוק ל-50 כתובות <span class="ltr-inline">IP</span> שמישות עבור סגמנט שרתים. מהו הפרפיקס הקטן והחסכוני ביותר שיספק מענה לדרישה זו?</p>
         <div class="quiz-options">
           <button class="quiz-opt" onclick="checkQuiz(this, false, 'q10', 'פרפיקס /27 מעניק 30 כתובות שמישות בלבד - לא מספיק ל-50!')"><span class="ltr-inline">/27</span> (מעניק 30 כתובות שמישות)</button>
           <button class="quiz-opt" onclick="checkQuiz(this, true, 'q10', 'שיחקת אותה! /26 מעניק 62 כתובות IP שמישות (2^6 - 2 = 62), שזה הפרפיקס הקטן ביותר שמכיל 50 כתובות!')"><span class="ltr-inline">/26</span> (מעניק 62 כתובות שמישות)</button>
@@ -1398,15 +1398,15 @@ footer {
           <h4>📋 פתרון מורחב למורה (תשובות נכונות):</h4>
           <ol>
             <li>תרגיל 1: <span>14 כתובות</span></li>
-            <li>תרגיל 2: <span>פועל באלגוריתם ANDing בינארי בין ה-IP למסכת הרשת</span></li>
-            <li>תרגיל 3: <span>/30</span></li>
-            <li>תרגיל 4: <span>192.168.10.64</span></li>
-            <li>תרגיל 5: <span>255.255.255.224</span></li>
-            <li>תרגיל 6: <span>10.0.0.39</span></li>
-            <li>תרגיל 7: <span>עבור ממשק Loopback או חוק Firewall ממוקד ל-IP יחיד</span></li>
-            <li>תרגיל 8: <span>ל-Default Gateway (הראוטר) מכיוון שהיעד ברשת מרוחקת</span></li>
-            <li>תרגיל 9: <span>פרפיקס /27, קפיצות של 32</span></li>
-            <li>תרגיל 10: <span>/26 (מעניק 62 כתובות שמישות)</span></li>
+            <li>תרגיל 2: <span>פועל באלגוריתם <span class="ltr-inline">ANDing</span> בינארי בין ה-<span class="ltr-inline">IP</span> למסכת הרשת</span></li>
+            <li>תרגיל 3: <span><span class="ltr-inline">/30</span></span></li>
+            <li>תרגיל 4: <span><span class="ltr-inline">192.168.10.64</span></span></li>
+            <li>תרגיל 5: <span><span class="ltr-inline">255.255.255.224</span></span></li>
+            <li>תרגיל 6: <span><span class="ltr-inline">10.0.0.39</span></span></li>
+            <li>תרגיל 7: <span>עפור ממשק <span class="ltr-inline">Loopback</span> או חוק <span class="ltr-inline">Firewall</span> ממוקד ל-<span class="ltr-inline">IP</span> יחיד</span></li>
+            <li>תרגיל 8: <span>ל-<span class="ltr-inline">Default Gateway</span> (הראוטר) מכיוון שהיעד ברשת מרוחקת</span></li>
+            <li>תרגיל 9: <span>פרפיקס <span class="ltr-inline">/27</span>, קפיצות של 32</span></li>
+            <li>תרגיל 10: <span><span class="ltr-inline">/26</span> (מעניק 62 כתובות שמישות)</span></li>
           </ol>
         </div>
       </div>
@@ -1415,10 +1415,10 @@ footer {
 
     <!-- TAB 8: REFLECTION -->
     <div id="reflection" class="tab-content">
-      <h3 class="comp-title">🧠 רפלקציה אחוונית לסיכום השיעור</h3>
+      <h3 class="comp-title">🧠 עושים סדר במחשבות</h3>
       <div class="section-box" style="border-color: var(--violet); background: var(--violet-soft);">
         <h4 style="color: var(--violet);">💬 סיכום אישי ומחשבות להמשך</h4>
-        <p style="margin-bottom: 12px;">תלמידים יקרים, קחו דקה לחשוב על מה שלמדנו בשיעור מטורלל זה על Subnetting, חישובי ANDing וביטים מ-<span class="ltr-inline">/24</span> ועד <span class="ltr-inline">/32</span>:</p>
+        <p style="margin-bottom: 12px;">תלמידים יקרים, קחו דקה לחשוב על מה שלמדנו בשיעור מטורלל זה על <span class="ltr-inline">Subnetting</span>, חישובי <span class="ltr-inline">ANDing</span> וביטים מ-<span class="ltr-inline">/24</span> ועד <span class="ltr-inline">/32</span>:</p>
         
         <div class="reflection-box">
           <label style="font-weight: 700; display: block; margin-top: 10px;">1. מה היה המושג החדש או "רגע חשוב" שלכם בשיעור הזה?</label>
@@ -1436,7 +1436,7 @@ footer {
 
 </div>
 
-<!-- 🤖 צומת העוזר המקורי -->
+<!-- 🤖 צומת העוזר המקורי exact match מהקובץ הראשוני -->
 <div class="bot-widget collapsed" id="botWidget" onclick="expandBot(event)">
     <div class="bot-header" onclick="toggleBot(event)">
         <span class="dot"></span> <span>NODE: DAN-GPT // ONLINE</span>
@@ -1466,7 +1466,7 @@ footer {
 </div>
 
 <footer>
-  session: מסכות רשת משנה (<span class="ltr-inline">/24</span> עד <span class="ltr-inline">/32</span>) // אקדמיית האחוואנים // CIDR & Bitwise ANDing // בהצלחה 💪
+  <span class="ltr-inline">session:</span> מסכות רשת משנה (<span class="ltr-inline">/24</span> עד <span class="ltr-inline">/32</span>) // אקדמיית האחוואנים // <span class="ltr-inline">CIDR & Bitwise ANDing</span> // בהצלחה 💪
 </footer>
 
 <script>
