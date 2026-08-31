@@ -470,7 +470,63 @@ header p.subtitle {
   font-weight: 800;
 }
 
-/* ============ QUIZ STYLES ============ */
+/* ============ QUIZ LAYOUT & STYLES ============ */
+.quiz-wrapper {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 25px;
+  align-items: start;
+  margin-top: 18px;
+}
+
+.quiz-cheat-sheet {
+  position: sticky;
+  top: 20px;
+  background: var(--card);
+  border: 2px solid var(--cyan);
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+
+.cheat-title {
+  font-family: 'Rubik', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--cyan);
+  margin: 0 0 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--panel-border);
+  padding-bottom: 8px;
+}
+
+.cheat-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+}
+
+.cheat-table th, .cheat-table td {
+  border: 1px solid var(--panel-border);
+  padding: 7px 4px;
+  text-align: center;
+}
+
+.cheat-table th {
+  background: var(--cyan-soft);
+  color: var(--cyan);
+  font-weight: 800;
+  font-size: 11px;
+}
+
+.quiz-main-content {
+  display: flex;
+  flex-direction: column;
+}
+
 .quiz-question {
   margin-bottom: 22px;
   padding: 18px;
@@ -837,6 +893,8 @@ footer {
 /* ============ MEDIA QUERIES ============ */
 @media (max-width: 900px) {
   .component-grid { grid-template-columns: 1fr; }
+  .quiz-wrapper { grid-template-columns: 1fr; }
+  .quiz-cheat-sheet { position: static; }
 }
 
 @media (max-width: 640px) {
@@ -1268,127 +1326,197 @@ footer {
     <div id="quiz" class="tab-content">
       <h3 class="comp-title">📝 מבדק ידע בכתובות <span class="ltr-inline">IP</span> - 10 תרגילים מטורללים במאסטרי <span class="ltr-inline">Subnetting</span></h3>
       <p style="font-weight: 600; color: var(--text-muted); margin-bottom: 20px;">
-        בחרו את התשובה הנכונה בכל תרגיל! לאחר הלחיצה תקבלו אינדיקציה מיידית והסבר מפורט.
+        בחרו את התשובה הנכונה בכל תרגיל! נעזרו בטבלת העזר מימין כדי לחשב במדויק.
       </p>
 
-      <!-- Q1 -->
-      <div class="quiz-question" id="q1">
-        <p class="q-title">תרגיל 1: כמה כתובות <span class="ltr-inline">IP</span> שמישות (<span class="ltr-inline">Usable Hosts</span>) מספקת מסכת רשת עם פרפיקס של <span class="ltr-inline">/28</span>?</p>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q1', 'בפרפיקס /28 נותרו 4 ביטים ל-Host. סה&quot;כ 16 כתובות, אך בניכוי 2 ל-Network ו-Broadcast מקבלים 14 שמישות!')">16 כתובות</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, true, 'q1', 'נכון מאוד! 2^4 - 2 = 14 כתובות IP שמישות!')">14 כתובות</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q1', '30 כתובות שמישות מתאימות לפרפיקס /27!')">30 כתובות</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q1', '62 כתובות שמישות מתאימות לפרפיקס /26!')">62 כתובות</button>
+      <div class="quiz-wrapper">
+        <!-- חלונית עזר ימנית לתלמידים -->
+        <div class="quiz-cheat-sheet">
+          <h4 class="cheat-title">📌 טבלת עזר: פרפיקסים <span class="ltr-inline">/25</span> עד <span class="ltr-inline">/32</span></h4>
+          <table class="cheat-table">
+            <thead>
+              <tr>
+                <th>פרפיקס</th>
+                <th>מסכת רשת (<span class="ltr-inline">Subnet Mask</span>)</th>
+                <th>קפיצה (גודל בלוק)</th>
+                <th>כתובות שמישות</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="mono"><span class="ltr-inline">/25</span></td>
+                <td class="mono"><span class="ltr-inline">255.255.255.128</span></td>
+                <td class="mono"><span class="ltr-inline">128</span></td>
+                <td class="mono"><span class="ltr-inline">126</span></td>
+              </tr>
+              <tr>
+                <td class="mono"><span class="ltr-inline">/26</span></td>
+                <td class="mono"><span class="ltr-inline">255.255.255.192</span></td>
+                <td class="mono"><span class="ltr-inline">64</span></td>
+                <td class="mono"><span class="ltr-inline">62</span></td>
+              </tr>
+              <tr>
+                <td class="mono"><span class="ltr-inline">/27</span></td>
+                <td class="mono"><span class="ltr-inline">255.255.255.224</span></td>
+                <td class="mono"><span class="ltr-inline">32</span></td>
+                <td class="mono"><span class="ltr-inline">30</span></td>
+              </tr>
+              <tr>
+                <td class="mono"><span class="ltr-inline">/28</span></td>
+                <td class="mono"><span class="ltr-inline">255.255.255.240</span></td>
+                <td class="mono"><span class="ltr-inline">16</span></td>
+                <td class="mono"><span class="ltr-inline">14</span></td>
+              </tr>
+              <tr>
+                <td class="mono"><span class="ltr-inline">/29</span></td>
+                <td class="mono"><span class="ltr-inline">255.255.255.248</span></td>
+                <td class="mono"><span class="ltr-inline">8</span></td>
+                <td class="mono"><span class="ltr-inline">6</span></td>
+              </tr>
+              <tr>
+                <td class="mono"><span class="ltr-inline">/30</span></td>
+                <td class="mono"><span class="ltr-inline">255.255.255.252</span></td>
+                <td class="mono"><span class="ltr-inline">4</span></td>
+                <td class="mono"><span class="ltr-inline">2</span></td>
+              </tr>
+              <tr>
+                <td class="mono"><span class="ltr-inline">/31</span></td>
+                <td class="mono"><span class="ltr-inline">255.255.255.254</span></td>
+                <td class="mono"><span class="ltr-inline">2</span></td>
+                <td class="mono"><span class="ltr-inline">2 (P2P)</span></td>
+              </tr>
+              <tr>
+                <td class="mono"><span class="ltr-inline">/32</span></td>
+                <td class="mono"><span class="ltr-inline">255.255.255.255</span></td>
+                <td class="mono"><span class="ltr-inline">1</span></td>
+                <td class="mono"><span class="ltr-inline">1 (Host)</span></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <div class="quiz-feedback"></div>
-      </div>
 
-      <!-- Q2 -->
-      <div class="quiz-question" id="q2">
-        <p class="q-title">תרגיל 2: מה מבצע כרטיס הרשת כדי להחליט אם לשלוח את הפקטה ישירות ליעד או ל-<span class="ltr-inline">Default Gateway</span>?</p>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkQuiz(this, true, 'q2', 'בול! כרטיס הרשת מבצע Bitwise AND בין ה-IP למסכה כדי לגלות את הרשת ולבחור בין ARP ישיר ל-Default Gateway.')">פועל באלגוריתם <span class="ltr-inline">ANDing</span> בינארי בין ה-<span class="ltr-inline">IP</span> למסכת הרשת</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q2', 'פינג (ICMP) אינו חלק ממנגנון הניתוב של כרטיס הרשת ברמת ה-L3!')">שולח פינג לראוטר ובודק את הזמן (<span class="ltr-inline">TTL</span>)</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q2', 'פורט 80 שייך לשכבת האפליקציה ולא לבדיקת סגמנט הרשת!')">בודק האם ל-<span class="ltr-inline">IP</span> של היעד יש פורט 80 פתוח</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q2', 'כתובת MAC מחושבת על ידי ARP ולא על פי DHCP!')">מחשב את כתובת ה-<span class="ltr-inline">MAC</span> לפי ה-<span class="ltr-inline">DHCP</span></button>
-        </div>
-        <div class="quiz-feedback"></div>
-      </div>
+        <!-- עמודת השאלות הראשיות -->
+        <div class="quiz-main-content">
+          <!-- Q1 -->
+          <div class="quiz-question" id="q1">
+            <p class="q-title">תרגיל 1: כמה כתובות <span class="ltr-inline">IP</span> שמישות (<span class="ltr-inline">Usable Hosts</span>) מספקת מסכת רשת עם פרפיקס של <span class="ltr-inline">/28</span>?</p>
+            <div class="quiz-options">
+              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q1', 'בפרפיקס /28 נותרו 4 ביטים ל-Host. סה&quot;כ 16 כתובות, אך בניכוי 2 ל-Network ו-Broadcast מקבלים 14 שמישות!')">16 כתובות</button>
+              <button class="quiz-opt" onclick="checkQuiz(this, true, 'q1', 'נכון מאוד! 2^4 - 2 = 14 כתובות IP שמישות!')">14 כתובות</button>
+              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q1', '30 כתובות שמישות מתאימות לפרפיקס /27!')">30 כתובות</button>
+              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q1', '62 כתובות שמישות מתאימות לפרפיקס /26!')">62 כתובות</button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
 
-      <!-- Q3 -->
-      <div class="quiz-question" id="q3">
-        <p class="q-title">תרגיל 3: איזה פרפיקס הוא האידיאלי והחסכוני ביותר לחיבור קווי ישר בין שני ראוטרים (<span class="ltr-inline">Point-to-Point</span>) לפי התקן הקיים?</p>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q3', 'פרפיקס /24 מבזבז 252 כתובות לחיבור בין שני ראוטרים בלבד!')"><span class="ltr-inline">/24</span></button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q3', 'פרפיקס /29 נותן 6 כתובות שמישות, מוגזם ל-2 ראוטרים!')"><span class="ltr-inline">/29</span></button>
-          <button class="quiz-opt" onclick="checkQuiz(this, true, 'q3', 'מדויק! /30 מעניק בדיוק 2 כתובות IP שמישות (2^2 - 2 = 2) עבור 2 ממשקי ראוטר!')"><span class="ltr-inline">/30</span></button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q3', 'פרפיקס /32 מגדיר host יחיד בלבד ולכן אינו מאפשר חיבור של שני ממשקים בנוי סגמנט!')"><span class="ltr-inline">/32</span></button>
-        </div>
-        <div class="quiz-feedback"></div>
-      </div>
+          <!-- Q2 -->
+          <div class="quiz-question" id="q2">
+            <p class="q-title">תרגיל 2: מה מבצע כרטיס הרשת כדי להחליט אם לשלוח את הפקטה ישירות ליעד או ל-<span class="ltr-inline">Default Gateway</span>?</p>
+            <div class="quiz-options">
+              <button class="quiz-opt" onclick="checkQuiz(this, true, 'q2', 'בול! כרטיס הרשת מבצע Bitwise AND בין ה-IP למסכה כדי לגלות את הרשת ולבחור בין ARP ישיר ל-Default Gateway.')">פועל באלגוריתם <span class="ltr-inline">ANDing</span> בינארי בין ה-<span class="ltr-inline">IP</span> למסכת הרשת</button>
+              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q2', 'פינג (ICMP) אינו חלק ממנגנון הניתוב של כרטיס הרשת ברמת ה-L3!')">שולח פינג לראוטר ובודק את הזמן (<span class="ltr-inline">TTL</span>)</button>
+              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q2', 'פורט 80 שייך לשכבת האפליקציה ולא לבדיקת סגמנט הרשת!')">בודק האם ל-<span class="ltr-inline">IP</span> של היעד יש פורט 80 פתוח</button>
+              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q2', 'כתובת MAC מחושבת על ידי ARP ולא על פי DHCP!')">מחשב את כתובת ה-<span class="ltr-inline">MAC</span> לפי ה-<span class="ltr-inline">DHCP</span></button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
 
-      <!-- Q4 -->
-      <div class="quiz-question" id="q4">
-        <p class="q-title">תרגיל 4: מהי כתובת ה-<span class="ltr-inline">Network</span> (הרשת) עבור הכתובת <span class="mono ltr-inline">192.168.10.77/26</span>?</p>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q4', '192.168.10.0 היא כתובת הרשת של הבלוק הראשון (0-63).')"><span class="ltr-inline">192.168.10.0</span></button>
-          <button class="quiz-opt" onclick="checkQuiz(this, true, 'q4', 'אלוף! בפרפיקס /26 הקפיצות הן של 64. הבלוקים הם: 0, 64, 128. המספר 77 נמצא בבלוק המתחיל ב-64!')"><span class="ltr-inline">192.168.10.64</span></button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q4', '192.168.10.127 היא כתובת ה-Broadcast של הבלוק השני (64-127).')"><span class="ltr-inline">192.168.10.127</span></button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q4', '192.168.10.128 היא הכתובת של הבלוק השלישי!')"><span class="ltr-inline">192.168.10.128</span></button>
-        </div>
-        <div class="quiz-feedback"></div>
-      </div>
+          <!-- Q3 -->
+          <div class="quiz-question" id="q3">
+            <p class="q-title">תרגיל 3: איזה פרפיקס הוא האידיאלי והחסכוני ביותר לחיבור קווי ישר בין שני ראוטרים (<span class="ltr-inline">Point-to-Point</span>) לפי התקן הקיים?</p>
+            <div class="quiz-options">
+              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q3', 'פרפיקס /24 מבזבז 252 כתובות לחיבור בין שני ראוטרים בלבד!')"><span class="ltr-inline">/24</span></button>
+              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q3', 'פרפיקס /29 נותן 6 כתובות שמישות, מוגזם ל-2 ראוטרים!')"><span class="ltr-inline">/29</span></button>
+              <button class="quiz-opt" onclick="checkQuiz(this, true, 'q3', 'מדויק! /30 מעניק בדיוק 2 כתובות IP שמישות (2^2 - 2 = 2) עבור 2 ממשקי ראוטר!')"><span class="ltr-inline">/30</span></button>
+              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q3', 'פרפיקס /32 מגדיר host יחיד בלבד ולכן אינו מאפשר חיבור של שני ממשקים בנוי סגמנט!')"><span class="ltr-inline">/32</span></button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
 
-      <!-- Q5 -->
-      <div class="quiz-question" id="q5">
-        <p class="q-title">תרגיל 5: מהי מסכת הרשת (<span class="ltr-inline">Subnet Mask</span>) העשרונית המקבילה לפרפיקס <span class="ltr-inline">CIDR</span> של <span class="ltr-inline">/27</span>?</p>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q5', '255.255.255.192 מציג 26 ביטים ברשת (/26).')"><span class="ltr-inline">255.255.255.192</span></button>
-          <button class="quiz-opt" onclick="checkQuiz(this, true, 'q5', 'תותח! 27 ביטים דולקים פירושם 128 + 64 + 32 = 224 באוקטט האחרון!')"><span class="ltr-inline">255.255.255.224</span></button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q5', '255.255.255.240 מציג 28 ביטים ברשת (/28).')"><span class="ltr-inline">255.255.255.240</span></button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q5', '255.255.255.248 מציג 29 ביטים ברשת (/29).')"><span class="ltr-inline">255.255.255.248</span></button>
-        </div>
-        <div class="quiz-feedback"></div>
-      </div>
+          <!-- Q4 -->
+          <div class="quiz-question" id="q4">
+            <p class="q-title">תרגיל 4: מהי כתובת ה-<span class="ltr-inline">Network</span> (הרשת) עבור הכתובת <span class="mono ltr-inline">192.168.10.77/26</span>?</p>
+            <div class="quiz-options">
+              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q4', '192.168.10.0 היא כתובת הרשת של הבלוק הראשון (0-63).')"><span class="ltr-inline">192.168.10.0</span></button>
+              <button class="quiz-opt" onclick="checkQuiz(this, true, 'q4', 'אלוף! בפרפיקס /26 הקפיצות הן של 64. הבלוקים הם: 0, 64, 128. המספר 77 נמצא בבלוק המתחיל ב-64!')"><span class="ltr-inline">192.168.10.64</span></button>
+              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q4', '192.168.10.127 היא כתובת ה-Broadcast של הבלוק השני (64-127).')"><span class="ltr-inline">192.168.10.127</span></button>
+              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q4', '192.168.10.128 היא הכתובת של הבלוק השלישי!')"><span class="ltr-inline">192.168.10.128</span></button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
 
-      <!-- Q6 -->
-      <div class="quiz-question" id="q6">
-        <p class="q-title">תרגיל 6: מהי כתובת ה-<span class="ltr-inline">Broadcast</span> של הרשת <span class="mono ltr-inline">10.0.0.32/29</span>?</p>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q6', '10.0.0.32 היא כתובת הרשת עצמה!')"><span class="ltr-inline">10.0.0.32</span></button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q6', '10.0.0.38 היא הכתובת השמישה האחרונה (Last Usable Host)!')"><span class="ltr-inline">10.0.0.38</span></button>
-          <button class="quiz-opt" onclick="checkQuiz(this, true, 'q6', 'פיצוץ! בפרפיקס /29 גודל הבלוק הוא 8 (קפיצות של 8). הרשת הבאה ב-40, לכן ה-Broadcast של הרשת הנוכחית הוא 39!')"><span class="ltr-inline">10.0.0.39</span></button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q6', '10.0.0.40 היא כתובת הרשת הבאה!')"><span class="ltr-inline">10.0.0.40</span></button>
-        </div>
-        <div class="quiz-feedback"></div>
-      </div>
+          <!-- Q5 -->
+          <div class="quiz-question" id="q5">
+            <p class="q-title">תרגיל 5: מהי מסכת הרשת (<span class="ltr-inline">Subnet Mask</span>) העשרונית המקבילה לפרפיקס <span class="ltr-inline">CIDR</span> של <span class="ltr-inline">/27</span>?</p>
+            <div class="quiz-options">
+              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q5', '255.255.255.192 מציג 26 ביטים ברשת (/26).')"><span class="ltr-inline">255.255.255.192</span></button>
+              <button class="quiz-opt" onclick="checkQuiz(this, true, 'q5', 'תותח! 27 ביטים דולקים פירושם 128 + 64 + 32 = 224 באוקטט האחרון!')"><span class="ltr-inline">255.255.255.224</span></button>
+              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q5', '255.255.255.240 מציג 28 ביטים ברשת (/28).')"><span class="ltr-inline">255.255.255.240</span></button>
+              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q5', '255.255.255.248 מציג 29 ביטים ברשת (/29).')"><span class="ltr-inline">255.255.255.248</span></button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
 
-      <!-- Q7 -->
-      <div class="quiz-question" id="q7">
-        <p class="q-title">תרגיל 7: לאיזה שימוש עיקרי מיועדת כתובת מסיכת רשת עם פרפיקס <span class="ltr-inline">/32</span>?</p>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q7', 'למחלקה בת 30 עובדים מתאים פרפיקס /27.')">לחלוקת כתובות למחלקה עם 30 מחשבים</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, true, 'q7', 'פגיעה בול! /32 מייצג Host יחיד (255.255.255.255) ומשמש להגדרת ממשקי Loopback או חוקי Firewall ממוקדים ל-IP מסוים.')">עבור ממשק <span class="ltr-inline">Loopback</span> או חוק <span class="ltr-inline">Firewall</span> ממוקד ל-<span class="ltr-inline">IP</span> יחיד</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q7', 'עבור שני ראוטרים נדרש פרפיקס /30.')">לחיבור שני ראוטרים ברשת <span class="ltr-inline">WAN</span></button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q7', 'הקטנת שידורי Broadcast מבוצעת על ידי Subnetting רגיל (/25 עד /29).')">להגדלת כמות שידורי ה-<span class="ltr-inline">Broadcast</span> ברשת</button>
-        </div>
-        <div class="quiz-feedback"></div>
-      </div>
+          <!-- Q6 -->
+          <div class="quiz-question" id="q6">
+            <p class="q-title">תרגיל 6: מהי כתובת ה-<span class="ltr-inline">Broadcast</span> של הרשת <span class="mono ltr-inline">10.0.0.32/29</span>?</p>
+            <div class="quiz-options">
+              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q6', '10.0.0.32 היא כתובת הרשת עצמה!')"><span class="ltr-inline">10.0.0.32</span></button>
+              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q6', '10.0.0.38 היא הכתובת השמישה האחרונה (Last Usable Host)!')"><span class="ltr-inline">10.0.0.38</span></button>
+              <button class="quiz-opt" onclick="checkQuiz(this, true, 'q6', 'פיצוץ! בפרפיקס /29 גודל הבלוק הוא 8 (קפיצות של 8). הרשת הבאה ב-40, לכן ה-Broadcast של הרשת הנוכחית הוא 39!')"><span class="ltr-inline">10.0.0.39</span></button>
+              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q6', '10.0.0.40 היא כתובת הרשת הבאה!')"><span class="ltr-inline">10.0.0.40</span></button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
 
-      <!-- Q8 -->
-      <div class="quiz-question" id="q8">
-        <p class="q-title">תרגיל 8: מחשב מקור מוגדר עם <span class="mono ltr-inline">172.16.5.10/25</span>. הוא מעוניין לשלוח פקטה לכתובת <span class="mono ltr-inline">172.16.5.130</span>. לאן תישלח הפקטה?</p>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q8', 'שים לב! ב- /25 הרשת הראשונה היא 0-127 והשנייה היא 128-255. היעד נמצא ברשת מרוחקת!')">ישירות ליעד באמצעות בקשת <span class="ltr-inline">ARP</span> מקומית</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, true, 'q8', 'גאוני! /25 חוצה את הרשת ב-128. מחשב המקור ברשת 0 והיעד ברשת 128. היות והן רשתות שונות, הפקטה תישלח ל-Default Gateway!')">ל-<span class="ltr-inline">Default Gateway</span> (הראוטר) מכיוון שהיעד ברשת מרוחקת</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q8', 'הפקטה תצא, אך תישלח דרך הראוטר ולא תישמט מראש!')">הפקטה תישרף מראש בגלל שאינה תקינה</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q8', 'שידור Broadcast מופנה ל-255, לא ליעד ספציפי בראוטינג!')">המחשב ישלח את הפקטה ב-<span class="ltr-inline">Broadcast</span> לכל הרשת</button>
-        </div>
-        <div class="quiz-feedback"></div>
-      </div>
+          <!-- Q7 -->
+          <div class="quiz-question" id="q7">
+            <p class="q-title">תרגיל 7: לאיזה שימוש עיקרי מיועדת כתובת מסיכת רשת עם פרפיקס <span class="ltr-inline">/32</span>?</p>
+            <div class="quiz-options">
+              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q7', 'למחלקה בת 30 עובדים מתאים פרפיקס /27.')">לחלוקת כתובות למחלקה עם 30 מחשבים</button>
+              <button class="quiz-opt" onclick="checkQuiz(this, true, 'q7', 'פגיעה בול! /32 מייצג Host יחיד (255.255.255.255) ומשמש להגדרת ממשקי Loopback או חוקי Firewall ממוקדים ל-IP מסוים.')">עבור ממשק <span class="ltr-inline">Loopback</span> או חוק <span class="ltr-inline">Firewall</span> ממוקד ל-<span class="ltr-inline">IP</span> יחיד</button>
+              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q7', 'עבור שני ראוטרים נדרש פרפיקס /30.')">לחיבור שני ראוטרים ברשת <span class="ltr-inline">WAN</span></button>
+              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q7', 'הקטנת שידורי Broadcast מבוצעת על ידי Subnetting רגיל (/25 עד /29).')">להגדלת כמות שידורי ה-<span class="ltr-inline">Broadcast</span> ברשת</button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
 
-      <!-- Q9 -->
-      <div class="quiz-question" id="q9">
-        <p class="q-title">תרגיל 9: אם הושאלו 3 ביטים מתוך האוקטט האחרון לטובת הרשת (בנוסף ל-<span class="ltr-inline">/24</span> בסיסי), מהו הפרפיקס החדש ומהו גודל הבלוק (קפיצות)?</p>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q9', '24 + 3 = 27! אבל קפיצות של 16 מתאימות ל-4 ביטים מושאלים.')">פרפיקס <span class="ltr-inline">/27</span>, קפיצות של 16</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, true, 'q9', 'מצוין! 24 + 3 = פרפיקס /27. ערך הביט השלישי באוקטט הוא 32 (128, 64, 32), ולכן הקפיצות הן בבלוקים של 32!')">פרפיקס <span class="ltr-inline">/27</span>, קפיצות של 32</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q9', 'הוספת 3 ביטים ל-24 מביאה ל-27 ולא ל-26!')">פרפיקס <span class="ltr-inline">/26</span>, קפיצות של 64</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q9', 'פרפיקס /28 מתקבל מהשאלת 4 ביטים!')">פרפיקס <span class="ltr-inline">/28</span>, קפיצות של 8</button>
-        </div>
-        <div class="quiz-feedback"></div>
-      </div>
+          <!-- Q8 -->
+          <div class="quiz-question" id="q8">
+            <p class="q-title">תרגיל 8: מחשב מקור מוגדר עם <span class="mono ltr-inline">172.16.5.10/25</span>. הוא מעוניין לשלוח פקטה לכתובת <span class="mono ltr-inline">172.16.5.130</span>. לאן תישלח הפקטה?</p>
+            <div class="quiz-options">
+              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q8', 'שים לב! ב- /25 הרשת הראשונה היא 0-127 והשנייה היא 128-255. היעד נמצא ברשת מרוחקת!')">ישירות ליעד באמצעות בקשת <span class="ltr-inline">ARP</span> מקומית</button>
+              <button class="quiz-opt" onclick="checkQuiz(this, true, 'q8', 'גאוני! /25 חוצה את הרשת ב-128. מחשב המקור ברשת 0 והיעד ברשת 128. היות והן רשתות שונות, הפקטה תישלח ל-Default Gateway!')">ל-<span class="ltr-inline">Default Gateway</span> (הראוטר) מכיוון שהיעד ברשת מרוחקת</button>
+              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q8', 'הפקטה תצא, אך תישלח דרך הראוטר ולא תישמט מראש!')">הפקטה תישרף מראש בגלל שאינה תקינה</button>
+              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q8', 'שידור Broadcast מופנה ל-255, לא ליעד ספציפי בראוטינג!')">המחשב ישלח את הפקטה ב-<span class="ltr-inline">Broadcast</span> לכל הרשת</button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
 
-      <!-- Q10 -->
-      <div class="quiz-question" id="q10">
-        <p class="q-title">תרגיל 10: ארגון זקוק ל-50 כתובות <span class="ltr-inline">IP</span> שמישות עבור סגמנט שרתים. מהו הפרפיקס הקטן והחסכוני ביותר שיספק מענה לדרישה זו?</p>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q10', 'פרפיקס /27 מעניק 30 כתובות שמישות בלבד - לא מספיק ל-50!')"><span class="ltr-inline">/27</span> (מעניק 30 כתובות שמישות)</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, true, 'q10', 'שיחקת אותה! /26 מעניק 62 כתובות IP שמישות (2^6 - 2 = 62), שזה הפרפיקס הקטן ביותר שמכיל 50 כתובות!')"><span class="ltr-inline">/26</span> (מעניק 62 כתובות שמישות)</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q10', 'פרפיקס /25 נותן 126 כתובות, שזה עונה על הדרישה אך אינו החסכוני ביותר!')"><span class="ltr-inline">/25</span> (מעניק 126 כתובות שמישות)</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q10', 'פרפיקס /24 מעניק 254 כתובות ומבזבז כתובות רבות!')"><span class="ltr-inline">/24</span> (מעניק 254 כתובות שמישות)</button>
+          <!-- Q9 -->
+          <div class="quiz-question" id="q9">
+            <p class="q-title">תרגיל 9: אם הושאלו 3 ביטים מתוך האוקטט האחרון לטובת הרשת (בנוסף ל-<span class="ltr-inline">/24</span> בסיסי), מהו הפרפיקס החדש ומהו גודל הבלוק (קפיצות)?</p>
+            <div class="quiz-options">
+              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q9', '24 + 3 = 27! אבל קפיצות של 16 מתאימות ל-4 ביטים מושאלים.')">פרפיקס <span class="ltr-inline">/27</span>, קפיצות של 16</button>
+              <button class="quiz-opt" onclick="checkQuiz(this, true, 'q9', 'מצוין! 24 + 3 = פרפיקס /27. ערך הביט השלישי באוקטט הוא 32 (128, 64, 32), ולכן הקפיצות הן בבלוקים של 32!')">פרפיקס <span class="ltr-inline">/27</span>, קפיצות של 32</button>
+              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q9', 'הוספת 3 ביטים ל-24 מביאה ל-27 ולא ל-26!')">פרפיקס <span class="ltr-inline">/26</span>, קפיצות של 64</button>
+              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q9', 'פרפיקס /28 מתקבל מהשאלת 4 ביטים!')">פרפיקס <span class="ltr-inline">/28</span>, קפיצות של 8</button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <!-- Q10 -->
+          <div class="quiz-question" id="q10">
+            <p class="q-title">תרגיל 10: ארגון זקוק ל-50 כתובות <span class="ltr-inline">IP</span> שמישות עבור סגמנט שרתים. מהו הפרפיקס הקטן והחסכוני ביותר שיספק מענה לדרישה זו?</p>
+            <div class="quiz-options">
+              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q10', 'פרפיקס /27 מעניק 30 כתובות שמישות בלבד - לא מספיק ל-50!')"><span class="ltr-inline">/27</span> (מעניק 30 כתובות שמישות)</button>
+              <button class="quiz-opt" onclick="checkQuiz(this, true, 'q10', 'שיחקת אותה! /26 מעניק 62 כתובות IP שמישות (2^6 - 2 = 62), שזה הפרפיקס הקטן ביותר שמכיל 50 כתובות!')"><span class="ltr-inline">/26</span> (מעניק 62 כתובות שמישות)</button>
+              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q10', 'פרפיקס /25 נותן 126 כתובות, שזה עונה על הדרישה אך אינו החסכוני ביותר!')"><span class="ltr-inline">/25</span> (מעניק 126 כתובות שמישות)</button>
+              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q10', 'פרפיקס /24 מעניק 254 כתובות ומבזבז כתובות רבות!')"><span class="ltr-inline">/24</span> (מעניק 254 כתובות שמישות)</button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
         </div>
-        <div class="quiz-feedback"></div>
       </div>
 
       <!-- חלונית מורה -->
@@ -1403,7 +1531,7 @@ footer {
             <li>תרגיל 4: <span><span class="ltr-inline">192.168.10.64</span></span></li>
             <li>תרגיל 5: <span><span class="ltr-inline">255.255.255.224</span></span></li>
             <li>תרגיל 6: <span><span class="ltr-inline">10.0.0.39</span></span></li>
-            <li>תרגיל 7: <span>עפור ממשק <span class="ltr-inline">Loopback</span> או חוק <span class="ltr-inline">Firewall</span> ממוקד ל-<span class="ltr-inline">IP</span> יחיד</span></li>
+            <li>תרגיל 7: <span>עבור ממשק <span class="ltr-inline">Loopback</span> או חוק <span class="ltr-inline">Firewall</span> ממוקד ל-<span class="ltr-inline">IP</span> יחיד</span></li>
             <li>תרגיל 8: <span>ל-<span class="ltr-inline">Default Gateway</span> (הראוטר) מכיוון שהיעד ברשת מרוחקת</span></li>
             <li>תרגיל 9: <span>פרפיקס <span class="ltr-inline">/27</span>, קפיצות של 32</span></li>
             <li>תרגיל 10: <span><span class="ltr-inline">/26</span> (מעניק 62 כתובות שמישות)</span></li>
