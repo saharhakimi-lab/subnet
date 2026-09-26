@@ -62,24 +62,29 @@ body {
   color: var(--text);
   transition: background-color 0.3s ease, color 0.3s ease;
   padding-bottom: 60px;
-  font-size: 18px; /* הגדלת פונט כללית */
+  font-size: 18px;
 }
 
-/* מסגור מונחים באנגלית */
+/* מסגור מונחים באנגלית - מותאם מדויק לגודל המושג */
 .framed-en {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
   direction: ltr !important;
   unicode-bidi: isolate !important;
   text-align: left !important;
   border: 1.5px solid var(--cyan);
   background-color: var(--cyan-soft);
   color: var(--cyan);
-  padding: 2px 8px;
+  padding: 1px 7px;
   margin: 0 3px;
   border-radius: 6px;
   font-family: 'JetBrains Mono', monospace;
   font-weight: 700;
-  font-size: 0.95em;
+  font-size: 0.9em;
+  line-height: 1.2;
+  box-sizing: border-box;
 }
 
 .ltr-inline {
@@ -314,7 +319,7 @@ header p.subtitle {
 
 .tab-btn {
   font-family: 'Rubik', sans-serif;
-  font-size: 18px; /* הגדלת פונט הטאבים */
+  font-size: 18px;
   font-weight: 800;
   padding: 12px 20px;
   border: 1px solid var(--panel-border);
