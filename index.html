@@ -444,31 +444,49 @@ header p.subtitle {
   color: var(--text);
 }
 
+/* ============ SPEC GRID REMODEL ============ */
 .spec-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .spec-card {
   background: var(--card);
   border: 1px solid var(--panel-border);
   border-radius: 10px;
-  padding: 14px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.spec-card .card-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
 }
 
 .spec-card span {
-  display: block;
+  display: inline-flex;
+  align-items: center;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
+  font-size: 15px;
   color: var(--text-muted);
-  margin-bottom: 6px;
 }
 
 .spec-card b {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 800;
   color: var(--text);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 /* ============ BINARY & ANDing TABLES ============ */
@@ -1019,10 +1037,22 @@ footer {
           <div class="section-box" style="border-color: var(--green);">
             <h4 style="color: var(--green);">🛠️ יתרונות מרכזיים של חלוקה לרשתות (<span class="framed-en">Subnetting</span>)</h4>
             <div class="spec-grid">
-              <div class="spec-card"><span>חיסכון בכתובות</span><b>מניעת בזבוז <span class="framed-en">IP</span> בעולם</b></div>
-              <div class="spec-card"><span>צמצום שידורים</span><b>הקטנת <span class="framed-en">Broadcast Domains</span></b></div>
-              <div class="spec-card"><span>שיפור אבטחה</span><b>בידוד מחלקות ו-<span class="framed-en">VLANs</span></b></div>
-              <div class="spec-card"><span>ניהול וביצועים</span><b>הקטנת עומסים על הסוויטש</b></div>
+              <div class="spec-card">
+                <div class="card-head"><span>חיסכון בכתובות</span></div>
+                <b>מניעת בזבוז <span class="framed-en">IP</span> בעולם</b>
+              </div>
+              <div class="spec-card">
+                <div class="card-head"><span>צמצום שידורים</span></div>
+                <b>הקטנת <span class="framed-en">Broadcast Domains</span></b>
+              </div>
+              <div class="spec-card">
+                <div class="card-head"><span>שיפור אבטחה</span></div>
+                <b>בידוד מחלקות ו-<span class="framed-en">VLANs</span></b>
+              </div>
+              <div class="spec-card">
+                <div class="card-head"><span>ניהול וביצועים</span></div>
+                <b>הקטנת עומסים על הסוויטש</b>
+              </div>
             </div>
           </div>
 
@@ -1258,9 +1288,32 @@ footer {
           <div class="section-box" style="border-color: var(--green);">
             <h4 style="color: var(--green);">🛠️ פירוט פרפיקסים ונתונים טכניים</h4>
             <div class="spec-grid">
-              <div class="spec-card"><span><span class="framed-en">/24</span> (<span class="framed-en">255.255.255.0</span>)</span><b>254 <span class="framed-en">hosts</span> שמישים | קפיצות של 256</b></div>
-              <div class="spec-card"><span><span class="framed-en">/25</span> (<span class="framed-en">255.255.255.128</span>)</span><b>126 <span class="framed-en">hosts</span> שמישים | 2 תתי-רשתות</b></div>
-              <div class="spec-card"><span><span class="framed-en">/26</span> (<span class="framed-en">255.255.255.192</span>)</span><b>62 <span class="framed-en">hosts</span> שמישים | 4 תתי-רשתות</b></div>
+              <div class="spec-card">
+                <div class="card-head">
+                  <span class="framed-en">/24</span>
+                  <span>-</span>
+                  <span class="framed-en">255.255.255.0</span>
+                </div>
+                <b>254 <span class="framed-en">hosts</span> שמישים | קפיצות של 256</b>
+              </div>
+              
+              <div class="spec-card">
+                <div class="card-head">
+                  <span class="framed-en">/25</span>
+                  <span>-</span>
+                  <span class="framed-en">255.255.255.128</span>
+                </div>
+                <b>126 <span class="framed-en">hosts</span> שמישים | 2 תתי-רשתות</b>
+              </div>
+              
+              <div class="spec-card">
+                <div class="card-head">
+                  <span class="framed-en">/26</span>
+                  <span>-</span>
+                  <span class="framed-en">255.255.255.192</span>
+                </div>
+                <b>62 <span class="framed-en">hosts</span> שמישים | 4 תתי-רשתות</b>
+              </div>
             </div>
           </div>
 
@@ -1294,9 +1347,32 @@ footer {
           <div class="section-box" style="border-color: var(--green);">
             <h4 style="color: var(--green);">🛠️ פירוט פרפיקסים ונתונים טכניים</h4>
             <div class="spec-grid">
-              <div class="spec-card"><span><span class="framed-en">/27</span> (<span class="framed-en">255.255.255.224</span>)</span><b>30 <span class="framed-en">hosts</span> שמישים | קפיצות של 32</b></div>
-              <div class="spec-card"><span><span class="framed-en">/28</span> (<span class="framed-en">255.255.255.240</span>)</span><b>14 <span class="framed-en">hosts</span> שמישים | קפיצות של 16</b></div>
-              <div class="spec-card"><span><span class="framed-en">/29</span> (<span class="framed-en">255.255.255.248</span>)</span><b>6 <span class="framed-en">hosts</span> שמישים | קפיצות של 8</b></div>
+              <div class="spec-card">
+                <div class="card-head">
+                  <span class="framed-en">/27</span>
+                  <span>-</span>
+                  <span class="framed-en">255.255.255.224</span>
+                </div>
+                <b>30 <span class="framed-en">hosts</span> שמישים | קפיצות של 32</b>
+              </div>
+
+              <div class="spec-card">
+                <div class="card-head">
+                  <span class="framed-en">/28</span>
+                  <span>-</span>
+                  <span class="framed-en">255.255.255.240</span>
+                </div>
+                <b>14 <span class="framed-en">hosts</span> שמישים | קפיצות של 16</b>
+              </div>
+
+              <div class="spec-card">
+                <div class="card-head">
+                  <span class="framed-en">/29</span>
+                  <span>-</span>
+                  <span class="framed-en">255.255.255.248</span>
+                </div>
+                <b>6 <span class="framed-en">hosts</span> שמישים | קפיצות של 8</b>
+              </div>
             </div>
           </div>
 
@@ -1324,15 +1400,38 @@ footer {
           
           <div class="section-box">
             <h4>⚡ אופן פעולה והבדלים</h4>
-            <p>כאן אנחנו מגיעים לטופ של היעילות! <span class="framed-en">/30</span> משמש חיבור נקודה-לנקודה (<span class="framed-en">Point-to-Point</span>) בין שני ראוטרים בלבד. <span class="framed-en">/31</span> מוגדר בתקנים חדישים (<span class="framed-en">RFC 3021</span>) לחיבור נקודתי ללא <span class="framed-en">Broadcast</span>. <span class="framed-en">/32</span> מייצג כתובת של הופעה אחת בלבד (<span class="framed-en">Host Single</span>) – בשימוש נרחב עבור ממשקי <span class="framed-en">Loopback</span> או חוקי <span class="framed-en">Firewall</span> ממוקדים!</p>
+            <p>כאן אנחנו מגיעים לטופ של היעילות! <span class="framed-en">/30</span> משמש חיבור נקודה-לנקודה - <span class="framed-en">Point-to-Point</span> בין שני ראוטרים בלבד. <span class="framed-en">/31</span> מוגדר בתקנים חדישים - <span class="framed-en">RFC 3021</span> לחיבור נקודתי ללא <span class="framed-en">Broadcast</span>. <span class="framed-en">/32</span> מייצג כתובת של הופעה אחת בלבד - <span class="framed-en">Host Single</span> – בשימוש נרחב עבור ממשקי <span class="framed-en">Loopback</span> או חוקי <span class="framed-en">Firewall</span> ממוקדים!</p>
           </div>
 
           <div class="section-box" style="border-color: var(--green);">
             <h4 style="color: var(--green);">🛠️ פירוט פרפיקסים ונתונים טכניים</h4>
             <div class="spec-grid">
-              <div class="spec-card"><span><span class="framed-en">/30</span> (<span class="framed-en">255.255.255.252</span>)</span><b>2 <span class="framed-en">hosts</span> שמישים בלבד | קלאסי לראוטרים</b></div>
-              <div class="spec-card"><span><span class="framed-en">/31</span> (<span class="framed-en">255.255.255.254</span>)</span><b>2 כתובות (<span class="framed-en">Point-to-Point</span> ללא <span class="framed-en">BC</span>)</b></div>
-              <div class="spec-card"><span><span class="framed-en">/32</span> (<span class="framed-en">255.255.255.255</span>)</span><b>1 <span class="framed-en">host</span> בלבד | <span class="framed-en">Loopback & FW Rules</span></b></div>
+              <div class="spec-card">
+                <div class="card-head">
+                  <span class="framed-en">/30</span>
+                  <span>-</span>
+                  <span class="framed-en">255.255.255.252</span>
+                </div>
+                <b>2 <span class="framed-en">hosts</span> שמישים בלבד | קלאסי לראוטרים</b>
+              </div>
+
+              <div class="spec-card">
+                <div class="card-head">
+                  <span class="framed-en">/31</span>
+                  <span>-</span>
+                  <span class="framed-en">255.255.255.254</span>
+                </div>
+                <b>2 כתובות - <span class="framed-en">Point-to-Point</span> ללא <span class="framed-en">BC</span></b>
+              </div>
+
+              <div class="spec-card">
+                <div class="card-head">
+                  <span class="framed-en">/32</span>
+                  <span>-</span>
+                  <span class="framed-en">255.255.255.255</span>
+                </div>
+                <b>1 <span class="framed-en">host</span> בלבד | <span class="framed-en">Loopback & FW Rules</span></b>
+              </div>
             </div>
           </div>
 
