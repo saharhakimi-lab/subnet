@@ -274,24 +274,13 @@ header p.subtitle {
 
 .panel-head {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: 14px;
   flex-wrap: wrap;
   margin-bottom: 20px;
   padding-bottom: 14px;
   border-bottom: 1px dashed var(--panel-border);
-}
-
-.panel-head h2 {
-  color: var(--text);
-  font-family: 'Rubik', 'Assistant', sans-serif;
-  font-size: 26px;
-  font-weight: 800;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 10px;
 }
 
 .panel-tag {
@@ -307,30 +296,31 @@ header p.subtitle {
   white-space: nowrap;
 }
 
-/* ============ TABS ============ */
+/* ============ TABS MODIFIED ============ */
 .tabs-nav {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
   margin-bottom: 25px;
   border-bottom: 2px solid var(--panel-border);
   padding-bottom: 12px;
+  align-items: center;
 }
 
 .tab-btn {
   font-family: 'Rubik', sans-serif;
-  font-size: 18px;
-  font-weight: 800;
-  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 6px 12px;
   border: 1px solid var(--panel-border);
-  border-radius: 12px;
+  border-radius: 8px;
   background: var(--bg);
   color: var(--text-muted);
   cursor: pointer;
   transition: all 0.2s ease;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
 }
 
 .tab-btn:hover {
@@ -339,11 +329,43 @@ header p.subtitle {
   border-color: var(--cyan);
 }
 
+/* עיצוב כפתור טאב מודגש/פעיל */
 .tab-btn.active {
-  background: linear-gradient(120deg, #dc2626, #b91c1c);
-  color: #ffffff;
-  border-color: transparent;
-  box-shadow: 0 6px 16px rgba(185, 28, 28, 0.35);
+  background: linear-gradient(120deg, #dc2626, #b91c1c) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  box-shadow: 0 4px 12px rgba(185, 28, 28, 0.35);
+  font-weight: 800;
+}
+
+/* מסגור ייחודי לטאב הראשון */
+.tab-btn.first-tab-framed {
+  border: 2px solid var(--cyan);
+}
+
+/* Dropdown לבחירת גודל רשתות בטאב 3 */
+.tab-select-wrapper {
+  display: inline-flex;
+  align-items: center;
+}
+
+.tab-select {
+  font-family: 'Rubik', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 6px 10px;
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text-muted);
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.tab-select:hover, .tab-select:focus {
+  border-color: var(--cyan);
+  color: var(--cyan);
 }
 
 .tab-content {
@@ -942,7 +964,7 @@ footer {
   .darkBtn { top: 12px; left: 12px; width: 40px; height: 40px; font-size: 16px; }
   .panel { padding: 18px 12px; }
   .hero-image img { width: 100px; height: 100px; }
-  .tab-btn { width: 100%; justify-content: center; font-size: 16px; }
+  .tab-btn { width: 100%; justify-content: center; font-size: 14px; }
   .bot-avatar { width: 68px; height: 68px; }
   .bot-widget:not(.collapsed) {
     width: calc(100vw - 44px);
@@ -998,23 +1020,35 @@ footer {
 
   <div class="panel">
     <div class="panel-head">
-      <h2>  מעבדת <span class="framed-en">Subnetting</span> - בחרו פרפיקס/נושא ללמידה</h2>
       <span class="panel-tag mono framed-en">SUBNET_MODULE_V4.0</span>
     </div>
 
-    <!-- סרגל הטאבים המורחב (ללא אייקונים) -->
+    <!-- סרגל הטאבים: הטאב הראשון מודגש כברירת מחדל עם המחלקה active -->
     <div class="tabs-nav">
-      <button class="tab-btn active" onclick="openTab(event, 'intro')">חשיבות המסכה</button>
-      <button class="tab-btn" onclick="openTab(event, 'binary_deep')">מבנה הביטים <span class="framed-en">32 Bits</span></button>
-      <button class="tab-btn" onclick="openTab(event, 'anding_mech')">אלגוריתם ה-<span class="framed-en">ANDing</span> והראוטר</button>
-      <button class="tab-btn" onclick="openTab(event, 'sub24_26')"><span class="framed-en">/24</span> עד <span class="framed-en">/26</span> גדולות</button>
-      <button class="tab-btn" onclick="openTab(event, 'sub27_29')"><span class="framed-en">/27</span> עד <span class="framed-en">/29</span> בינוניות</button>
-      <button class="tab-btn" onclick="openTab(event, 'sub30_32')"><span class="framed-en">/30</span> עד <span class="framed-en">/32</span> נקודתיות</button>
-      <button class="tab-btn" onclick="openTab(event, 'quiz')">מבדק ידע בכתובות <span class="framed-en">IP</span></button>
-      <button class="tab-btn" onclick="openTab(event, 'reflection')">עושים סדר במחשבות</button>
+      <!-- טאב 1: מודגש כברירת מחדל -->
+      <button class="tab-btn first-tab-framed active" onclick="openTab(event, 'intro')">חשיבות subnet mask</button>
+      
+      <!-- טאב 2 -->
+      <button class="tab-btn" onclick="openTab(event, 'anding_mech')">אלגוריתם AND</button>
+      
+      <!-- טאב 3: בחירת גודל רשת ב-Dropdown -->
+      <div class="tab-select-wrapper">
+        <button class="tab-btn" id="subnetsTabBtn" onclick="openTab(event, getSelectedSubnetTab())">גודל רשת ▾</button>
+        <select class="tab-select" id="subnetSelect" onchange="switchSubnetCategory(this.value)">
+          <option value="sub24_26">רשתות גדולות (/24 - /26)</option>
+          <option value="sub27_29">רשתות בינוניות (/27 - /29)</option>
+          <option value="sub30_32">רשתות קטנות/נקודתיות (/30 - /32)</option>
+        </select>
+      </div>
+
+      <!-- טאב 4 -->
+      <button class="tab-btn" onclick="openTab(event, 'quiz')">מבדק ידע בכתובות IP</button>
+      
+      <!-- טאב 5 -->
+      <button class="tab-btn" onclick="openTab(event, 'reflection')">רפלקציה</button>
     </div>
 
-    <!-- TAB 1: מבוא וחשיבות -->
+    <!-- TAB 1: חשיבות subnet mask -->
     <div id="intro" class="tab-content active">
       <div class="component-grid">
         <div class="comp-media">
@@ -1064,134 +1098,7 @@ footer {
       </div>
     </div>
 
-    <!-- TAB 2: BINARY & BITS DEEP DIVE -->
-    <div id="binary_deep" class="tab-content">
-      <div class="component-grid">
-        <div class="comp-media">
-          <img class="comp-img" src="https://lh3.googleusercontent.com/d/1ytfgyT1ELCKV1hAZrMw6Ohy0veK5VWjU" alt="Binary Math">
-          <div class="meta-box">
-            <div class="meta-item"><span class="meta-label">סה"כ ביטים:</span><span class="meta-val"><span class="framed-en">32 Bits</span></span></div>
-            <div class="meta-item"><span class="meta-label">חלוקה:</span><span class="meta-val">4 אוקטטים <span class="framed-en">8 Bits</span></span></div>
-            <div class="meta-item"><span class="meta-label">ביט ברשת 1:</span><span class="meta-val"><span class="framed-en">Network Bit</span></span></div>
-            <div class="meta-item"><span class="meta-label">ביט במארח 0:</span><span class="meta-val"><span class="framed-en">Host Bit</span></span></div>
-          </div>
-        </div>
-        <div class="comp-details">
-          <h3 class="comp-title"> צלילה לעומק הביטים <span class="framed-en">32-Bit Representation</span></h3>
-          
-          <div class="section-box">
-            <h4>  איך המחשב רואה את מסכת הרשת?</h4>
-            <p>עבור בני אדם, מסכת רשת נראית כמו <span class="mono framed-en">255.255.255.192</span>. אבל כרטיס הרשת של המחשב מבין רק בינארית! במסכת רשת, כל הביטים של הרשת חייבים להיות 1 ברצף, וכל הביטים של המארח חייבים להיות 0 ברצף!</p>
-          </div>
-
-          <div class="section-box" style="border-color: var(--cyan);">
-            <h4>  ייצוג בינארי מדויק של פרפיקסים <span class="framed-en">/24</span> עד <span class="framed-en">/32</span></h4>
-            <p style="font-size: 16px; margin-bottom: 10px;">ביטי הרשת 1-ים מסומנים בכחול, וביטי המארח 0-ים מסומנים בכתום. שימו לב לייצוג המלא והרציף משמאל לימין:</p>
-            <table class="binary-table">
-              <thead>
-                <tr>
-                  <th>פרפיקס <span class="framed-en">CIDR</span></th>
-                  <th>ייצוג עשרוני</th>
-                  <th>ייצוג בינארי מלא 32 הביטים</th>
-                  <th>ערך באוקטט ה-4</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="mono"><span class="framed-en">/24</span></td>
-                  <td class="mono"><span class="framed-en">255.255.255.0</span></td>
-                  <td class="mono"><span class="ltr-inline"><span style="color:var(--cyan); font-weight:800;">11111111.11111111.11111111.</span><span style="color:var(--amber); font-weight:800;">00000000</span></span></td>
-                  <td class="mono"><span class="framed-en">00000000 0</span></td>
-                </tr>
-                <tr>
-                  <td class="mono"><span class="framed-en">/25</span></td>
-                  <td class="mono"><span class="framed-en">255.255.255.128</span></td>
-                  <td class="mono"><span class="ltr-inline"><span style="color:var(--cyan); font-weight:800;">11111111.11111111.11111111.1</span><span style="color:var(--amber); font-weight:800;">0000000</span></span></td>
-                  <td class="mono"><span class="framed-en">10000000 128</span></td>
-                </tr>
-                <tr>
-                  <td class="mono"><span class="framed-en">/26</span></td>
-                  <td class="mono"><span class="framed-en">255.255.255.192</span></td>
-                  <td class="mono"><span class="ltr-inline"><span style="color:var(--cyan); font-weight:800;">11111111.11111111.11111111.11</span><span style="color:var(--amber); font-weight:800;">000000</span></span></td>
-                  <td class="mono"><span class="framed-en">11000000 192</span></td>
-                </tr>
-                <tr>
-                  <td class="mono"><span class="framed-en">/27</span></td>
-                  <td class="mono"><span class="framed-en">255.255.255.224</span></td>
-                  <td class="mono"><span class="ltr-inline"><span style="color:var(--cyan); font-weight:800;">11111111.11111111.11111111.111</span><span style="color:var(--amber); font-weight:800;">00000</span></span></td>
-                  <td class="mono"><span class="framed-en">11100000 224</span></td>
-                </tr>
-                <tr>
-                  <td class="mono"><span class="framed-en">/28</span></td>
-                  <td class="mono"><span class="framed-en">255.255.255.240</span></td>
-                  <td class="mono"><span class="ltr-inline"><span style="color:var(--cyan); font-weight:800;">11111111.11111111.11111111.1111</span><span style="color:var(--amber); font-weight:800;">0000</span></span></td>
-                  <td class="mono"><span class="framed-en">11110000 240</span></td>
-                </tr>
-                <tr>
-                  <td class="mono"><span class="framed-en">/29</span></td>
-                  <td class="mono"><span class="framed-en">255.255.255.248</span></td>
-                  <td class="mono"><span class="ltr-inline"><span style="color:var(--cyan); font-weight:800;">11111111.11111111.11111111.11111</span><span style="color:var(--amber); font-weight:800;">000</span></span></td>
-                  <td class="mono"><span class="framed-en">11111000 248</span></td>
-                </tr>
-                <tr>
-                  <td class="mono"><span class="framed-en">/30</span></td>
-                  <td class="mono"><span class="framed-en">255.255.255.252</span></td>
-                  <td class="mono"><span class="ltr-inline"><span style="color:var(--cyan); font-weight:800;">11111111.11111111.11111111.111111</span><span style="color:var(--amber); font-weight:800;">00</span></span></td>
-                  <td class="mono"><span class="framed-en">11111100 252</span></td>
-                </tr>
-                <tr>
-                  <td class="mono"><span class="framed-en">/31</span></td>
-                  <td class="mono"><span class="framed-en">255.255.255.254</span></td>
-                  <td class="mono"><span class="ltr-inline"><span style="color:var(--cyan); font-weight:800;">11111111.11111111.11111111.1111111</span><span style="color:var(--amber); font-weight:800;">0</span></span></td>
-                  <td class="mono"><span class="framed-en">11111110 254</span></td>
-                </tr>
-                <tr>
-                  <td class="mono"><span class="framed-en">/32</span></td>
-                  <td class="mono"><span class="framed-en">255.255.255.255</span></td>
-                  <td class="mono"><span class="ltr-inline"><span style="color:var(--cyan); font-weight:800;">11111111.11111111.11111111.11111111</span></span></td>
-                  <td class="mono"><span class="framed-en">11111111 255</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div class="section-box" style="border-color: var(--amber);">
-            <h4 style="color: var(--amber);">  טבלת משקלי הביטים באוקטט הרביעי</h4>
-            <p style="font-size: 16px; margin-bottom: 8px;">כשאנחנו משאילים ביטים, מחברים משמאל לימין את ערכי המיקומים בבינארי כדי להגיע לערך העשרוני של המסכה:</p>
-            <table class="binary-table" style="font-size:14px;">
-              <thead>
-                <tr>
-                  <th>מיקום ביט</th>
-                  <th><span class="framed-en">Bit 0</span></th>
-                  <th><span class="framed-en">Bit 1</span></th>
-                  <th><span class="framed-en">Bit 2</span></th>
-                  <th><span class="framed-en">Bit 3</span></th>
-                  <th><span class="framed-en">Bit 4</span></th>
-                  <th><span class="framed-en">Bit 5</span></th>
-                  <th><span class="framed-en">Bit 6</span></th>
-                  <th><span class="framed-en">Bit 7</span></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>ערך עשרוני</strong></td>
-                  <td class="mono"><span class="framed-en">1</span></td>
-                  <td class="mono"><span class="framed-en">2</span></td>
-                  <td class="mono"><span class="framed-en">4</span></td>
-                  <td class="mono"><span class="framed-en">8</span></td>
-                  <td class="mono"><span class="framed-en">16</span></td>
-                  <td class="mono"><span class="framed-en">32</span></td>
-                  <td class="mono"><span class="framed-en">64</span></td>
-                  <td class="mono"><span class="framed-en">128</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TAB 3: ANDing & ROUTER DECISION -->
+    <!-- TAB 2: אלגוריתם AND -->
     <div id="anding_mech" class="tab-content">
       <div class="component-grid">
         <div class="comp-media">
@@ -1266,7 +1173,7 @@ footer {
       </div>
     </div>
 
-    <!-- TAB 4: /24 עד /26 -->
+    <!-- TAB 3: בחירת גודל רשתות (רשתות גדולות) -->
     <div id="sub24_26" class="tab-content">
       <div class="component-grid">
         <div class="comp-media">
@@ -1325,7 +1232,7 @@ footer {
       </div>
     </div>
 
-    <!-- TAB 5: /27 עד /29 -->
+    <!-- TAB 3 SUB: רשתות בינוניות -->
     <div id="sub27_29" class="tab-content">
       <div class="component-grid">
         <div class="comp-media">
@@ -1384,7 +1291,7 @@ footer {
       </div>
     </div>
 
-    <!-- TAB 6: /30 עד /32 -->
+    <!-- TAB 3 SUB: רשתות קטנות/נקודתיות -->
     <div id="sub30_32" class="tab-content">
       <div class="component-grid">
         <div class="comp-media">
@@ -1443,7 +1350,7 @@ footer {
       </div>
     </div>
 
-    <!-- TAB 7: QUIZ -->
+    <!-- TAB 4: מבדק ידע -->
     <div id="quiz" class="tab-content">
       <h3 class="comp-title"> מבדק ידע בכתובות <span class="framed-en">IP</span> - 10 תרגילים מטורללים ב <span class="framed-en">Subnetting</span></h3>
       <p style="font-weight: 600; color: var(--text-muted); margin-bottom: 20px;">
@@ -1451,7 +1358,6 @@ footer {
       </p>
 
       <div class="quiz-wrapper">
-        <!-- חלונית עזר ימנית לתלמידים -->
         <div class="quiz-cheat-sheet">
           <h4 class="cheat-title"> טבלת עזר: פרפיקסים <span class="framed-en">/25</span> עד <span class="framed-en">/32</span></h4>
           <table class="cheat-table">
@@ -1516,7 +1422,6 @@ footer {
           </table>
         </div>
 
-        <!-- עמודת השאלות הראשיות -->
         <div class="quiz-main-content">
           <!-- Q1 -->
           <div class="quiz-question" id="q1">
@@ -1662,7 +1567,7 @@ footer {
 
     </div>
 
-    <!-- TAB 8: REFLECTION -->
+    <!-- TAB 5: רפלקציה -->
     <div id="reflection" class="tab-content">
       <h3 class="comp-title">🧠 עושים סדר במחשבות</h3>
       <div class="section-box" style="border-color: var(--violet); background: var(--violet-soft);">
@@ -1685,7 +1590,7 @@ footer {
 
 </div>
 
-<!-- 🤖 צומת העוזר המקורי exact match מהקובץ הראשוני -->
+<!-- 🤖 צומת העוזר -->
 <div class="bot-widget collapsed" id="botWidget" onclick="expandBot(event)">
     <div class="bot-header" onclick="toggleBot(event)">
         <span class="dot"></span> <span>NODE: DAN-GPT // ONLINE</span>
@@ -1733,7 +1638,22 @@ function openTab(evt, tabName) {
   }
 
   document.getElementById(tabName).classList.add("active");
-  evt.currentTarget.classList.add("active");
+  
+  // אם הלחיצה הייתה על כפתור טאב רגיל
+  if (evt && evt.currentTarget) {
+    evt.currentTarget.classList.add("active");
+  } else {
+    // אם הופעל דרך ה-Dropdown
+    document.getElementById("subnetsTabBtn").classList.add("active");
+  }
+}
+
+function getSelectedSubnetTab() {
+  return document.getElementById("subnetSelect").value;
+}
+
+function switchSubnetCategory(val) {
+  openTab(null, val);
 }
 
 function toggleDark(){
