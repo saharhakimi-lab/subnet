@@ -361,6 +361,12 @@ header p.subtitle {
   cursor: pointer;
   outline: none;
   transition: all 0.2s ease;
+  direction: rtl;
+}
+
+.tab-select option {
+  direction: rtl;
+  text-align: right;
 }
 
 .tab-select:hover, .tab-select:focus {
@@ -1023,7 +1029,7 @@ footer {
       <span class="panel-tag mono framed-en">SUBNET_MODULE_V4.0</span>
     </div>
 
-    <!-- סרגל הטאבים: הטאב הראשון מודגש כברירת מחדל עם המחלקה active -->
+    <!-- סרגל הטאבים: תוקנו הפרפיקסים ב-Select לפי כיווניות LTR/RTL -->
     <div class="tabs-nav">
       <!-- טאב 1: מודגש כברירת מחדל -->
       <button class="tab-btn first-tab-framed active" onclick="openTab(event, 'intro')">חשיבות subnet mask</button>
@@ -1031,13 +1037,13 @@ footer {
       <!-- טאב 2 -->
       <button class="tab-btn" onclick="openTab(event, 'anding_mech')">אלגוריתם AND</button>
       
-      <!-- טאב 3: בחירת גודל רשת ב-Dropdown -->
+      <!-- טאב 3: בחירת גודל רשת עם תמיכה מדויקת ב-LTR/RTL -->
       <div class="tab-select-wrapper">
         <button class="tab-btn" id="subnetsTabBtn" onclick="openTab(event, getSelectedSubnetTab())">גודל רשת ▾</button>
         <select class="tab-select" id="subnetSelect" onchange="switchSubnetCategory(this.value)">
-          <option value="sub24_26">רשתות גדולות (/24 - /26)</option>
-          <option value="sub27_29">רשתות בינוניות (/27 - /29)</option>
-          <option value="sub30_32">רשתות קטנות/נקודתיות (/30 - /32)</option>
+          <option value="sub24_26">רשתות גדולות &#8206;(/24 - /26)&#8207;</option>
+          <option value="sub27_29">רשתות בינוניות &#8206;(/27 - /29)&#8207;</option>
+          <option value="sub30_32">רשתות קטנות/נקודתיות &#8206;(/30 - /32)&#8207;</option>
         </select>
       </div>
 
@@ -1500,7 +1506,7 @@ footer {
             <p class="q-title">תרגיל 7: לאיזה שימוש עיקרי מיועדת כתובת מסיכת רשת עם פרפיקס <span class="framed-en">/32</span>?</p>
             <div class="quiz-options">
               <button class="quiz-opt" onclick="checkQuiz(this, false, 'q7', 'למחלקה בת 30 עובדים מתאים פרפיקס /27.')">לחלוקת כתובות למחלקה עם 30 מחשבים</button>
-              <button class="quiz-opt" onclick="checkQuiz(this, true, 'q7', 'פגיעה בול! /32 מייצג Host יחיד 255.255.255.255 ומשמש להגדרת ממשקי Loopback או חוקי Firewall ממוקדים ל-IP מסוים.')">עבור ממשק <span class="framed-en">Loopback</span> או חוק <span class="framed-en">Firewall</span> ממוקד ל-<span class="framed-en">IP</span> יחיד</button>
+              <button class="quiz-opt" onclick="checkQuiz(this, true, 'q7', 'פגיעה בול! /32 מייצג Host יחיד 255.255.255.255 ומשמש להגדרת ממשקי Loopback או חוקי Firewall ממוקד ל-IP מסוים.')">עבור ממשק <span class="framed-en">Loopback</span> או חוק <span class="framed-en">Firewall</span> ממוקד ל-<span class="framed-en">IP</span> יחיד</button>
               <button class="quiz-opt" onclick="checkQuiz(this, false, 'q7', 'עבור שני ראוטרים נדרש פרפיקס /30.')">לחיבור שני ראוטרים ברשת <span class="framed-en">WAN</span></button>
               <button class="quiz-opt" onclick="checkQuiz(this, false, 'q7', 'הקטנת שידורי Broadcast מבוצעת על ידי Subnetting רגיל /25 עד /29.')">להגדלת כמות שידורי ה-<span class="framed-en">Broadcast</span> ברשת</button>
             </div>
