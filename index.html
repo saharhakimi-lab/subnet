@@ -1,1759 +1,1174 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl" class="light">
+<html lang="he" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>אקדמיית השותפים - שיעור מטורלל: מסכות רשת משנה /24 עד /32 | האקדמיה לרשתות</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>הפרדת ה IP למספר רשת ומספר לקוח - Subnet Mask</title>
 
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-  tailwind.config = {
-    darkMode: 'class',
-    theme: {
-      extend: {
-        colors: {
-          cyber: {
-            light: '#fdf8f4',
-            paper: '#ffffff',
-            ink: '#1e1b4b',
-            soft: '#475569',
-            line: '#fecaca',
-            cyan: '#0284c7',
-            redInk: '#7f1d1d'
-          }
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@600;800&family=Heebo:wght@400;500;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #fbf8ee;
+            --paper: #ffffff;
+            --ink: #20150f;
+            --muted: #5a4a40;
+            --line: #e6d9bf;
+            --red: #b91c1c;
+            --red-text: #a11a1a;
+            --red-soft: #fcebe7;
+            --term: #0b5d73;
+            --term-soft: #e1f3f8;
+            --ok: #0b6b4a;
+            --ok-soft: #e0f5ec;
+            --bad: #a11a1a;
+            --bad-soft: #fcebe7;
+            --c-host: #0e7490;
+            --c-media: #047857;
+            --c-mid: #6d28d9;
+            --c-proto: #b45309;
+            --shadow: 0 10px 30px -12px rgba(120, 40, 20, 0.18);
         }
-      }
-    }
-  }
-</script>
-
-<!-- Google Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Heebo:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;600;700&family=Rubik:wght@700;800;900&display=swap" rel="stylesheet">
-
-<style>
-:root {
-  /* Day Ops / Cream Theme */
-  --bg-base: #fdf8f4;
-  --paper: rgba(255, 255, 255, 0.88);
-  --ink: #1e1b4b;
-  --soft: #334155;
-  --line: rgba(252, 165, 165, 0.45);
-  --red-soft: #fecaca;
-  --red-mid: #fca5a5;
-  --red-ink: #7f1d1d;
-  --term-bg: #e0f2fe;
-  --term-border: #0284c7;
-  --term-text: #0369a1;
-
-  --bg: #fdf8f4;
-  --grid-line: rgba(15, 23, 42, 0.04);
-  --card: rgba(255, 255, 255, 0.9);
-  --panel-border: rgba(252, 165, 165, 0.5);
-  --text: #1e1b4b;
-  --text-muted: #475569;
-  --cyan: #0284c7;
-  --cyan-soft: #e0f2fe;
-  --green: #047857;
-  --green-soft: #e1f8ef;
-  --amber: #b45309;
-  --amber-soft: #fdf1dd;
-  --violet: #6d28d9;
-  --violet-soft: #f1e9fc;
-  --shadow: 0 20px 50px -20px rgba(76, 29, 149, 0.15);
-  --radius: 20px;
-}
-
-.dark {
-  /* Night Ops */
-  --bg-base: #181311;
-  --paper: rgba(36, 28, 24, 0.9);
-  --ink: #f8efe7;
-  --soft: #cbd5e1;
-  --line: #3d2f26;
-  --red-soft: #3c1f1c;
-  --red-mid: #6d3a33;
-  --red-ink: #ff9b9b;
-  --term-bg: rgba(2, 132, 199, 0.2);
-  --term-border: #38bdf8;
-  --term-text: #7dd3fc;
-
-  --bg: #181311;
-  --grid-line: rgba(34, 211, 238, 0.06);
-  --card: rgba(36, 28, 24, 0.9);
-  --panel-border: #3d2f26;
-  --text: #f8efe7;
-  --text-muted: #cbd5e1;
-  --cyan: #38bdf8;
-  --cyan-soft: rgba(2, 132, 199, 0.2);
-  --green: #34d399;
-  --green-soft: rgba(52, 211, 153, 0.12);
-  --amber: #fbbf24;
-  --amber-soft: rgba(251, 191, 36, 0.12);
-  --violet: #a78bfa;
-  --violet-soft: rgba(167, 139, 250, 0.12);
-  --shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.6);
-}
-
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  font-family: 'Assistant', 'Heebo', sans-serif;
-  background-color: var(--bg);
-  background-image:
-    linear-gradient(var(--grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  background-size: 42px 42px;
-  color: var(--text);
-  transition: background-color 0.25s ease, color 0.25s ease;
-  padding-bottom: 60px;
-  font-size: 18px;
-  overflow-x: hidden;
-  position: relative;
-}
-
-/* רקע אורורה דינמי */
-body::before {
-  content: "";
-  position: fixed; inset: -20%;
-  z-index: -1;
-  background:
-    radial-gradient(40% 40% at 15% 20%, rgba(252,165,165,.35), transparent 70%),
-    radial-gradient(35% 35% at 85% 15%, rgba(56,189,248,.25), transparent 70%),
-    radial-gradient(45% 45% at 70% 85%, rgba(167,139,250,.25), transparent 70%);
-  filter: blur(30px);
-  animation: aurora 22s ease-in-out infinite alternate;
-}
-@keyframes aurora {
-  0% { transform: translate3d(0,0,0) scale(1) rotate(0); }
-  100% { transform: translate3d(3%,-4%,0) scale(1.1) rotate(5deg); }
-}
-
-/* מסגור מונחים באנגלית - מותאם מדויק לגודל המושג */
-.framed-en {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: fit-content;
-  direction: ltr !important;
-  unicode-bidi: isolate !important;
-  text-align: left !important;
-  border: 1.5px solid var(--term-border);
-  background-color: var(--term-bg);
-  color: var(--term-text);
-  padding: 1px 7px;
-  margin: 0 3px;
-  border-radius: 8px;
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
-  font-size: 0.85em;
-  line-height: 1.3;
-  box-sizing: border-box;
-  vertical-align: middle;
-}
-
-.ltr-inline {
-  direction: ltr !important;
-  display: inline-block !important;
-  unicode-bidi: isolate !important;
-  text-align: left !important;
-}
-
-.num {
-  direction: ltr;
-  unicode-bidi: isolate;
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
-}
-
-:focus-visible {
-  outline: 3px solid var(--cyan);
-  outline-offset: 3px;
-  border-radius: 6px;
-}
-
-.mono { font-family: 'JetBrains Mono', monospace; }
-
-/* ============ HEADER ============ */
-header {
-  position: relative;
-  background: var(--paper);
-  backdrop-filter: blur(14px);
-  color: var(--text);
-  padding: 16px 20px;
-  text-align: right;
-  overflow: hidden;
-  border-bottom: 2px solid var(--panel-border);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-}
-
-.header-inner {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  max-width: 1300px;
-  margin: 0 auto;
-  flex-wrap: wrap;
-}
-
-.header-main-group {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  flex-wrap: wrap;
-}
-
-.hero-image img {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--cyan);
-  box-shadow: 0 0 0 3px var(--paper), 0 4px 10px -3px rgba(2, 132, 199, 0.35);
-  background: #fff;
-  flex-shrink: 0;
-}
-
-.header-text-content {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.statusbar {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.3px;
-  color: var(--amber);
-  flex-wrap: wrap;
-  margin-bottom: 0;
-}
-
-.statusbar .dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--cyan);
-  box-shadow: 0 0 0 2px var(--cyan-soft);
-  animation: pulse 1.8s ease-in-out infinite;
-}
-
-.statusbar .sep { opacity: 0.4; }
-
-h1 {
-  position: relative;
-  margin: 0;
-  font-family: 'Rubik', 'Assistant', sans-serif;
-  font-size: 22px;
-  font-weight: 900;
-  letter-spacing: -0.5px;
-  color: var(--text);
-  line-height: 1.2;
-}
-
-header p.subtitle {
-  position: relative;
-  margin: 0;
-  color: var(--text-muted);
-  font-weight: 700;
-  font-size: 13px;
-}
-
-.header-actions-group {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.protocol-row {
-  position: relative;
-  display: flex;
-  gap: 4px;
-  flex-wrap: wrap;
-}
-
-.protocol-chip {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  font-weight: 700;
-}
-
-.navbar {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin: 0;
-  max-width: none;
-}
-
-.nav-btn {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 6px 12px;
-  border-radius: 10px;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  cursor: pointer;
-  border: none;
-  transition: transform 0.18s ease, opacity 0.18s ease;
-  letter-spacing: 0.2px;
-}
-
-.nav-btn:hover { transform: translateY(-1px); }
-
-.nav-btn.outline {
-  background: var(--paper);
-  border: 1.5px solid var(--panel-border);
-  color: var(--text);
-}
-
-.nav-btn.solid {
-  background: linear-gradient(135deg, #0284c7, #0369a1);
-  color: #ffffff;
-  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
-}
-
-/* ============ מבנה כללי ============ */
-.container {
-  width: 92%;
-  max-width: 1300px;
-  margin: 30px auto;
-}
-
-.panel {
-  position: relative;
-  background: var(--card);
-  backdrop-filter: blur(14px);
-  padding: 30px 30px 28px;
-  margin-bottom: 30px;
-  border-radius: var(--radius);
-  border: 2px solid var(--panel-border);
-  box-shadow: var(--shadow);
-  transition: background-color 0.25s ease, border-color 0.25s ease;
-}
-
-/* ============ TABS MODIFIED ============ */
-.tabs-nav {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 25px;
-  border-bottom: 2px solid var(--panel-border);
-  padding-bottom: 12px;
-  align-items: center;
-}
-
-.tab-btn {
-  font-family: 'Rubik', sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  padding: 8px 14px;
-  border: 1.5px solid var(--panel-border);
-  border-radius: 12px;
-  background: var(--paper);
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.tab-btn:hover {
-  background: var(--cyan-soft);
-  color: var(--cyan);
-  border-color: var(--cyan);
-}
-
-/* עיצוב כפתור טאב מודגש/פעיל */
-.tab-btn.active {
-  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
-  color: #ffffff !important;
-  border-color: transparent !important;
-  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
-  font-weight: 800;
-}
-
-/* Dropdown לבחירת גודל רשתות בטאב 3 */
-.tab-select-wrapper {
-  display: inline-flex;
-  align-items: center;
-}
-
-.tab-select {
-  font-family: 'Rubik', sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  padding: 8px 12px;
-  border: 1.5px solid var(--panel-border);
-  border-radius: 12px;
-  background: var(--paper);
-  color: var(--text-muted);
-  cursor: pointer;
-  outline: none;
-  transition: all 0.2s ease;
-  direction: rtl;
-}
-
-.tab-select option {
-  direction: rtl;
-  text-align: right;
-  background-color: var(--paper);
-  color: var(--text);
-}
-
-.tab-select:hover, .tab-select:focus {
-  border-color: var(--cyan);
-  color: var(--cyan);
-}
-
-.tab-content {
-  display: none;
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-.tab-content.active {
-  display: block;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.component-grid {
-  display: grid;
-  grid-template-columns: 340px 1fr;
-  gap: 25px;
-}
-
-.comp-media {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.comp-img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-  border-radius: 16px;
-  border: 2px solid var(--panel-border);
-  box-shadow: var(--shadow);
-}
-
-.meta-box {
-  background: var(--bg);
-  border: 1.5px solid var(--panel-border);
-  border-radius: 14px;
-  padding: 16px;
-}
-
-.meta-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
-  border-bottom: 1px dashed var(--panel-border);
-  font-size: 15px;
-}
-
-.meta-item:last-child { border-bottom: none; }
-
-.meta-label { font-weight: 700; color: var(--text-muted); }
-.meta-val { font-family: 'JetBrains Mono', monospace; font-weight: 800; color: var(--cyan); }
-
-.comp-details {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.comp-title {
-  font-family: 'Rubik', sans-serif;
-  font-size: 26px;
-  font-weight: 900;
-  margin: 0;
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.section-box {
-  background: var(--bg);
-  border-right: 4px solid var(--cyan);
-  border-radius: 12px;
-  padding: 18px;
-}
-
-.section-box h4 {
-  margin: 0 0 10px 0;
-  font-family: 'Rubik', sans-serif;
-  font-size: 19px;
-  color: var(--cyan);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.section-box p {
-  margin: 0;
-  font-size: 17px;
-  line-height: 1.7;
-  font-weight: 600;
-  color: var(--text);
-}
-
-/* ============ SPEC GRID ============ */
-.spec-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.spec-card {
-  background: var(--card);
-  border: 1.5px solid var(--panel-border);
-  border-radius: 12px;
-  padding: 14px 18px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.spec-card .card-head {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: nowrap;
-}
-
-.spec-card span {
-  display: inline-flex;
-  align-items: center;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 15px;
-  color: var(--text-muted);
-}
-
-.spec-card b {
-  font-size: 16px;
-  font-weight: 800;
-  color: var(--text);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-/* ============ BINARY & ANDing TABLES ============ */
-.binary-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 12px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 15px;
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.binary-table th, .binary-table td {
-  border: 1px solid var(--panel-border);
-  padding: 12px 10px;
-  text-align: center;
-}
-
-.binary-table th {
-  background: var(--cyan-soft);
-  color: var(--cyan);
-  font-weight: 800;
-}
-
-/* ============ QUIZ LAYOUT & STYLES ============ */
-.quiz-wrapper {
-  display: grid;
-  grid-template-columns: 360px 1fr;
-  gap: 25px;
-  align-items: start;
-  margin-top: 18px;
-}
-
-.quiz-cheat-sheet {
-  position: sticky;
-  top: 20px;
-  background: var(--card);
-  border: 2px solid var(--cyan);
-  border-radius: 16px;
-  padding: 18px;
-  box-shadow: var(--shadow);
-}
-
-.cheat-title {
-  font-family: 'Rubik', sans-serif;
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--cyan);
-  margin: 0 0 12px 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border-bottom: 1.5px solid var(--panel-border);
-  padding-bottom: 8px;
-}
-
-.cheat-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 14px;
-}
-
-.cheat-table th, .cheat-table td {
-  border: 1px solid var(--panel-border);
-  padding: 8px 5px;
-  text-align: center;
-}
-
-.cheat-table th {
-  background: var(--cyan-soft);
-  color: var(--cyan);
-  font-weight: 800;
-  font-size: 13px;
-}
-
-.quiz-main-content {
-  display: flex;
-  flex-direction: column;
-}
-
-.quiz-question {
-  margin-bottom: 24px;
-  padding: 22px;
-  background: var(--bg);
-  border-radius: 16px;
-  border: 1.5px solid var(--panel-border);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-}
-
-.quiz-question p.q-title {
-  font-weight: 800;
-  font-size: 18px;
-  margin-top: 0;
-  margin-bottom: 14px;
-  color: var(--text);
-}
-
-.quiz-options {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.quiz-opt {
-  padding: 14px 18px;
-  background: var(--card);
-  border: 1.5px solid var(--panel-border);
-  border-radius: 12px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.2s ease;
-  text-align: right;
-  font-size: 16px;
-  color: var(--text);
-}
-
-.quiz-opt:hover {
-  border-color: var(--cyan);
-  background: var(--cyan-soft);
-}
-
-.quiz-opt.correct {
-  background: var(--green-soft) !important;
-  border-color: var(--green) !important;
-  color: var(--green) !important;
-  font-weight: 800;
-}
-
-.quiz-opt.wrong {
-  background: rgba(185, 28, 28, 0.1) !important;
-  border-color: #b91c1c !important;
-  color: #b91c1c !important;
-}
-
-.quiz-feedback {
-  margin-top: 14px;
-  padding: 12px 16px;
-  border-radius: 12px;
-  font-size: 15px;
-  font-weight: 700;
-  display: none;
-  line-height: 1.5;
-}
-
-.quiz-feedback.show { display: block; }
-
-/* ============ TEACHER BOX STYLES ============ */
-.teacher-container {
-  margin-top: 35px;
-  padding: 22px;
-  background: var(--bg);
-  border: 2px dashed var(--cyan);
-  border-radius: 18px;
-  text-align: center;
-}
-
-.teacher-btn {
-  font-family: 'Rubik', sans-serif;
-  font-size: 17px;
-  font-weight: 800;
-  padding: 12px 28px;
-  background: linear-gradient(135deg, #0284c7, #0369a1);
-  color: #ffffff;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  box-shadow: 0 6px 18px rgba(2, 132, 199, 0.3);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.teacher-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(2, 132, 199, 0.45);
-}
-
-.teacher-answers-box {
-  display: none;
-  margin-top: 20px;
-  text-align: right;
-  background: var(--card);
-  padding: 20px;
-  border-radius: 14px;
-  border: 1.5px solid var(--panel-border);
-  box-shadow: var(--shadow);
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-.teacher-answers-box h4 {
-  margin-top: 0;
-  color: var(--cyan);
-  font-family: 'Rubik', sans-serif;
-  font-size: 19px;
-  border-bottom: 1.5px solid var(--panel-border);
-  padding-bottom: 8px;
-}
-
-.teacher-answers-box ol {
-  margin: 0;
-  padding-right: 20px;
-  line-height: 1.8;
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.teacher-answers-box li {
-  margin-bottom: 8px;
-  color: var(--text);
-}
-
-.teacher-answers-box li span {
-  color: var(--green);
-  font-weight: 800;
-}
-
-/* ============ REFLECTION STYLES ============ */
-.reflection-box textarea {
-  width: 100%;
-  min-height: 120px;
-  padding: 14px;
-  border-radius: 12px;
-  border: 1.5px solid var(--panel-border);
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Assistant', sans-serif;
-  font-size: 16px;
-  resize: vertical;
-  margin-top: 8px;
-}
-
-.reflection-box textarea:focus { outline: 2px solid var(--cyan); }
-
-.submit-btn {
-  font-family: 'Rubik', sans-serif;
-  font-size: 16px;
-  font-weight: 800;
-  padding: 12px 28px;
-  background: linear-gradient(135deg, #0284c7, #0369a1);
-  color: #fff;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  margin-top: 12px;
-  transition: transform 0.2s ease;
-}
-
-.submit-btn:hover { transform: translateY(-2px); }
-
-/* ============ BOT WIDGET ============ */
-.bot-widget {
-    position: fixed;
-    bottom: 16px;
-    left: 16px;
-    width: 230px;
-    max-width: calc(100vw - 32px);
-    background: var(--card);
-    backdrop-filter: blur(14px);
-    color: var(--text);
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    z-index: 9999;
-    animation: floatBot 4s ease-in-out infinite;
-    border: 2px solid var(--cyan);
-    transition: width 0.25s ease, height 0.25s ease, opacity 0.2s ease;
-}
-
-.bot-widget.collapsed {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    animation: none;
-    cursor: pointer;
-}
-
-.bot-widget.collapsed .bot-header, 
-.bot-widget.collapsed .bot-body > *:not(.bot-avatar) {
-    display: none;
-}
-
-.bot-widget.collapsed .bot-body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    height: 100%;
-}
-
-.bot-widget.collapsed .bot-avatar {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    border: 2px solid var(--cyan);
-    box-shadow: 0 4px 11px rgba(0,0,0,0.3);
-}
-
-.bot-close {
-    margin-right: auto;
-    background: none;
-    border: none;
-    color: #eaf6fb;
-    cursor: pointer;
-    font-size: 12px;
-    line-height: 1;
-    padding: 1px 2px;
-}
-
-.bot-header {
-    background: linear-gradient(135deg, #0284c7, #0369a1);
-    color: #ffffff;
-    padding: 8px 10px;
-    font-weight: 800;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    letter-spacing: 0.2px;
-    cursor: pointer;
-}
-
-.bot-header .dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #34d399;
-    box-shadow: 0 0 0 2px rgba(52,211,153,0.25);
-    animation: pulse 1.8s ease-in-out infinite;
-    flex-shrink: 0;
-}
-
-.bot-body { padding: 12px; }
-
-.bot-avatar {
-    width: 54px;
-    height: 54px;
-    border-radius: 50%;
-    display: block;
-    margin: 0 auto 8px auto;
-    object-fit: cover;
-    border: 2px solid var(--cyan);
-    box-shadow: 0 0 0 3px var(--cyan-soft);
-}
-
-.bot-body p.greet {
-    margin: 0 0 6px 0;
-    font-weight: 800;
-    text-align: center;
-    font-size: 13px;
-}
-
-.bot-body .lead {
-    font-weight: 600;
-    font-size: 11px;
-    text-align: center;
-    color: var(--text-muted);
-    margin: 0 0 8px;
-}
-
-.bot-chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    justify-content: center;
-    margin-bottom: 10px;
-}
-
-.bot-chip {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    font-weight: 600;
-    color: var(--text-muted);
-    background: var(--bg);
-    border: 1px solid var(--panel-border);
-    padding: 2px 6px;
-    border-radius: 6px;
-}
-
-.bot-btn {
-    display: block;
-    text-align: center;
-    padding: 8px;
-    background: var(--cyan);
-    color: #ffffff;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 800;
-    font-size: 11px;
-    font-family: 'JetBrains Mono', monospace;
-    transition: transform 0.2s ease, opacity 0.2s ease;
-}
-
-.bot-btn:hover {
-    opacity: 0.9;
-    transform: scale(1.02);
-}
-
-footer {
-  background: var(--card);
-  border-top: 2px solid var(--panel-border);
-  color: var(--text-muted);
-  font-weight: 700;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 14px;
-  text-align: center;
-  padding: 24px;
-  margin-top: 50px;
-  letter-spacing: 0.3px;
-}
-
-@keyframes floatBot {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-  100% { transform: translateY(0); }
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}
-
-/* ============ MEDIA QUERIES ============ */
-@media (max-width: 900px) {
-  .component-grid { grid-template-columns: 1fr; }
-  .quiz-wrapper { grid-template-columns: 1fr; }
-  .quiz-cheat-sheet { position: static; }
-}
-
-@media (max-width: 640px) {
-  h1 { font-size: 20px; }
-  .panel { padding: 18px 14px; }
-  .hero-image img { width: 50px; height: 50px; }
-  .tab-btn { width: 100%; justify-content: center; font-size: 13px; }
-  .bot-avatar { width: 60px; height: 60px; }
-  .bot-widget:not(.collapsed) {
-    width: calc(100vw - 32px);
-    max-height: 70vh;
-    overflow-y: auto;
-  }
-}
-</style>
+
+        body.dark {
+            --bg: #1a1412;
+            --paper: #251c18;
+            --ink: #f8efe7;
+            --muted: #d0c0b3;
+            --line: #43352d;
+            --red-text: #ff9b9b;
+            --red-soft: #3c1f1c;
+            --term: #7fdcf0;
+            --term-soft: #123640;
+            --ok: #6ee7b7;
+            --ok-soft: #12392b;
+            --bad: #ffb0b0;
+            --bad-soft: #432120;
+            --c-host: #5fd0e8;
+            --c-media: #5eead4;
+            --c-mid: #c4b5fd;
+            --c-proto: #fcd34d;
+            --shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.6);
+        }
+
+        * { box-sizing: border-box; }
+
+        html { font-size: 20px; }
+        @media (max-width: 600px) { html { font-size: 18px; } }
+
+        body {
+            margin: 0;
+            font-family: 'Heebo', 'Assistant', sans-serif;
+            font-weight: 500;
+            line-height: 1.85;
+            background: var(--bg);
+            color: var(--ink);
+            transition: background-color 0.25s ease, color 0.25s ease;
+        }
+
+        .hidden { display: none !important; }
+
+        :focus-visible { outline: 3px solid #f59e0b; outline-offset: 3px; }
+
+        button { font-family: inherit; cursor: pointer; }
+
+        /* ===== מונחים באנגלית בתוך מסגרת ===== */
+        .english-term-box, .framed-en {
+            display: inline-block;
+            direction: ltr;
+            unicode-bidi: isolate;
+            white-space: nowrap;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8em;
+            font-weight: 700;
+            line-height: 1.5;
+            padding: 0 0.45em;
+            margin: 0 0.15em;
+            border-radius: 7px;
+            border: 1.5px solid var(--term);
+            background: var(--term-soft);
+            color: var(--term);
+            vertical-align: baseline;
+        }
+
+        .num {
+            direction: ltr;
+            unicode-bidi: isolate;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+        }
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        /* ===== כותרת עליונה ===== */
+        .site-header {
+            background: var(--paper);
+            border-bottom: 2px solid var(--line);
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .brand img {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: 3px solid var(--red);
+            object-fit: cover;
+            background: #fff;
+            flex-shrink: 0;
+        }
+
+        .brand h1 {
+            margin: 0;
+            font-family: 'Rubik', sans-serif;
+            font-weight: 800;
+            font-size: 1.35rem;
+            line-height: 1.25;
+            color: var(--red-text);
+        }
+
+        .brand p {
+            margin: 0;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            color: var(--muted);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .teacher-btn {
+            display: inline-flex;
+            align-items: center;
+            min-height: 48px;
+            padding: 0 22px;
+            border-radius: 12px;
+            background: var(--red);
+            color: #fff;
+            font-weight: 800;
+            font-size: 0.95rem;
+            text-decoration: none;
+        }
+
+        .teacher-btn:hover { background: #991b1b; }
+
+        .icon-btn {
+            min-height: 48px;
+            padding: 0 16px;
+            border-radius: 12px;
+            border: 2px solid var(--line);
+            background: var(--paper);
+            color: var(--ink);
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .icon-btn:hover { border-color: var(--red); }
+
+        /* ===== כפתורי הטאבים ===== */
+        .tabs-wrap {
+            max-width: 1200px;
+            margin: 14px auto 0;
+            padding: 0 20px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .tab, .tab-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 58px;
+            padding: 10px 16px;
+            text-align: right;
+            border-radius: 14px;
+            border: 2px solid var(--line);
+            background: var(--paper);
+            color: var(--ink);
+            font-size: 0.95rem;
+            font-weight: 800;
+            line-height: 1.3;
+            transition: border-color 0.15s ease, background-color 0.15s ease;
+            cursor: pointer;
+            font-family: 'Rubik', sans-serif;
+        }
+
+        .tab:hover, .tab-btn:hover { border-color: var(--red); color: var(--red-text); }
+
+        .tab .num-badge, .tab .num {
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: var(--red-soft);
+            color: var(--red-text);
+            font-family: 'Rubik', sans-serif;
+            font-weight: 800;
+            font-size: 0.9rem;
+            line-height: 1;
+        }
+
+        .tab.active, .tab-btn.active {
+            background: #b91c1c;
+            border-color: #b91c1c;
+            color: #fff;
+        }
+
+        .tab.active .num-badge, .tab-btn.active .num { background: #fff; color: #b91c1c; }
+
+        /* Dropdown לבחירת גודל רשתות בטאב 3 */
+        .tab-select-wrapper {
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .tab-select {
+            font-family: 'Rubik', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            padding: 10px 14px;
+            border: 2px solid var(--line);
+            border-radius: 14px;
+            background: var(--paper);
+            color: var(--ink);
+            cursor: pointer;
+            outline: none;
+            direction: rtl;
+            min-height: 58px;
+        }
+
+        .tab-select:hover { border-color: var(--red); }
+
+        /* ===== אזור התוכן ===== */
+        main {
+            max-width: 1200px;
+            margin: 20px auto 0;
+            padding: 0 20px 40px;
+        }
+
+        .lesson, .tab-content {
+            background: var(--paper);
+            border: 2px solid var(--line);
+            border-radius: 22px;
+            padding: clamp(22px, 4vw, 48px);
+            box-shadow: var(--shadow);
+            display: none;
+        }
+
+        .lesson.active, .tab-content.active {
+            display: block;
+        }
+
+        h2, .comp-title {
+            margin: 0 0 14px;
+            font-family: 'Rubik', sans-serif;
+            font-weight: 800;
+            font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+            line-height: 1.3;
+            color: var(--red-text);
+        }
+
+        h3 {
+            margin: 36px 0 12px;
+            font-family: 'Rubik', sans-serif;
+            font-weight: 800;
+            font-size: 1.3rem;
+            line-height: 1.4;
+        }
+
+        p { margin: 0 0 14px; font-size: 1.05rem; }
+        .lead { font-size: 1.15rem; font-weight: 500; }
+
+        /* גריד רכיבים ותצוגה */
+        .component-grid {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 24px;
+        }
+        @media (max-width: 900px) { .component-grid { grid-template-columns: 1fr; } }
+
+        .comp-media { display: flex; flex-direction: column; gap: 14px; }
+        .comp-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 16px;
+            border: 2px solid var(--line);
+        }
+
+        .meta-box {
+            background: var(--bg);
+            border: 2px solid var(--line);
+            border-radius: 14px;
+            padding: 14px;
+        }
+
+        .meta-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px dashed var(--line);
+            font-size: 0.95rem;
+        }
+        .meta-item:last-child { border-bottom: none; }
+        .meta-label { font-weight: 700; color: var(--muted); }
+        .meta-val { font-family: 'JetBrains Mono', monospace; font-weight: 800; color: var(--term); }
+
+        .section-box {
+            background: var(--bg);
+            border-right: 5px solid var(--red);
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .section-box h4 {
+            margin: 0 0 10px 0;
+            font-family: 'Rubik', sans-serif;
+            font-size: 1.2rem;
+            color: var(--red-text);
+        }
+
+        .spec-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+            margin-top: 14px;
+        }
+
+        .spec-card {
+            background: var(--paper);
+            border: 2px solid var(--line);
+            border-radius: 14px;
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .spec-card b { font-size: 1.05rem; font-weight: 800; color: var(--ink); }
+
+        /* טבלאות בינאריות ועזר */
+        .binary-table, .cheat-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--paper);
+        }
+
+        .binary-table th, .binary-table td, .cheat-table th, .cheat-table td {
+            border: 2px solid var(--line);
+            padding: 10px 8px;
+            text-align: center;
+        }
+
+        .binary-table th, .cheat-table th {
+            background: var(--red-soft);
+            color: var(--red-text);
+            font-weight: 800;
+        }
+
+        /* מבדק ידע */
+        .quiz-wrapper {
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+        @media (max-width: 950px) { .quiz-wrapper { grid-template-columns: 1fr; } }
+
+        .quiz-cheat-sheet {
+            position: sticky;
+            top: 20px;
+            background: var(--bg);
+            border: 2px solid var(--red);
+            border-radius: 16px;
+            padding: 16px;
+        }
+
+        .cheat-title {
+            font-family: 'Rubik', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--red-text);
+            margin: 0 0 10px 0;
+            border-bottom: 2px solid var(--line);
+            padding-bottom: 6px;
+        }
+
+        .quiz-main-content { display: flex; flex-direction: column; gap: 18px; }
+
+        .quiz-question {
+            background: var(--bg);
+            border: 2px solid var(--line);
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        .q-title { font-weight: 800; font-size: 1.15rem; margin: 0 0 14px; line-height: 1.5; color: var(--ink); }
+
+        .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+
+        .quiz-opt {
+            padding: 12px 16px;
+            background: var(--paper);
+            border: 2px solid var(--line);
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            text-align: right;
+            font-size: 1rem;
+            color: var(--ink);
+            transition: border-color 0.15s ease;
+        }
+
+        .quiz-opt:hover { border-color: var(--red); }
+        .quiz-opt.correct { background: var(--ok-soft) !important; border-color: var(--ok) !important; color: var(--ok) !important; }
+        .quiz-opt.wrong { background: var(--bad-soft) !important; border-color: var(--bad) !important; color: var(--bad) !important; }
+
+        .quiz-feedback {
+            margin-top: 12px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            display: none;
+            line-height: 1.5;
+        }
+        .quiz-feedback.show { display: block; }
+
+        /* כניסת מורה */
+        .teacher-container {
+            margin-top: 30px;
+            padding: 20px;
+            background: var(--bg);
+            border: 2px dashed var(--red);
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .teacher-answers-box {
+            display: none;
+            margin-top: 16px;
+            text-align: right;
+            background: var(--paper);
+            padding: 18px;
+            border-radius: 14px;
+            border: 2px solid var(--line);
+        }
+
+        .teacher-answers-box ol { margin: 0; padding-right: 20px; line-height: 1.7; font-weight: 700; }
+        .teacher-answers-box li span { color: var(--ok); }
+
+        /* רפלקציה */
+        .reflection-box textarea {
+            width: 100%;
+            min-height: 110px;
+            padding: 14px;
+            border-radius: 14px;
+            border: 2px solid var(--line);
+            background: var(--paper);
+            color: var(--ink);
+            font-family: inherit;
+            font-size: 1rem;
+            resize: vertical;
+            margin-top: 8px;
+            margin-bottom: 14px;
+        }
+        .reflection-box textarea:focus { border-color: var(--red); outline: none; }
+
+        /* כפתורי מעבר */
+        .step-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 28px;
+        }
+
+        .btn {
+            min-height: 52px;
+            padding: 0 24px;
+            border-radius: 14px;
+            border: 2px solid var(--line);
+            background: var(--paper);
+            color: var(--ink);
+            font-size: 1rem;
+            font-weight: 800;
+        }
+        .btn:hover { border-color: var(--red); }
+        .btn.primary { background: var(--red); border-color: var(--red); color: #fff; }
+        .btn.primary:hover { background: #991b1b; }
+
+        /* פוטר */
+        footer {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 20px 40px;
+            border-top: 2px solid var(--line);
+            display: flex;
+            justify-content: space-between;
+            gap: 14px;
+            flex-wrap: wrap;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        /* עוזר דן GPT */
+        .bot {
+            position: fixed;
+            bottom: 16px;
+            left: 16px;
+            z-index: 90;
+        }
+
+        .bot-fab {
+            width: 76px;
+            height: 76px;
+            padding: 0;
+            border-radius: 50%;
+            border: 3px solid var(--red);
+            background: #fff;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            animation: floatBot 4s ease-in-out infinite;
+        }
+        .bot-fab img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        .bot-card {
+            width: min(300px, calc(100vw - 32px));
+            background: var(--paper);
+            color: var(--ink);
+            border: 2px solid var(--line);
+            border-radius: 18px;
+            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
+            overflow: hidden;
+        }
+        .bot.collapsed .bot-card { display: none; }
+        .bot:not(.collapsed) .bot-fab { display: none; }
+
+        .bot-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 14px;
+            background: var(--red);
+            color: #fff;
+            font-weight: 800;
+            font-size: 0.85rem;
+        }
+        .bot-top button {
+            width: 36px; height: 36px; border-radius: 50%; border: none; background: rgba(255,255,255,0.2); color: #fff; font-size: 1rem;
+        }
+        .bot-body { padding: 14px; text-align: center; }
+        .bot-body img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 3px solid var(--red); margin: 0 auto 8px; display: block; }
+        .bot-body p { margin: 6px 0 12px; font-size: 0.85rem; line-height: 1.6; }
+        .bot-link {
+            display: block; padding: 10px; border-radius: 12px; background: var(--red); color: #fff; font-weight: 800; font-size: 0.9rem; text-decoration: none;
+        }
+
+        @keyframes floatBot {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+    </style>
 </head>
-
 <body>
 
-<header>
-  <div class="header-inner">
-    <!-- קבוצה ימנית: אוואטר, סטטוסבר, תג וכותרת -->
-    <div class="header-main-group">
-      <div class="hero-image">
-        <img src="https://lh3.googleusercontent.com/d/1oIkZlLHZWtFgoDblyxziTALQZwsyxAOo" alt="אווטר">
-      </div>
-      <div class="header-text-content">
-        <div class="statusbar">
-          <span class="dot"></span>
-          <span class="framed-en">session: subnetting_mastery</span>
-          <span class="sep">//</span>
-          <span class="framed-en">academy.subnet.local</span>
-          <span class="sep">//</span>
-          <span><span class="framed-en">CIDR:</span> <span class="framed-en">/24</span> - <span class="framed-en">/32</span></span>
+    <!-- כותרת עליונה מעודכנת -->
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="brand">
+                <img src="https://lh3.googleusercontent.com/d/1oIkZlLHZWtFgoDblyxziTALQZwsyxAOo" alt="אווטר המורה">
+                <div>
+                    <h1>הפרדת ה IP למספר רשת ומספר לקוח - Subnet Mask</h1>
+                    <p>אקדמיית השותפים: מסכות רשת משנה /24 עד /32</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <a class="teacher-btn" href="https://gemini.google.com/gem/13FFjtbW5S3yg0EE1qBEQiP8GEMwoepKu?usp=sharing" target="_blank" rel="noopener">אקדמיית השותפים</a>
+                <button class="icon-btn" id="darkToggleBtn" onclick="toggleDark()">🌙 מצב לילה</button>
+            </div>
         </div>
-        
-        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-          <span class="framed-en !bg-sky-100 !text-sky-800 !border-sky-300">שיעור מטורלל: מסכות רשת משנה</span>
-          <h1>למה חייבים <span class="framed-en">Subnet Mask</span> אחי?</h1>
-        </div>
+    </header>
 
-        <p class="subtitle">מסע עומק בטאבים: איך כרטיס הרשת מחשב ביטים, מזהה את ה-<span class="framed-en">Subnet</span> ומחליט אם לשלוח לראוטר!</p>
-      </div>
-    </div>
-
-    <!-- קבוצה שמאלית: פרוטוקולים, כפתור מוד כהה וכפתורי ניווט בשורה אחת -->
-    <div class="header-actions-group">
-      <button onclick="toggleDark()" id="darkToggleBtn" class="px-3.5 py-1.5 text-xs font-bold rounded-xl border-2 border-[var(--panel-border)] bg-[var(--paper)] hover:border-sky-500 transition-all flex items-center gap-2 shadow-sm">
-        🌙 מצב לילה
-      </button>
-
-      <div class="protocol-row">
-        <span class="protocol-chip framed-en">SUBNET MASK</span>
-        <span class="protocol-chip framed-en">BITWISE ANDing</span>
-        <span class="protocol-chip framed-en">DEFAULT GATEWAY</span>
-        <span class="protocol-chip framed-en">ARP VS ROUTER</span>
-        <span class="protocol-chip framed-en">CIDR NOTATION</span>
-      </div>
-      <nav class="navbar">
-        <a class="nav-btn outline" href="#tabs-section">עברו ישר לחלוקת הפרפיקסים</a>
-        <a class="nav-btn solid" href="https://gemini.google.com/gem/13FFjtbW5S3yg0EE1qBEQiP8GEMwoepKu?usp=sharing" target="_blank" rel="noopener">🖥️ אקדמיית השותפים</a>
-      </nav>
-    </div>
-  </div>
-</header>
-
-<div class="container" id="tabs-section">
-
-  <div class="panel">
     <!-- סרגל הטאבים -->
-    <div class="tabs-nav">
-      <!-- טאב 1: מודגש כברירת מחדל -->
-      <button class="tab-btn active" onclick="openTab(event, 'intro')">חשיבות <span class="framed-en">Subnet Mask</span></button>
-      
-      <!-- טאב 2 -->
-      <button class="tab-btn" onclick="openTab(event, 'anding_mech')">אלגוריתם <span class="framed-en">AND</span></button>
-      
-      <!-- טאב 3: בחירת גודל רשת -->
-      <div class="tab-select-wrapper">
-        <button class="tab-btn" id="subnetsTabBtn" onclick="openTab(event, getSelectedSubnetTab())">גודל רשת ▾</button>
-        <select class="tab-select" id="subnetSelect" onchange="switchSubnetCategory(this.value)">
-          <option value="sub24_26">רשתות גדולות &#8206;(/24 - /26)&#8207;</option>
-          <option value="sub27_29">רשתות בינוניות &#8206;(/27 - /29)&#8207;</option>
-          <option value="sub30_32">רשתות קטנות/נקודתיות &#8206;(/30 - /32)&#8207;</option>
-        </select>
-      </div>
-
-      <!-- טאב 4 -->
-      <button class="tab-btn" onclick="openTab(event, 'quiz')">מבדק ידע בכתובות <span class="framed-en">IP</span></button>
-      
-      <!-- טאב 5 -->
-      <button class="tab-btn" onclick="openTab(event, 'reflection')">רפלקציה</button>
-    </div>
-
-    <!-- TAB 1: חשיבות subnet mask -->
-    <div id="intro" class="tab-content active">
-      <div class="component-grid">
-        <div class="comp-media">
-          <img class="comp-img" src="https://lh3.googleusercontent.com/d/1ytfgyT1ELCKV1hAZrMw6Ohy0veK5VWjU" alt="Subnet Mask Concept">
-          <div class="meta-box">
-            <div class="meta-item"><span class="meta-label">תפקיד המסכה:</span><span class="meta-val">הפרדת <span class="framed-en">Network/Host</span></span></div>
-            <div class="meta-item"><span class="meta-label">גודל <span class="framed-en">IP</span>:</span><span class="meta-val"><span class="framed-en">32 Bits IPv4</span></span></div>
-            <div class="meta-item"><span class="meta-label">שיטה:</span><span class="meta-val"><span class="framed-en">ANDing</span> בינארי</span></div>
-            <div class="meta-item"><span class="meta-label">ייצוג:</span><span class="meta-val"><span class="framed-en">CIDR Slash</span></span></div>
-          </div>
-        </div>
-        <div class="comp-details">
-          <h3 class="comp-title">למה חייבים מסכת רשת משנה <span class="framed-en">Subnet Mask</span>?</h3>
-          
-          <div class="section-box">
-            <h4>אופן פעולה</h4>
-            <p>כתובת <span class="framed-en">IP</span> לבדה למשל <span class="framed-en">192.168.1.50</span> היא סתם מספר! היא לא אומרת למחשב או לראוטר באיזו רשת המחשב נמצא. מסכת רשת המשנה היא השריף שקובע איזה חלק בכתובת שייך ל-<span class="framed-en">Network</span> הרשת ואיזה חלק שייך ל-<span class="framed-en">Host</span> המארח הספציפי. בעזרת פעולת <span class="framed-en">AND</span> בינארית, המחשב יודע מיד אם יעד החבילה נמצא איתו באותה רשת מקומית, או שצריך לשלוח אותה ל-<span class="framed-en">Default Gateway</span> הראוטר!</p>
-          </div>
-
-          <div class="section-box" style="border-color: var(--green);">
-            <h4 style="color: var(--green);">יתרונות מרכזיים של חלוקה לרשתות <span class="framed-en">Subnetting</span></h4>
-            <div class="spec-grid">
-              <div class="spec-card">
-                <div class="card-head"><span>חיסכון בכתובות</span></div>
-                <b>מניעת בזבוז <span class="framed-en">IP</span> בעולם</b>
-              </div>
-              <div class="spec-card">
-                <div class="card-head"><span>צמצום שידורים</span></div>
-                <b>הקטנת <span class="framed-en">Broadcast Domains</span></b>
-              </div>
-              <div class="spec-card">
-                <div class="card-head"><span>שיפור אבטחה</span></div>
-                <b>בידוד מחלקות ו-<span class="framed-en">VLANs</span></b>
-              </div>
-              <div class="spec-card">
-                <div class="card-head"><span>ניהול וביצועים</span></div>
-                <b>הקטנת עומסים על הסוויטש</b>
-              </div>
-            </div>
-          </div>
-
-          <div class="section-box" style="border-color: var(--amber);">
-            <h4 style="color: var(--amber);">טיפ לפנתאון של סהר</h4>
-            <p>בכל רשת משנה יש שתי כתובות שאי אפשר להגדיר למחשבים: כתובת הרשת הראשונה, כל ביטי ה-<span class="framed-en">Host</span> הם <span class="num">0</span> וכתובת ה-<span class="framed-en">Broadcast</span> האחרונה, כל ביטי ה-<span class="framed-en">Host</span> הם <span class="num">1</span>! לכן נוסחת הכתובות השמישות היא תמיד: <span class="mono framed-en">2^Hosts - 2</span>!</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TAB 2: אלגוריתם AND -->
-    <div id="anding_mech" class="tab-content">
-      <div class="component-grid">
-        <div class="comp-media">
-          <img class="comp-img" src="https://lh3.googleusercontent.com/d/1ytfgyT1ELCKV1hAZrMw6Ohy0veK5VWjU" alt="Networking Router Decision">
-          <div class="meta-box">
-            <div class="meta-item"><span class="meta-label">פעולה לוגית:</span><span class="meta-val"><span class="framed-en">Bitwise AND</span></span></div>
-            <div class="meta-item"><span class="meta-label">תנאי <span class="framed-en">1 AND 1</span>:</span><span class="meta-val"><span class="framed-en">= 1</span></span></div>
-            <div class="meta-item"><span class="meta-label">תנאי <span class="framed-en">1 AND 0</span>:</span><span class="meta-val"><span class="framed-en">= 0</span></span></div>
-            <div class="meta-item"><span class="meta-label">יעד מקומי:</span><span class="meta-val"><span class="framed-en">ARP -> Direct</span></span></div>
-            <div class="meta-item"><span class="meta-label">יעד מרוחק:</span><span class="meta-val"><span class="framed-en">Default Gateway MAC</span></span></div>
-          </div>
-        </div>
-        <div class="comp-details">
-          <h3 class="comp-title">🤖 אלגוריתם ה-<span class="framed-en">ANDing</span>: איך כרטיס הרשת מחליט?</h3>
-          
-          <div class="section-box">
-            <h4>⚡ תהליך קבלת ההחלטה בשבריר שנייה <span class="framed-en">Step-by-Step</span></h4>
-            <p>כאשר מחשב א <span class="mono framed-en">192.168.1.10/24</span> רוצה לשלוח פקטה למחשב ב <span class="mono framed-en">192.168.1.50</span> או <span class="mono framed-en">8.8.8.8</span>, כרטיס הרשת מבצע את האלגוריתם הבא בדיוק נמרץ:</p>
+    <div class="tabs-wrap">
+        <div class="tabs" role="tablist" aria-label="שלבי השיעור">
+            <button class="tab active" role="tab" id="tab-intro" aria-controls="intro" aria-selected="true" onclick="openTab(event, 'intro')">
+                <span class="num-badge">1</span><span>חשיבות Subnet Mask</span>
+            </button>
+            <button class="tab" role="tab" id="tab-anding" aria-controls="anding_mech" aria-selected="false" onclick="openTab(event, 'anding_mech')">
+                <span class="num-badge">2</span><span>אלגוריתם AND</span>
+            </button>
             
-            <ol style="font-weight: 700; line-height: 1.8; margin-top: 10px;">
-              <li><strong>חישוב הרשת המקומית:</strong> המחשב מפעיל <span class="mono framed-en">AND</span> בין כתובת ה-<span class="framed-en">IP</span> שלו לבין ה-<span class="framed-en">Subnet Mask</span> שלו כדי לדעת באיזו רשת הוא נמצא.</li>
-              <li><strong>חישוב רשת היעד:</strong> המחשב מפעיל <span class="mono framed-en">AND</span> בין כתובת ה-<span class="framed-en">IP</span> של <u>היעד</u> לבין ה-<span class="framed-en">Subnet Mask</span> <u>של המקור</u>!</li>
-              <li><strong>השוואה דרמטית:</strong>
-                <ul>
-                  <li>אם תוצאת הרשת <strong>זהה</strong> היעד נמצא איתי באותה רשת <span class="framed-en">Local LAN</span>! המחשב ישלח בקשת <span class="mono framed-en">ARP Request</span> כדי למצוא את ה-<span class="framed-en">MAC</span> של היעד ויפנה אליו ישירות.</li>
-                  <li>אם תוצאת הרשת <strong>שונה</strong> היעד ברשת מרוחקת <span class="framed-en">Remote</span>! המחשב לא פונה ליעד, אלא עוטף את הפקטה ושולח אותה ל-<span class="framed-en">MAC</span> של ה-<span class="framed-en">Default Gateway</span> הראוטר!</li>
-                </ul>
-              </li>
-            </ol>
-          </div>
+            <div class="tab-select-wrapper">
+                <button class="tab-btn" id="subnetsTabBtn" onclick="openTab(event, getSelectedSubnetTab())">גודל רשת ▾</button>
+                <select class="tab-select" id="subnetSelect" onchange="switchSubnetCategory(this.value)">
+                    <option value="sub24_26">רשתות גדולות (/24 - /26)</option>
+                    <option value="sub27_29">רשתות בינוניות (/27 - /29)</option>
+                    <option value="sub30_32">רשתות קטנות (/30 - /32)</option>
+                </select>
+            </div>
 
-          <div class="section-box" style="border-color: var(--violet); background: var(--violet-soft);">
-            <h4 style="color: var(--violet);">המחשה מעשית של <span class="framed-en">ANDing</span></h4>
-            <p style="font-size: 16px; margin-bottom: 8px;"><strong>מחשב מקור:</strong> <span class="framed-en">192.168.1.10</span> | <strong>מסכה:</strong> <span class="framed-en">255.255.255.0</span> <span class="framed-en">/24</span></p>
-            <table class="binary-table">
-              <thead>
-                <tr>
-                  <th>רכיב</th>
-                  <th>כתובת / מסכה</th>
-                  <th>ערך בינארי באוקטט ה-4</th>
-                  <th>תוצאת <span class="framed-en">ANDing</span></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>כתובת המקור</td>
-                  <td class="mono"><span class="framed-en">192.168.1.10</span></td>
-                  <td class="mono"><span class="framed-en">00001010</span></td>
-                  <td class="mono" rowspan="2"><strong class="framed-en">192.168.1.0</strong><br>רשת מקור</td>
-                </tr>
-                <tr>
-                  <td>מסכת הרשת</td>
-                  <td class="mono"><span class="framed-en">255.255.255.0</span></td>
-                  <td class="mono"><span class="framed-en">00000000</span></td>
-                </tr>
-                <tr style="border-top: 2px solid var(--panel-border);">
-                  <td>יעד א מקומי</td>
-                  <td class="mono"><span class="framed-en">192.168.1.50</span></td>
-                  <td class="mono"><span class="framed-en">00110010 AND 00000000</span></td>
-                  <td class="mono" style="color:var(--green); font-weight:800;"><span class="framed-en">192.168.1.0</span> זהה! 🟢</td>
-                </tr>
-                <tr>
-                  <td>יעד ב אינטרנט</td>
-                  <td class="mono"><span class="framed-en">8.8.8.8</span></td>
-                  <td class="mono"><span class="framed-en">00001000 AND 00000000</span></td>
-                  <td class="mono" style="color:#b91c1c; font-weight:800;"><span class="framed-en">8.0.0.0</span> שונה! 🛑 ➔ ראוטר</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+            <button class="tab" role="tab" id="tab-quiz" aria-controls="quiz" aria-selected="false" onclick="openTab(event, 'quiz')">
+                <span class="num-badge">✎</span><span>מבדק ידע IP</span>
+            </button>
+            <button class="tab" role="tab" id="tab-reflection" aria-controls="reflection" aria-selected="false" onclick="openTab(event, 'reflection')">
+                <span class="num-badge">🧠</span><span>רפלקציה</span>
+            </button>
         </div>
-      </div>
     </div>
 
-    <!-- TAB 3: בחירת גודל רשתות (רשתות גדולות) -->
-    <div id="sub24_26" class="tab-content">
-      <div class="component-grid">
-        <div class="comp-media">
-          <img class="comp-img" src="https://lh3.googleusercontent.com/d/1ytfgyT1ELCKV1hAZrMw6Ohy0veK5VWjU" alt="Large Networks">
-          <div class="meta-box">
-            <div class="meta-item"><span class="meta-label">פוקוס:</span><span class="meta-val">רשתות <span class="framed-en">LAN</span> רחבות</span></div>
-            <div class="meta-item"><span class="meta-label">טווח הוסטיים:</span><span class="meta-val"><span class="framed-en">62 - 254 Hosts</span></span></div>
-            <div class="meta-item"><span class="meta-label">שימוש נפוץ:</span><span class="meta-val">משרדים, בית, מחלקות</span></div>
-          </div>
-        </div>
-        <div class="comp-details">
-          <h3 class="comp-title">פרפיקסים <span class="framed-en">/24</span> עד <span class="framed-en">/26</span> - הרשתות הקלאסיות</h3>
-          
-          <div class="section-box">
-            <h4>אופן פעולה והבדלים</h4>
-            <p>אלו הפרפיקסים הנפוצים ביותר ברשתות מקומיות <span class="framed-en">LAN</span>. <span class="framed-en">/24</span> היא המסכה הביתית הסטנדרטית הנותנת אוקטט שלם למארחים. ככל שנעולים עוד ביטים ברשת המשנה למשל <span class="framed-en">/25</span> או <span class="framed-en">/26</span>, אנחנו חוצים את הרשת לשניים או לארבעה תתי-רשתות קטנות יותר!</p>
-          </div>
+    <main>
+        <!-- טאב 1: חשיבות subnet mask -->
+        <section id="intro" class="tab-content active" role="tabpanel" aria-labelledby="tab-intro">
+            <div class="component-grid">
+                <div class="comp-media">
+                    <img class="comp-img" src="https://lh3.googleusercontent.com/d/1ytfgyT1ELCKV1hAZrMw6Ohy0veK5VWjU" alt="Subnet Mask Concept">
+                    <div class="meta-box">
+                        <div class="meta-item"><span class="meta-label">תפקיד המסכה:</span><span class="meta-val"><span class="framed-en">Network/Host</span></span></div>
+                        <div class="meta-item"><span class="meta-label">גודל IP:</span><span class="meta-val"><span class="framed-en">32 Bits IPv4</span></span></div>
+                        <div class="meta-item"><span class="meta-label">שיטה:</span><span class="meta-val"><span class="framed-en">ANDing</span> בינארי</span></div>
+                    </div>
+                </div>
+                <div class="comp-details">
+                    <h2 style="margin-top:0;">למה חייבים מסכת רשת משנה Subnet Mask?</h2>
+                    
+                    <div class="section-box">
+                        <h4>אופן פעולה</h4>
+                        <p>כתובת <span class="framed-en">IP</span> לבדה למשל <span class="framed-en">192.168.1.50</span> היא סתם מספר! היא לא אומרת למחשב או לראוטר באיזו רשת המחשב נמצא. מסכת רשת המשנה היא השריף שקובע איזה חלק בכתובת שייך ל-<span class="framed-en">Network</span> הרשת ואיזה חלק שייך ל-<span class="framed-en">Host</span> המארח הספציפי. בעזרת פעולת <span class="framed-en">AND</span> בינארית, המחשב יודע מיד אם יעד החבילה נמצא איתו באותה רשת מקומית, או שצריך לשלוח אותה ל-<span class="framed-en">Default Gateway</span> הראוטר!</p>
+                    </div>
 
-          <div class="section-box" style="border-color: var(--green);">
-            <h4 style="color: var(--green);">פירוט פרפיקסים ונתונים טכניים</h4>
-            <div class="spec-grid">
-              <div class="spec-card">
-                <div class="card-head">
-                  <span class="framed-en">/24</span>
-                  <span>-</span>
-                  <span class="framed-en">255.255.255.0</span>
+                    <div class="section-box" style="border-color: var(--ok);">
+                        <h4 style="color: var(--ok);">יתרונות מרכזיים של חלוקה לרשתות <span class="framed-en">Subnetting</span></h4>
+                        <div class="spec-grid">
+                            <div class="spec-card">
+                                <span class="meta-label">חיסכון בכתובות</span>
+                                <b>מניעת בזבוז <span class="framed-en">IP</span> בעולם</b>
+                            </div>
+                            <div class="spec-card">
+                                <span class="meta-label">צמצום שידורים</span>
+                                <b>הקטנת <span class="framed-en">Broadcast Domains</span></b>
+                            </div>
+                            <div class="spec-card">
+                                <span class="meta-label">שיפור אבטחה</span>
+                                <b>בידוד מחלקות ו-<span class="framed-en">VLANs</span></b>
+                            </div>
+                            <div class="spec-card">
+                                <span class="meta-label">ניהול וביצועים</span>
+                                <b>הקטנת עומסים על הסוויטש</b>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <b><span class="num">254</span> <span class="framed-en">hosts</span> שמישים | קפיצות של <span class="num">256</span></b>
-              </div>
-              
-              <div class="spec-card">
-                <div class="card-head">
-                  <span class="framed-en">/25</span>
-                  <span>-</span>
-                  <span class="framed-en">255.255.255.128</span>
-                </div>
-                <b><span class="num">126</span> <span class="framed-en">hosts</span> שמישים | <span class="num">2</span> תתי-רשתות</b>
-              </div>
-              
-              <div class="spec-card">
-                <div class="card-head">
-                  <span class="framed-en">/26</span>
-                  <span>-</span>
-                  <span class="framed-en">255.255.255.192</span>
-                </div>
-                <b><span class="num">62</span> <span class="framed-en">hosts</span> שמישים | <span class="num">4</span> תתי-רשתות</b>
-              </div>
             </div>
-          </div>
+            <div class="step-nav">
+                <span></span>
+                <button class="btn primary" onclick="openTab(event, 'anding_mech')">לשלב הבא: אלגוריתם AND</button>
+            </div>
+        </section>
 
-          <div class="section-box" style="border-color: var(--amber);">
-            <h4 style="color: var(--amber);">טיפ אלוף של סהר</h4>
-            <p>בפרפיקס <span class="framed-en">/26</span>, גודל כל בלוק הוא <span class="num">64</span> כתובות. הרשת הראשונה תהיה <span class="num">0</span>, השנייה <span class="num">64</span>, השלישית <span class="num">128</span> והרביעית <span class="num">192</span>. זכרו: הקפיצה נקבעת לפי ערך הביט האחרון שהושאל!</p>
-          </div>
+        <!-- טאב 2: אלגוריתם AND -->
+        <section id="anding_mech" class="tab-content" role="tabpanel" aria-labelledby="tab-anding">
+            <div class="component-grid">
+                <div class="comp-media">
+                    <img class="comp-img" src="https://lh3.googleusercontent.com/d/1ytfgyT1ELCKV1hAZrMw6Ohy0veK5VWjU" alt="Networking Router Decision">
+                    <div class="meta-box">
+                        <div class="meta-item"><span class="meta-label">פעולה לוגית:</span><span class="meta-val"><span class="framed-en">Bitwise AND</span></span></div>
+                        <div class="meta-item"><span class="meta-label">תנאי 1 AND 1:</span><span class="meta-val">= 1</span></div>
+                        <div class="meta-item"><span class="meta-label">יעד מקומי:</span><span class="meta-val"><span class="framed-en">ARP -> Direct</span></span></div>
+                    </div>
+                </div>
+                <div class="comp-details">
+                    <h2 style="margin-top:0;">🤖 אלגוריתם ה-ANDing: איך כרטיס הרשת מחליט?</h2>
+                    
+                    <div class="section-box">
+                        <h4>⚡ תהליך קבלת ההחלטה בשבריר שנייה</h4>
+                        <p>כאשר מחשב א <span class="mono framed-en">192.168.1.10/24</span> רוצה לשלוח פקטה למחשב ב <span class="mono framed-en">192.168.1.50</span> או <span class="mono framed-en">8.8.8.8</span>, כרטיס הרשת מבצע את האלגוריתם הבא בדיוק נמרץ:</p>
+                        <ol style="font-weight: 700; line-height: 1.8; margin-top: 10px;">
+                            <li><strong>חישוב הרשת המקומית:</strong> המחשב מפעיל <span class="mono framed-en">AND</span> בין כתובת ה-<span class="framed-en">IP</span> שלו לבין ה-<span class="framed-en">Subnet Mask</span> שלו.</li>
+                            <li><strong>חישוב רשת היעד:</strong> המחשב מפעיל <span class="mono framed-en">AND</span> בין כתובת ה-<span class="framed-en">IP</span> של היעד לבין ה-<span class="framed-en">Subnet Mask</span> של המקור.</li>
+                            <li><strong>השוואה דרמטית:</strong> אם התוצאה זהה – היעד ברשת מקומית (<span class="framed-en">ARP</span>). אם שונה – נשלח ל-<span class="framed-en">Default Gateway</span>!</li>
+                        </ol>
+                    </div>
+
+                    <table class="binary-table">
+                        <thead>
+                            <tr>
+                                <th>רכיב</th>
+                                <th>כתובת / מסכה</th>
+                                <th>ערך בינארי באוקטט ה-4</th>
+                                <th>תוצאת ANDing</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>כתובת המקור</td>
+                                <td class="mono">192.168.1.10</td>
+                                <td class="mono">00001010</td>
+                                <td class="mono" rowspan="2"><b>192.168.1.0</b><br>רשת מקור</td>
+                            </tr>
+                            <tr>
+                                <td>מסכת הרשת</td>
+                                <td class="mono">255.255.255.0</td>
+                                <td class="mono">00000000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="step-nav">
+                <button class="btn" onclick="openTab(event, 'intro')">חזרה לחשיבות המסכה</button>
+                <button class="btn primary" onclick="openTab(event, 'sub24_26')">לשלב הבא: גודל רשתות</button>
+            </div>
+        </section>
+
+        <!-- טאב 3: רשתות גדולות (/24 - /26) -->
+        <section id="sub24_26" class="tab-content" role="tabpanel">
+            <div class="component-grid">
+                <div class="comp-media">
+                    <img class="comp-img" src="https://lh3.googleusercontent.com/d/1ytfgyT1ELCKV1hAZrMw6Ohy0veK5VWjU" alt="Large Networks">
+                    <div class="meta-box">
+                        <div class="meta-item"><span class="meta-label">פוקוס:</span><span class="meta-val">רשתות LAN רחבות</span></div>
+                        <div class="meta-item"><span class="meta-label">טווח הוסטיים:</span><span class="meta-val">62 - 254 Hosts</span></div>
+                    </div>
+                </div>
+                <div class="comp-details">
+                    <h2 style="margin-top:0;">פרפיקסים /24 עד /26 - הרשתות הקלאסיות</h2>
+                    <div class="section-box">
+                        <p>אלו הפרפיקסים הנפוצים ביותר ברשתות מקומיות <span class="framed-en">LAN</span>. <span class="framed-en">/24</span> היא המסכה הביתית הסטנדרטית הנותנת אוקטט שלם למארחים. ככל שנועלים עוד ביטים ברשת המשנה, אנו מחלקים את הרשת לתתי-רשתות קטנות יותר!</p>
+                    </div>
+                    <div class="spec-grid">
+                        <div class="spec-card">
+                            <span class="framed-en">/24 (255.255.255.0)</span>
+                            <b><span class="num">254</span> hosts שמישים | קפיצות של <span class="num">256</span></b>
+                        </div>
+                        <div class="spec-card">
+                            <span class="framed-en">/25 (255.255.255.128)</span>
+                            <b><span class="num">126</span> hosts שמישים | 2 תתי-רשתות</b>
+                        </div>
+                        <div class="spec-card">
+                            <span class="framed-en">/26 (255.255.255.192)</span>
+                            <b><span class="num">62</span> hosts שמישים | 4 תתי-רשתות</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="step-nav">
+                <button class="btn" onclick="openTab(event, 'anding_mech')">חזרה</button>
+                <button class="btn primary" onclick="openTab(event, 'sub27_29')">לרשתות בינוניות</button>
+            </div>
+        </section>
+
+        <!-- טאב 3.2: רשתות בינוניות (/27 - /29) -->
+        <section id="sub27_29" class="tab-content" role="tabpanel">
+            <div class="component-grid">
+                <div class="comp-media">
+                    <img class="comp-img" src="https://lh3.googleusercontent.com/d/1ytfgyT1ELCKV1hAZrMw6Ohy0veK5VWjU" alt="Medium Networks">
+                    <div class="meta-box">
+                        <div class="meta-item"><span class="meta-label">פוקוס:</span><span class="meta-val">סגמנטים ממוקדים</span></div>
+                        <div class="meta-item"><span class="meta-label">טווח הוסטיים:</span><span class="meta-val">6 - 30 Hosts</span></div>
+                    </div>
+                </div>
+                <div class="comp-details">
+                    <h2 style="margin-top:0;">פרפיקסים /27 עד /29 - חלוקה ממוקדת וחכמה</h2>
+                    <div class="section-box">
+                        <p>כאשר יש לנו צוותים קטנים, חוות שרתים (<span class="framed-en">Server Farm</span>) או סביבות מבודדות (<span class="framed-en">DMZ</span>), פרפיקסים אלו מאפשרים לנו לחתוך את הרשת לחלקים מדויקים.</p>
+                    </div>
+                    <div class="spec-grid">
+                        <div class="spec-card">
+                            <span class="framed-en">/27 (255.255.255.224)</span>
+                            <b><span class="num">30</span> hosts שמישים | קפיצות של <span class="num">32</span></b>
+                        </div>
+                        <div class="spec-card">
+                            <span class="framed-en">/28 (255.255.255.240)</span>
+                            <b><span class="num">14</span> hosts שמישים | קפיצות של <span class="num">16</span></b>
+                        </div>
+                        <div class="spec-card">
+                            <span class="framed-en">/29 (255.255.255.248)</span>
+                            <b><span class="num">6</span> hosts שמישים | קפיצות של <span class="num">8</span></b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="step-nav">
+                <button class="btn" onclick="openTab(event, 'sub24_26')">חזרה לרשתות גדולות</button>
+                <button class="btn primary" onclick="openTab(event, 'sub30_32')">לרשתות קטנות</button>
+            </div>
+        </section>
+
+        <!-- טאב 3.3: רשתות קטנות/נקודתיות (/30 - /32) -->
+        <section id="sub30_32" class="tab-content" role="tabpanel">
+            <div class="component-grid">
+                <div class="comp-media">
+                    <img class="comp-img" src="https://lh3.googleusercontent.com/d/1ytfgyT1ELCKV1hAZrMw6Ohy0veK5VWjU" alt="Special Connections">
+                    <div class="meta-box">
+                        <div class="meta-item"><span class="meta-label">פוקוס:</span><span class="meta-val">Point-to-Point / Loopback</span></div>
+                    </div>
+                </div>
+                <div class="comp-details">
+                    <h2 style="margin-top:0;">פרפיקסים /30 עד /32 - חיבורים מיוחדים ונקודתיים</h2>
+                    <div class="section-box">
+                        <p>כאן מגיעים ליעילות המקסימלית! <span class="framed-en">/30</span> משמש לחיבור נקודה-לנקודה בין שני ראוטרים. <span class="framed-en">/32</span> מייצג כתובת של מארח יחיד (<span class="framed-en">Host Single</span>) עבור ממשקי <span class="framed-en">Loopback</span> או חוקי פיירוול ממוקדים!</p>
+                    </div>
+                    <div class="spec-grid">
+                        <div class="spec-card">
+                            <span class="framed-en">/30 (255.255.255.252)</span>
+                            <b><span class="num">2</span> hosts שמישים בלבד | לראוטרים</b>
+                        </div>
+                        <div class="spec-card">
+                            <span class="framed-en">/31 (255.255.255.254)</span>
+                            <b><span class="num">2</span> כתובות P2P ללא Broadcast</b>
+                        </div>
+                        <div class="spec-card">
+                            <span class="framed-en">/32 (255.255.255.255)</span>
+                            <b><span class="num">1</span> host בלבד | Loopback & FW</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="step-nav">
+                <button class="btn" onclick="openTab(event, 'sub27_29')">חזרה לרשתות בינוניות</button>
+                <button class="btn primary" onclick="openTab(event, 'quiz')">למעבר למבדק הידע</button>
+            </div>
+        </section>
+
+        <!-- טאב 4: מבדק ידע (כל 10 השאלות המקוריות!) -->
+        <section id="quiz" class="tab-content" role="tabpanel" aria-labelledby="tab-quiz">
+            <h2 style="margin-top:0;">מבדק ידע בכתובות IP - 10 תרגילים מטורללים ב-Subnetting</h2>
+            <p class="lead" style="margin-bottom: 20px;">בחרו את התשובה הנכונה בכל תרגיל! נעזרו בטבלת העזר מימין כדי לחשב במדויק.</p>
+
+            <div class="quiz-wrapper">
+                <div class="quiz-cheat-sheet">
+                    <h4 class="cheat-title">טבלת עזר: פרפיקסים /25 עד /32</h4>
+                    <table class="cheat-table">
+                        <thead>
+                            <tr>
+                                <th>פרפיקס</th>
+                                <th>Subnet Mask</th>
+                                <th>קפיצה</th>
+                                <th>שמישות</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="mono">/25</td><td class="mono">255.128</td><td class="mono">128</td><td class="mono">126</td></tr>
+                            <tr><td class="mono">/26</td><td class="mono">255.192</td><td class="mono">64</td><td class="mono">62</td></tr>
+                            <tr><td class="mono">/27</td><td class="mono">255.224</td><td class="mono">32</td><td class="mono">30</td></tr>
+                            <tr><td class="mono">/28</td><td class="mono">255.240</td><td class="mono">16</td><td class="mono">14</td></tr>
+                            <tr><td class="mono">/29</td><td class="mono">255.248</td><td class="mono">8</td><td class="mono">6</td></tr>
+                            <tr><td class="mono">/30</td><td class="mono">255.252</td><td class="mono">4</td><td class="mono">2</td></tr>
+                            <tr><td class="mono">/31</td><td class="mono">255.254</td><td class="mono">2</td><td class="mono">2 P2P</td></tr>
+                            <tr><td class="mono">/32</td><td class="mono">255.255</td><td class="mono">1</td><td class="mono">1 Host</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="quiz-main-content">
+                    <!-- Q1 -->
+                    <div class="quiz-question" id="q1">
+                        <p class="q-title">תרגיל 1: כמה כתובות IP שמישות מספקת מסכת רשת עם פרפיקס של /28?</p>
+                        <div class="quiz-options">
+                            <button class="quiz-opt" onclick="checkQuiz(this, false, 'q1', 'בפרפיקס /28 נותרו 4 ביטים ל-Host. סה&quot;כ 16, אך בניכוי 2 ל-Network ו-Broadcast מקבלים 14!')">16 כתובות</button>
+                            <button class="quiz-opt" onclick="checkQuiz(this, true, 'q1', 'נכון מאוד! 2^4 - 2 = 14 כתובות IP שמישות!')">14 כתובות</button>
+                            <button class="quiz-opt" onclick="checkQuiz(this, false, 'q1', '30 כתובות שמישות מתאימות לפרפיקס /27!')">30 כתובות</button>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <!-- Q2 -->
+                    <div class="quiz-question" id="q2">
+                        <p class="q-title">תרגיל 2: מה מבצע כרטיס הרשת כדי להחליט אם לשלוח את הפקטה ישירות או ל-Default Gateway?</p>
+                        <div class="quiz-options">
+                            <button class="quiz-opt" onclick="checkQuiz(this, true, 'q2', 'בול! כרטיס הרשת מבצע Bitwise AND בין ה-IP למסכה כדי לגלות את הרשת ולבחור בין ARP ישיר ל-Default Gateway.')">פועל באלגוריתם ANDing בינארי בין ה-IP למסכת הרשת</button>
+                            <button class="quiz-opt" onclick="checkQuiz(this, false, 'q2', 'פינג ICMP אינו חלק ממנגנון הניתוב של כרטיס הרשת ברמת ה-L3!')">שולח פינג לראוטר ובודק את ה-TTL</button>
+                            <button class="quiz-opt" onclick="checkQuiz(this, false, 'q2', 'פורט 80 שייך לשכבת האפליקציה ולא לבדיקת סגמנט הרשת!')">בודק האם ל-IP של היעד יש פורט 80 פתוח</button>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <!-- Q3 -->
+                    <div class="quiz-question" id="q3">
+                        <p class="q-title">תרגיל 3: איזה פרפיקס הוא האידיאלי והחסכוני ביותר לחיבור קווי ישר בין שני ראוטרים Point-to-Point?</p>
+                        <div class="quiz-options">
+                            <button class="quiz-opt" onclick="checkQuiz(this, false, 'q3', 'פרפיקס /24 מבזבז 252 כתובות לחיבור בין שני ראוטרים בלבד!')">/24</button>
+                            <button class="quiz-opt" onclick="checkQuiz(this, true, 'q3', 'מדויק! /30 מעניק בדיוק 2 כתובות IP שמישות עבור 2 ממשקי ראוטר!')">/30</button>
+                            <button class="quiz-opt" onclick="checkQuiz(this, false, 'q3', 'פרפיקס /32 מגדיר host יחיד בלבד ולכן אינו מאפשר חיבור של שני ממשקים!')">/32</button>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <!-- Q4 -->
+                    <div class="quiz-question" id="q4">
+                        <p class="q-title">תרגיל 4: מהי כתובת ה-Network עבור הכתובת 192.168.10.77/26?</p>
+                        <div class="quiz-options">
+                            <button class="quiz-opt" onclick="checkQuiz(this, false, 'q4', '192.168.10.0 היא כתובת הרשת של הבלוק הראשון 0-63.')">192.168.10.0</button>
+                            <button class="quiz-opt" onclick="checkQuiz(this, true, 'q4', 'אלוף! בפרפיקס /26 הקפיצות הן של 64. המספר 77 נמצא בבלוק המתחיל ב-64!')">192.168.10.64</button>
+                            <button class="quiz-opt" onclick="checkQuiz(this, false, 'q4', '192.168.10.128 היא הכתובת של הבלוק השלישי.')">192.168.10.128</button>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <!-- Q5 -->
+                    <div class="quiz-question" id="q5">
+                        <p class="q-title">תרגיל 5: מהי מסכת הרשת Subnet Mask העשרונית המקבילה לפרפיקס /27?</p>
+                        <div class="quiz-options">
+                            <button class="quiz-opt" onclick="checkQuiz(this, false, 'q5', '255.255.255.192 מציג 26 ביטים ברשת /26.')">255.255.255.192</button>
+                            <button class="quiz-opt" onclick="checkQuiz(this, true, 'q5', 'תותח! 27 ביטים דולקים פירושם 128 + 64 + 32 = 224 באוקטט האחרון!')">255.255.255.224</button>
+                            <button class="quiz-opt" onclick="checkQuiz(this, false, 'q5', '255.255.255.240 מציג 28 ביטים ברשת /28.')">255.255.255.240</button>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <!-- Q6 -->
+                    <div class="quiz-question" id="q6">
+                        <p class="q-title">תרגיל 6: מהי כתובת ה-Broadcast של הרשת 10.0.0.32/29?</p>
+                        <div class="quiz-options">
+                            <button class="quiz-opt" onclick="checkQuiz(this, false, 'q6', '10.0.0.32 היא כתובת הרשת עצמה!')">10.0.0.32</button>
+                            <button class="quiz-opt" onclick="checkQuiz(this, true, 'q6', 'פיצוץ! בפרפיקס /29 גודל הבלוק הוא 8. הרשת הבאה ב-40, לכן ה-Broadcast הוא 39!')">10.0.0.39</button>
+                            <button class="quiz-opt" onclick="checkQuiz(this, false, 'q6', '10.0.0.40 היא כתובת הרשת הבאה!')">10.0.0.40</button>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <!-- Q7 -->
+                    <div class="quiz-question" id="q7">
+                        <p class="q-title">תרגיל 7: לאיזה שימוש עיקרי מיועדת כתובת מסכת רשת עם פרפיקס /32?</p>
+                        <div class="quiz-options">
+                            <button class="quiz-opt" onclick="checkQuiz(this, false, 'q7', 'למחלקה בת 30 עובדים מתאים פרפיקס /27.')">לחלוקת כתובות למחלקה עם 30 מחשבים</button>
+                            <button class="quiz-opt" onclick="checkQuiz(this, true, 'q7', 'פגיעה בול! /32 מייצג Host יחיד (255.255.255.255) ומשמש להגדרת Loopback או חוקי Firewall.')">עבור ממשק Loopback או חוק Firewall ממוקד ל-IP יחיד</button>
+                            <button class="quiz-opt" onclick="checkQuiz(this, false, 'q7', 'עבור שני ראוטרים נדרש פרפיקס /30.')">לחיבור שני ראוטרים ברשת WAN</button>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <!-- Q8 -->
+                    <div class="quiz-question" id="q8">
+                        <p class="q-title">תרגיל 8: מחשב מקור מוגדר עם 172.16.5.10/25 ומנסה לשלוח פקטה לכתובת 172.16.5.130. לאן תישלח?</p>
+                        <div class="quiz-options">
+                            <button class="quiz-opt" onclick="checkQuiz(this, false, 'q8', 'שים לב! ב-/25 הרשת הראשונה היא 0-127 והשנייה 128-255.')">ישירות ליעד באמצעות בקשת ARP מקומית</button>
+                            <button class="quiz-opt" onclick="checkQuiz(this, true, 'q8', 'גאוני! /25 חוצה ב-128. מקור ברשת 0 ויעד ברשת 128, לכן הפקטה תישלח ל-Default Gateway!')">ל-Default Gateway הראוטר מכיוון שהיעד ברשת מרוחקת</button>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <!-- Q9 -->
+                    <div class="quiz-question" id="q9">
+                        <p class="q-title">תרגיל 9: אם הושאלו 3 ביטים מתוך האוקטט האחרון לטובת הרשת בנוסף ל-/24, מהו הפרפיקס והקפיצות?</p>
+                        <div class="quiz-options">
+                            <button class="quiz-opt" onclick="checkQuiz(this, true, 'q9', 'מצוין! 24 + 3 = /27. ערך הביט השלישי הוא 32, ולכן הקפיצות בבלוקים של 32!')">פרפיקס /27, קפיצות של 32</button>
+                            <button class="quiz-opt" onclick="checkQuiz(this, false, 'q9', 'הוספת 3 ביטים מביאה ל-27 ולא ל-26!')">פרפיקס /26, קפיצות של 64</button>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <!-- Q10 -->
+                    <div class="quiz-question" id="q10">
+                        <p class="q-title">תרגיל 10: ארגון זקוק ל-50 כתובות IP שמישות. מהו הפרפיקס הקטן והחסכוני ביותר שיספק מענה?</p>
+                        <div class="quiz-options">
+                            <button class="quiz-opt" onclick="checkQuiz(this, false, 'q10', 'פרפיקס /27 מעניק 30 כתובות בלבד - לא מספיק!')">/27 מעניק 30 כתובות שמישות</button>
+                            <button class="quiz-opt" onclick="checkQuiz(this, true, 'q10', 'שיחקת אותה! /26 מעניק 62 כתובות IP שמישות, שזה הפרפיקס הקטן ביותר שמכיל 50 כתובות!')">/26 מעניק 62 כתובות שמישות</button>
+                            <button class="quiz-opt" onclick="checkQuiz(this, false, 'q10', 'פרפיקס /24 מעניק 254 כתובות ומבזבז כתובות רבות!')">/24 מעניק 254 כתובות שמישות</button>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- חלונית מורה -->
+            <div class="teacher-container">
+                <button class="teacher-btn" onclick="revealTeacherAnswers()">🔑 כניסת מורה</button>
+                <div class="teacher-answers-box" id="teacherAnswersBox">
+                    <h4 style="color:var(--red-text); margin-top:0;">📋 פתרון מורחב למורה - תשובות נכונות:</h4>
+                    <ol>
+                        <li>תרגיל 1: <span>14 כתובות</span></li>
+                        <li>תרגיל 2: <span>פועל באלגוריתם ANDing בינארי בין ה-IP למסכת הרשת</span></li>
+                        <li>תרגיל 3: <span>/30</span></li>
+                        <li>תרגיל 4: <span>192.168.10.64</span></li>
+                        <li>תרגיל 5: <span>255.255.255.224</span></li>
+                        <li>תרגיל 6: <span>10.0.0.39</span></li>
+                        <li>תרגיל 7: <span>עבור ממשק Loopback או חוק Firewall ממוקד ל-IP יחיד</span></li>
+                        <li>תרגיל 8: <span>לספק Default Gateway הראוטר מכיוון שהיעד ברשת מרוחקת</span></li>
+                        <li>תרגיל 9: <span>פרפיקס /27, קפיצות של 32</span></li>
+                        <li>תרגיל 10: <span>/26 מעניק 62 כתובות שמישות</span></li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- טאב 5: רפלקציה -->
+        <section id="reflection" class="tab-content" role="tabpanel" aria-labelledby="tab-reflection">
+            <h2 style="margin-top:0;">🧠 עושים סדר במחשבות</h2>
+            <div class="section-box" style="border-color: var(--c-mid); background: var(--paper);">
+                <h4 style="color: var(--c-mid);">💬 סיכום אישי ומחשבות להמשך</h4>
+                <p style="margin-bottom: 12px;">תלמידים יקרים, קחו דקה לחשוב על מה שלמדנו בשיעור זה על <span class="framed-en">Subnetting</span>, חישובי <span class="framed-en">ANDing</span> וביטים מ-<span class="framed-en">/24</span> ועד <span class="framed-en">/32</span>:</p>
+                
+                <div class="reflection-box">
+                    <label style="font-weight: 700; display: block; margin-top: 10px;">1. מה היה המושג החדש או רגע חשוב שלכם בשיעור הזה?</label>
+                    <textarea placeholder="כתבו כאן את התשובה שלכם אחונים..."></textarea>
+
+                    <label style="font-weight: 700; display: block; margin-top: 10px;">2. איפה אתם רואים את החשיבות של תכנון נכון של מסכות רשת בפרויקט הרשתות שלכם?</label>
+                    <textarea placeholder="איך CIDR וחישוב ה-ANDing מונעים עומסים ובזבוז כתובות בפרויקט?..."></textarea>
+
+                    <button class="btn primary" onclick="alert('אחון יקר! הרפלקציה שלך נשמרה בהצלחה! תותח על 💪')">שמור רפלקציה 💪</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p style="margin:0">© 2026 אקדמיית האחוואנים, הדרך שלך לרשתות ותקשורת</p>
+        <span>מסכות רשת משנה /24 עד /32 // CIDR & Bitwise ANDing</span>
+    </footer>
+
+    <!-- עוזר דן GPT -->
+    <div class="bot collapsed" id="botWidget">
+        <button class="bot-fab" onclick="setBot(true)" aria-label="פתח את העוזר דן GPT">
+            <img src="https://lh3.googleusercontent.com/d/1fzqv93VKIW_VT8-e1HdJxBmbU2sFnwlb" alt="דן GPT עוזר הפרויקט">
+        </button>
+        <div class="bot-card">
+            <div class="bot-top">
+                <span>דן GPT מחובר</span>
+                <button onclick="setBot(false)" aria-label="סגור">✕</button>
+            </div>
+            <div class="bot-body">
+                <img src="https://lh3.googleusercontent.com/d/1fzqv93VKIW_VT8-e1HdJxBmbU2sFnwlb" alt="דן GPT עוזר הפרויקט">
+                <p><b>שלום תלמידים 👋</b><br>אני דן GPT, עוזר השיעור והפרויקט שלכם. אפשר להיעזר בי בכל שעה.</p>
+                <a class="bot-link" href="https://gemini.google.com/gem/13FFjtbW5S3yg0EE1qBEQiP8GEMwoepKu?usp=sharing" target="_blank" rel="noopener">לשיחה עם דן</a>
+            </div>
         </div>
-      </div>
     </div>
 
-    <!-- TAB 3 SUB: רשתות בינוניות -->
-    <div id="sub27_29" class="tab-content">
-      <div class="component-grid">
-        <div class="comp-media">
-          <img class="comp-img" src="https://lh3.googleusercontent.com/d/1ytfgyT1ELCKV1hAZrMw6Ohy0veK5VWjU" alt="Medium Networks">
-          <div class="meta-box">
-            <div class="meta-item"><span class="meta-label">פוקוס:</span><span class="meta-val">סגמנטים ממוקדים</span></div>
-            <div class="meta-item"><span class="meta-label">טווח הוסטיים:</span><span class="meta-val"><span class="framed-en">6 - 30 Hosts</span></span></div>
-            <div class="meta-item"><span class="meta-label">שימוש נפוץ:</span><span class="meta-val">שרתים, מדפסות, <span class="framed-en">DMZ</span></span></div>
-          </div>
-        </div>
-        <div class="comp-details">
-          <h3 class="comp-title">פרפיקסים <span class="framed-en">/27</span> עד <span class="framed-en">/29</span> - חלוקה ממוקדת וחכמה</h3>
-          
-          <div class="section-box">
-            <h4>אופן פעולה והבדלים</h4>
-            <p>כאשר יש לנו צוותים קטנים, חוות שרתים <span class="framed-en">Server Farm</span> או סביבות מבודדות <span class="framed-en">DMZ</span>, אין טעם לבזבז <span class="num">250</span> כתובות. פרפיקסים אלו מאפשרים לנו לחתוך את הרשת לחלקים מדויקים, ולמנוע מזיקים מלהציף רשתות שלמות.</p>
-          </div>
+    <script>
+        // ===== מצב לילה =====
+        function applyDark(on) {
+            document.body.classList.toggle('dark', on);
+            document.getElementById('darkToggleBtn').textContent = on ? '☀️ מצב יום' : '🌙 מצב לילה';
+        }
 
-          <div class="section-box" style="border-color: var(--green);">
-            <h4 style="color: var(--green);">פירוט פרפיקסים ונתונים טכניים</h4>
-            <div class="spec-grid">
-              <div class="spec-card">
-                <div class="card-head">
-                  <span class="framed-en">/27</span>
-                  <span>-</span>
-                  <span class="framed-en">255.255.255.224</span>
-                </div>
-                <b><span class="num">30</span> <span class="framed-en">hosts</span> שמישים | קפיצות של <span class="num">32</span></b>
-              </div>
+        function toggleDark() {
+            const on = !document.body.classList.contains('dark');
+            applyDark(on);
+            try { localStorage.setItem('net_academy_dark', on ? '1' : '0'); } catch (e) {}
+        }
 
-              <div class="spec-card">
-                <div class="card-head">
-                  <span class="framed-en">/28</span>
-                  <span>-</span>
-                  <span class="framed-en">255.255.255.240</span>
-                </div>
-                <b><span class="num">14</span> <span class="framed-en">hosts</span> שמישים | קפיצות של <span class="num">16</span></b>
-              </div>
+        // ===== עוזר דן GPT =====
+        function setBot(open) {
+            document.getElementById('botWidget').classList.toggle('collapsed', !open);
+        }
 
-              <div class="spec-card">
-                <div class="card-head">
-                  <span class="framed-en">/29</span>
-                  <span>-</span>
-                  <span class="framed-en">255.255.255.248</span>
-                </div>
-                <b><span class="num">6</span> <span class="framed-en">hosts</span> שמישים | קפיצות של <span class="num">8</span></b>
-              </div>
-            </div>
-          </div>
+        // ===== מעבר טאבים =====
+        function openTab(evt, tabName) {
+            const contents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < contents.length; i++) {
+                contents[i].classList.remove("active");
+            }
 
-          <div class="section-box" style="border-color: var(--amber);">
-            <h4 style="color: var(--amber);">טיפ מטורלל של סהר</h4>
-            <p><span class="framed-en">/29</span> מעולה לחיבור קבוצה קטנה של שרתי <span class="framed-en">Web</span> ציבוריים! אתם מקבלים בדיוק <span class="num">6</span> כתובות <span class="framed-en">IP</span> שמישות בלי לחסל כתובות <span class="framed-en">IPv4</span> יקרות!</p>
-          </div>
-        </div>
-      </div>
-    </div>
+            const tabs = document.getElementsByClassName("tab");
+            for (let i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove("active");
+            }
 
-    <!-- TAB 3 SUB: רשתות קטנות/נקודתיות -->
-    <div id="sub30_32" class="tab-content">
-      <div class="component-grid">
-        <div class="comp-media">
-          <img class="comp-img" src="https://lh3.googleusercontent.com/d/1ytfgyT1ELCKV1hAZrMw6Ohy0veK5VWjU" alt="Special Connections">
-          <div class="meta-box">
-            <div class="meta-item"><span class="meta-label">פוקוס:</span><span class="meta-val"><span class="framed-en">Point-to-Point / Loopback</span></span></div>
-            <div class="meta-item"><span class="meta-label">טווח הוסטיים:</span><span class="meta-val"><span class="framed-en">1 - 2 Hosts</span></span></div>
-            <div class="meta-item"><span class="meta-label">שימוש נפוץ:</span><span class="meta-val">לינקים בין ראוטרים, ניהול</span></div>
-          </div>
-        </div>
-        <div class="comp-details">
-          <h3 class="comp-title">פרפיקסים <span class="framed-en">/30</span> עד <span class="framed-en">/32</span> - חיבורים מיוחדים ונקודתיים</h3>
-          
-          <div class="section-box">
-            <h4>אופן פעולה והבדלים</h4>
-            <p>כאן אנחנו מגיעים לטופ של היעילות! <span class="framed-en">/30</span> משמש חיבור נקודה-לנקודה - <span class="framed-en">Point-to-Point</span> בין שני ראוטרים בלבד. <span class="framed-en">/31</span> מוגדר בתקנים חדישים - <span class="framed-en">RFC 3021</span> לחיבור נקודתי ללא <span class="framed-en">Broadcast</span>. <span class="framed-en">/32</span> מייצג כתובת של הופעה אחת בלבד - <span class="framed-en">Host Single</span> – בשימוש נרחב עבור ממשקי <span class="framed-en">Loopback</span> או חוקי <span class="framed-en">Firewall</span> ממוקדים!</p>
-          </div>
+            const target = document.getElementById(tabName);
+            if (target) target.classList.add("active");
 
-          <div class="section-box" style="border-color: var(--green);">
-            <h4 style="color: var(--green);">פירוט פרפיקסים ונתונים טכניים</h4>
-            <div class="spec-grid">
-              <div class="spec-card">
-                <div class="card-head">
-                  <span class="framed-en">/30</span>
-                  <span>-</span>
-                  <span class="framed-en">255.255.255.252</span>
-                </div>
-                <b><span class="num">2</span> <span class="framed-en">hosts</span> שמישים בלבד | קלאסי לראוטרים</b>
-              </div>
+            if (evt && evt.currentTarget && evt.currentTarget.classList.contains("tab")) {
+                evt.currentTarget.classList.add("active");
+                document.getElementById("subnetsTabBtn").classList.remove("active");
+            } else {
+                document.getElementById("subnetsTabBtn").classList.add("active");
+            }
 
-              <div class="spec-card">
-                <div class="card-head">
-                  <span class="framed-en">/31</span>
-                  <span>-</span>
-                  <span class="framed-en">255.255.255.254</span>
-                </div>
-                <b><span class="num">2</span> כתובות - <span class="framed-en">Point-to-Point</span> ללא <span class="framed-en">BC</span></b>
-              </div>
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-              <div class="spec-card">
-                <div class="card-head">
-                  <span class="framed-en">/32</span>
-                  <span>-</span>
-                  <span class="framed-en">255.255.255.255</span>
-                </div>
-                <b><span class="num">1</span> <span class="framed-en">host</span> בלבד | <span class="framed-en">Loopback & FW Rules</span></b>
-              </div>
-            </div>
-          </div>
+        function getSelectedSubnetTab() {
+            return document.getElementById("subnetSelect").value;
+        }
 
-          <div class="section-box" style="border-color: var(--amber);">
-            <h4 style="color: var(--amber);">טיפ מטורלל של שותפים</h4>
-            <p>בכתובת <span class="framed-en">/32</span> המסכה היא <span class="framed-en">255.255.255.255</span>! זה אומר שכל הביטים שייכים לרשת, ואין שום מארחים נוספים ברשת הזו. נכס צאן ברזל בהגדרות אבטחת מידע!</p>
-          </div>
-        </div>
-      </div>
-    </div>
+        function switchSubnetCategory(val) {
+            openTab(null, val);
+        }
 
-    <!-- TAB 4: מבדק ידע -->
-    <div id="quiz" class="tab-content">
-      <h3 class="comp-title">מבדק ידע בכתובות <span class="framed-en">IP</span> - <span class="num">10</span> תרגילים מטורללים ב-<span class="framed-en">Subnetting</span></h3>
-      <p style="font-weight: 600; color: var(--text-muted); margin-bottom: 20px;">
-        בחרו את התשובה הנכונה בכל תרגיל! נעזרו בטבלת העזר מימין כדי לחשב במדויק.
-      </p>
+        // ===== בדיקת שאלות מבדק =====
+        function checkQuiz(btn, isCorrect, qId, explanation) {
+            const container = document.getElementById(qId);
+            const options = container.querySelectorAll('.quiz-opt');
+            const feedback = container.querySelector('.quiz-feedback');
 
-      <div class="quiz-wrapper">
-        <div class="quiz-cheat-sheet">
-          <h4 class="cheat-title">טבלת עזר: פרפיקסים <span class="framed-en">/25</span> עד <span class="framed-en">/32</span></h4>
-          <table class="cheat-table">
-            <thead>
-              <tr>
-                <th>פרפיקס</th>
-                <th>מסכת רשת <span class="framed-en">Subnet Mask</span></th>
-                <th>קפיצה גודל בלוק</th>
-                <th>כתובות שמישות</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="mono"><span class="framed-en">/25</span></td>
-                <td class="mono"><span class="framed-en">255.255.255.128</span></td>
-                <td class="mono"><span class="framed-en">128</span></td>
-                <td class="mono"><span class="framed-en">126</span></td>
-              </tr>
-              <tr>
-                <td class="mono"><span class="framed-en">/26</span></td>
-                <td class="mono"><span class="framed-en">255.255.255.192</span></td>
-                <td class="mono"><span class="framed-en">64</span></td>
-                <td class="mono"><span class="framed-en">62</span></td>
-              </tr>
-              <tr>
-                <td class="mono"><span class="framed-en">/27</span></td>
-                <td class="mono"><span class="framed-en">255.255.255.224</span></td>
-                <td class="mono"><span class="framed-en">32</span></td>
-                <td class="mono"><span class="framed-en">30</span></td>
-              </tr>
-              <tr>
-                <td class="mono"><span class="framed-en">/28</span></td>
-                <td class="mono"><span class="framed-en">255.255.255.240</span></td>
-                <td class="mono"><span class="framed-en">16</span></td>
-                <td class="mono"><span class="framed-en">14</span></td>
-              </tr>
-              <tr>
-                <td class="mono"><span class="framed-en">/29</span></td>
-                <td class="mono"><span class="framed-en">255.255.255.248</span></td>
-                <td class="mono"><span class="framed-en">8</span></td>
-                <td class="mono"><span class="framed-en">6</span></td>
-              </tr>
-              <tr>
-                <td class="mono"><span class="framed-en">/30</span></td>
-                <td class="mono"><span class="framed-en">255.255.255.252</span></td>
-                <td class="mono"><span class="framed-en">4</span></td>
-                <td class="mono"><span class="framed-en">2</span></td>
-              </tr>
-              <tr>
-                <td class="mono"><span class="framed-en">/31</span></td>
-                <td class="mono"><span class="framed-en">255.255.255.254</span></td>
-                <td class="mono"><span class="framed-en">2</span></td>
-                <td class="mono"><span class="framed-en">2 P2P</span></td>
-              </tr>
-              <tr>
-                <td class="mono"><span class="framed-en">/32</span></td>
-                <td class="mono"><span class="framed-en">255.255.255.255</span></td>
-                <td class="mono"><span class="framed-en">1</span></td>
-                <td class="mono"><span class="framed-en">1 Host</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+            options.forEach(opt => opt.classList.remove('correct', 'wrong'));
+            feedback.classList.remove('show', 'ok', 'bad');
 
-        <div class="quiz-main-content">
-          <!-- Q1 -->
-          <div class="quiz-question" id="q1">
-            <p class="q-title">תרגיל 1: כמה כתובות <span class="framed-en">IP</span> שמישות <span class="framed-en">Usable Hosts</span> מספקת מסכת רשת עם פרפיקס של <span class="framed-en">/28</span>?</p>
-            <div class="quiz-options">
-              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q1', 'בפרפיקס /28 נותרו 4 ביטים ל-Host. סה&quot;כ 16 כתובות, אך בניכוי 2 ל-Network ו-Broadcast מקבלים 14 שמישות!')"><span class="num">16</span> כתובות</button>
-              <button class="quiz-opt" onclick="checkQuiz(this, true, 'q1', 'נכון מאוד! 2^4 - 2 = 14 כתובות IP שמישות!')"><span class="num">14</span> כתובות</button>
-              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q1', '30 כתובות שמישות מתאימות לפרפיקס /27!')"><span class="num">30</span> כתובות</button>
-              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q1', '62 כתובות שמישות מתאימות לפרפיקס /26!')"><span class="num">62</span> כתובות</button>
-            </div>
-            <div class="quiz-feedback"></div>
-          </div>
+            if (isCorrect) {
+                btn.classList.add('correct');
+                feedback.style.background = "var(--ok-soft)";
+                feedback.style.color = "var(--ok)";
+                feedback.style.border = "1.5px solid var(--ok)";
+                feedback.innerHTML = "✅ <strong>תשובה נכונה!</strong> " + explanation;
+            } else {
+                btn.classList.add('wrong');
+                feedback.style.background = "var(--bad-soft)";
+                feedback.style.color = "var(--bad)";
+                feedback.style.border = "1.5px solid var(--bad)";
+                feedback.innerHTML = "❌ <strong>תשובה שגויה!</strong> " + explanation;
+            }
+            feedback.classList.add('show');
+        }
 
-          <!-- Q2 -->
-          <div class="quiz-question" id="q2">
-            <p class="q-title">תרגיל 2: מה מבצע כרטיס הרשת כדי להחליט אם לשלוח את הפקטה ישירות ליעד או ל-<span class="framed-en">Default Gateway</span>?</p>
-            <div class="quiz-options">
-              <button class="quiz-opt" onclick="checkQuiz(this, true, 'q2', 'בול! כרטיס הרשת מבצע Bitwise AND בין ה-IP למסכה כדי לגלות את הרשת ולבחור בין ARP ישיר ל-Default Gateway.')">פועל באלגוריתם <span class="framed-en">ANDing</span> בינארי בין ה-<span class="framed-en">IP</span> למסכת הרשת</button>
-              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q2', 'פינג ICMP אינו חלק ממנגנון הניתוב של כרטיס הרשת ברמת ה-L3!')">שולח פינג לראוטר ובודק את הזמן <span class="framed-en">TTL</span></button>
-              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q2', 'פורט 80 שייך לשכבת האפליקציה ולא לבדיקת סגמנט הרשת!')">בודק האם ל-<span class="framed-en">IP</span> של היעד יש פורט <span class="num">80</span> פתוח</button>
-              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q2', 'כתובת MAC מחושבת על ידי ARP ולא על פי DHCP!')">מחשב את כתובת ה-<span class="framed-en">MAC</span> לפי ה-<span class="framed-en">DHCP</span></button>
-            </div>
-            <div class="quiz-feedback"></div>
-          </div>
+        // ===== כניסת מורה =====
+        function revealTeacherAnswers() {
+            const password = prompt("אנא הזן סיסמת מורה:");
+            if (password && password.trim().toLowerCase() === "sahar") {
+                const box = document.getElementById("teacherAnswersBox");
+                box.style.display = "block";
+                box.scrollIntoView({ behavior: 'smooth' });
+            } else if (password !== null) {
+                alert("סיסמה שגויה!");
+            }
+        }
 
-          <!-- Q3 -->
-          <div class="quiz-question" id="q3">
-            <p class="q-title">תרגיל 3: איזה פרפיקס הוא האידיאלי והחסכוני ביותר לחיבור קווי ישר בין שני ראוטרים <span class="framed-en">Point-to-Point</span> לפי התקן הקיים?</p>
-            <div class="quiz-options">
-              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q3', 'פרפיקס /24 מבזבז 252 כתובות לחיבור בין שני ראוטרים בלבד!')"><span class="framed-en">/24</span></button>
-              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q3', 'פרפיקס /29 נותן 6 כתובות שמישות, מוגזם ל-2 ראוטרים!')"><span class="framed-en">/29</span></button>
-              <button class="quiz-opt" onclick="checkQuiz(this, true, 'q3', 'מדויק! /30 מעניק בדיוק 2 כתובות IP שמישות (2^2 - 2 = 2) עבור 2 ממשקי ראוטר!')"><span class="framed-en">/30</span></button>
-              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q3', 'פרפיקס /32 מגדיר host יחיד בלבד ולכן אינו מאפשר חיבור של שני ממשקים בנוי סגמנט!')"><span class="framed-en">/32</span></button>
-            </div>
-            <div class="quiz-feedback"></div>
-          </div>
-
-          <!-- Q4 -->
-          <div class="quiz-question" id="q4">
-            <p class="q-title">תרגיל 4: מהי כתובת ה-<span class="framed-en">Network</span> הרשת עבור הכתובת <span class="mono framed-en">192.168.10.77/26</span>?</p>
-            <div class="quiz-options">
-              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q4', '192.168.10.0 היא כתובת הרשת של הבלוק הראשון 0-63.')"><span class="framed-en">192.168.10.0</span></button>
-              <button class="quiz-opt" onclick="checkQuiz(this, true, 'q4', 'אלוף! בפרפיקס /26 הקפיצות הן של 64. הבלוקים הם: 0, 64, 128. המספר 77 נמצא בבלוק המתחיל ב-64!')"><span class="framed-en">192.168.10.64</span></button>
-              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q4', '192.168.10.127 היא כתובת ה-Broadcast של הבלוק השני 64-127.')"><span class="framed-en">192.168.10.127</span></button>
-              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q4', '192.168.10.128 היא הכתובת של הבלוק השלישי!')"><span class="framed-en">192.168.10.128</span></button>
-            </div>
-            <div class="quiz-feedback"></div>
-          </div>
-
-          <!-- Q5 -->
-          <div class="quiz-question" id="q5">
-            <p class="q-title">תרגיל 5: מהי מסכת הרשת <span class="framed-en">Subnet Mask</span> העשרונית המקבילה לפרפיקס <span class="framed-en">CIDR</span> של <span class="framed-en">/27</span>?</p>
-            <div class="quiz-options">
-              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q5', '255.255.255.192 מציג 26 ביטים ברשת /26.')"><span class="framed-en">255.255.255.192</span></button>
-              <button class="quiz-opt" onclick="checkQuiz(this, true, 'q5', 'תותח! 27 ביטים דולקים פירושם 128 + 64 + 32 = 224 באוקטט האחרון!')"><span class="framed-en">255.255.255.224</span></button>
-              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q5', '255.255.255.240 מציג 28 ביטים ברשת /28.')"><span class="framed-en">255.255.255.240</span></button>
-              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q5', '255.255.255.248 מציג 29 ביטים ברשת /29.')"><span class="framed-en">255.255.255.248</span></button>
-            </div>
-            <div class="quiz-feedback"></div>
-          </div>
-
-          <!-- Q6 -->
-          <div class="quiz-question" id="q6">
-            <p class="q-title">תרגיל 6: מהי כתובת ה-<span class="framed-en">Broadcast</span> של הרשת <span class="mono framed-en">10.0.0.32/29</span>?</p>
-            <div class="quiz-options">
-              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q6', '10.0.0.32 היא כתובת הרשת עצמה!')"><span class="framed-en">10.0.0.32</span></button>
-              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q6', '10.0.0.38 היא הכתובת השמישה האחרונה Last Usable Host!')"><span class="framed-en">10.0.0.38</span></button>
-              <button class="quiz-opt" onclick="checkQuiz(this, true, 'q6', 'פיצוץ! בפרפיקס /29 גודל הבלוק הוא 8 קפיצות של 8. הרשת הבאה ב-40, לכן ה-Broadcast של הרשת הנוכחית הוא 39!')"><span class="framed-en">10.0.0.39</span></button>
-              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q6', '10.0.0.40 היא כתובת הרשת הבאה!')"><span class="framed-en">10.0.0.40</span></button>
-            </div>
-            <div class="quiz-feedback"></div>
-          </div>
-
-          <!-- Q7 -->
-          <div class="quiz-question" id="q7">
-            <p class="q-title">תרגיל 7: לאיזה שימוש עיקרי מיועדת כתובת מסיכת רשת עם פרפיקס <span class="framed-en">/32</span>?</p>
-            <div class="quiz-options">
-              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q7', 'למחלקה בת 30 עובדים מתאים פרפיקס /27.')">לחלוקת כתובות למחלקה עם <span class="num">30</span> מחשבים</button>
-              <button class="quiz-opt" onclick="checkQuiz(this, true, 'q7', 'פגיעה בול! /32 מייצג Host יחיד 255.255.255.255 ומשמש להגדרת ממשקי Loopback או חוקי Firewall ממוקד ל-IP מסוים.')">עבור ממשק <span class="framed-en">Loopback</span> או חוק <span class="framed-en">Firewall</span> ממוקד ל-<span class="framed-en">IP</span> יחיד</button>
-              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q7', 'עבור שני ראוטרים נדרש פרפיקס /30.')">לחיבור שני ראוטרים ברשת <span class="framed-en">WAN</span></button>
-              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q7', 'הקטנת שידורי Broadcast מבוצעת על ידי Subnetting רגיל /25 עד /29.')">להגדלת כמות שידורי ה-<span class="framed-en">Broadcast</span> ברשת</button>
-            </div>
-            <div class="quiz-feedback"></div>
-          </div>
-
-          <!-- Q8 -->
-          <div class="quiz-question" id="q8">
-            <p class="q-title">תרגיל 8: מחשב מקור מוגדר עם <span class="mono framed-en">172.16.5.10/25</span>. הוא מעוניין לשלוח פקטה לכתובת <span class="mono framed-en">172.16.5.130</span>. לאן תישלח הפקטה?</p>
-            <div class="quiz-options">
-              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q8', 'שים לב! ב- /25 הרשת הראשונה היא 0-127 והשנייה היא 128-255. היעד נמצא ברשת מרוחקת!')">ישירות ליעד באמצעות בקשת <span class="framed-en">ARP</span> מקומית</button>
-              <button class="quiz-opt" onclick="checkQuiz(this, true, 'q8', 'גאוני! /25 חוצה את הרשת ב-128. מחשב המקור ברשת 0 והיעד ברשת 128. היות והן רשתות שונות, הפקטה תישלח ל-Default Gateway!')">ל-<span class="framed-en">Default Gateway</span> הראוטר מכיוון שהיעד ברשת מרוחקת</button>
-              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q8', 'הפקטה תצא, אך תישלח דרך הראוטר ולא תישמט מראש!')">הפקטה תישרף מראש בגלל שאינה תקינה</button>
-              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q8', 'שידור Broadcast מופנה ל-255, לא ליעד ספציפי בראוטינג!')">המחשב ישלח את הפקטה ב-<span class="framed-en">Broadcast</span> לכל הרשת</button>
-            </div>
-            <div class="quiz-feedback"></div>
-          </div>
-
-          <!-- Q9 -->
-          <div class="quiz-question" id="q9">
-            <p class="q-title">תרגיל 9: אם הושאלו <span class="num">3</span> ביטים מתוך האוקטט האחרון לטובת הרשת בנוסף ל-<span class="framed-en">/24</span> בסיסי, מהו הפרפיקס החדש ומהו גודל הבלוק קפיצות?</p>
-            <div class="quiz-options">
-              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q9', '24 + 3 = 27! אבל קפיצות של 16 מתאימות ל-4 ביטים מושאלים.')">פרפיקס <span class="framed-en">/27</span>, קפיצות של <span class="num">16</span></button>
-              <button class="quiz-opt" onclick="checkQuiz(this, true, 'q9', 'מצוין! 24 + 3 = פרפיקס /27. ערך הביט השלישי באוקטט הוא 32 (128, 64, 32), ולכן הקפיצות הן בבלוקים של 32!')">פרפיקס <span class="framed-en">/27</span>, קפיצות של <span class="num">32</span></button>
-              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q9', 'הוספת 3 ביטים ל-24 מביאה ל-27 ולא ל-26!')">פרפיקס <span class="framed-en">/26</span>, קפיצות של <span class="num">64</span></button>
-              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q9', 'פרפיקס /28 מתקבל מהשאלת 4 ביטים!')">פרפיקס <span class="framed-en">/28</span>, קפיצות של <span class="num">8</span></button>
-            </div>
-            <div class="quiz-feedback"></div>
-          </div>
-
-          <!-- Q10 -->
-          <div class="quiz-question" id="q10">
-            <p class="q-title">תרגיל 10: ארגון זקוק ל-<span class="num">50</span> כתובות <span class="framed-en">IP</span> שמישות עבור סגמנט שרתים. מהו הפרפיקס הקטן והחסכוני ביותר שיספק מענה לדרישה זו?</p>
-            <div class="quiz-options">
-              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q10', 'פרפיקס /27 מעניק 30 כתובות שמישות בלבד - לא מספיק ל-50!')"><span class="framed-en">/27</span> מעניק <span class="num">30</span> כתובות שמישות</button>
-              <button class="quiz-opt" onclick="checkQuiz(this, true, 'q10', 'שיחקת אותה! /26 מעניק 62 כתובות IP שמישות (2^6 - 2 = 62), שזה הפרפיקס הקטן ביותר שמכיל 50 כתובות!')"><span class="framed-en">/26</span> מעניק <span class="num">62</span> כתובות שמישות</button>
-              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q10', 'פרפיקס /25 נותן 126 כתובות, שזה עונה על הדרישה אך אינו החסכוני ביותר!')"><span class="framed-en">/25</span> מעניק <span class="num">126</span> כתובות שמישות</button>
-              <button class="quiz-opt" onclick="checkQuiz(this, false, 'q10', 'פרפיקס /24 מעניק 254 כתובות ומבזבז כתובות רבות!')"><span class="framed-en">/24</span> מעניק <span class="num">254</span> כתובות שמישות</button>
-            </div>
-            <div class="quiz-feedback"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- חלונית מורה -->
-      <div class="teacher-container">
-        <button class="teacher-btn" onclick="revealTeacherAnswers()">🔑 כניסת מורה</button>
-        <div class="teacher-answers-box" id="teacherAnswersBox">
-          <h4>📋 פתרון מורחב למורה - תשובות נכונות:</h4>
-          <ol>
-            <li>תרגיל 1: <span><span class="num">14</span> כתובות</span></li>
-            <li>תרגיל 2: <span>פועל באלגוריתם <span class="framed-en">ANDing</span> בינארי בין ה-<span class="framed-en">IP</span> למסכת הרשת</span></li>
-            <li>תרגיל 3: <span><span class="framed-en">/30</span></span></li>
-            <li>תרגיל 4: <span><span class="framed-en">192.168.10.64</span></span></li>
-            <li>תרגיל 5: <span><span class="framed-en">255.255.255.224</span></span></li>
-            <li>תרגיל 6: <span><span class="framed-en">10.0.0.39</span></span></li>
-            <li>תרגיל 7: <span>עבור ממשק <span class="framed-en">Loopback</span> או חוק <span class="framed-en">Firewall</span> ממוקד ל-<span class="framed-en">IP</span> יחיד</span></li>
-            <li>תרגיל 8: <span>ל-<span class="framed-en">Default Gateway</span> הראוטר מכיוון שהיעד ברשת מרוחקת</span></li>
-            <li>תרגיל 9: <span>פרפיקס <span class="framed-en">/27</span>, קפיצות של <span class="num">32</span></span></li>
-            <li>תרגיל 10: <span><span class="framed-en">/26</span> מעניק <span class="num">62</span> כתובות שמישות</span></li>
-          </ol>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- TAB 5: רפלקציה -->
-    <div id="reflection" class="tab-content">
-      <h3 class="comp-title">🧠 עושים סדר במחשבות</h3>
-      <div class="section-box" style="border-color: var(--violet); background: var(--violet-soft);">
-        <h4 style="color: var(--violet);">💬 סיכום אישי ומחשבות להמשך</h4>
-        <p style="margin-bottom: 12px;">תלמידים יקרים, קחו דקה לחשוב על מה שלמדנו בשיעור מטורלל זה על <span class="framed-en">Subnetting</span>, חישובי <span class="framed-en">ANDing</span> וביטים מ-<span class="framed-en">/24</span> ועד <span class="framed-en">/32</span>:</p>
-        
-        <div class="reflection-box">
-          <label style="font-weight: 700; display: block; margin-top: 10px;">1. מה היה המושג החדש או רגע חשוב שלכם בשיעור הזה?</label>
-          <textarea placeholder="כתבו כאן את התשובה שלכם אחונים..."></textarea>
-
-          <label style="font-weight: 700; display: block; margin-top: 10px;">2. איפה אתם רואים את החשיבות של תכנון נכון של מסכות רשת בפרויקט הרשתות שלכם?</label>
-          <textarea placeholder="איך CIDR וחישוב ה-ANDing מונעים עומסים ובזבוז כתובות בפרויקט?..."></textarea>
-
-          <button class="submit-btn" onclick="alert('אחון יקר! הרפלקציה שלך נשמרה בהצלחה! תותח על 💪')">שמור רפלקציה 💪</button>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-</div>
-
-<!-- 🤖 צומת העוזר -->
-<div class="bot-widget collapsed" id="botWidget" onclick="expandBot(event)">
-    <div class="bot-header" onclick="toggleBot(event)">
-        <span class="dot"></span> <span>NODE: DAN-GPT // ONLINE</span>
-        <button class="bot-close" onclick="toggleBot(event)" title="סגור/פתח">✕</button>
-    </div>
-
-    <div class="bot-body">
-        <img class="bot-avatar" src="https://lh3.googleusercontent.com/d/1fzqv93VKIW_VT8-e1HdJxBmbU2sFnwlb" alt="דן GPT עוזר הפרויקט">
-
-        <p class="greet">שלום תלמידים 👋</p>
-        <p class="lead">אני דן GPT, עוזר השיעור והפרויקט שלכם. אפשר להיעזר בי ב:</p>
-
-        <div class="bot-chips">
-            <span class="bot-chip">Subnetting</span>
-            <span class="bot-chip">ANDing Logic</span>
-            <span class="bot-chip">CIDR /24-/32</span>
-            <span class="bot-chip">Packet Tracer</span>
-            <span class="bot-chip">VLANs</span>
-            <span class="bot-chip">DHCP</span>
-            <span class="bot-chip">Routing</span>
-        </div>
-
-        <a class="bot-btn" href="https://gemini.google.com/gem/13FFjtbW5S3yg0EE1qBEQiP8GEMwoepKu?usp=sharing" target="_blank" rel="noopener">
-            $ connect --gem dan-gpt
-        </a>
-    </div>
-</div>
-
-<footer>
-  <span class="framed-en">session:</span> מסכות רשת משנה <span class="framed-en">/24</span> עד <span class="framed-en">/32</span> // אקדמיית האחוואנים // <span class="framed-en">CIDR & Bitwise ANDing</span> // בהצלחה 💪
-</footer>
-
-<script>
-function openTab(evt, tabName) {
-  var i, tabcontent, tablinks;
-  
-  tabcontent = document.getElementsByClassName("tab-content");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].classList.remove("active");
-  }
-
-  tablinks = document.getElementsByClassName("tab-btn");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].classList.remove("active");
-  }
-
-  document.getElementById(tabName).classList.add("active");
-  
-  if (evt && evt.currentTarget) {
-    evt.currentTarget.classList.add("active");
-  } else {
-    document.getElementById("subnetsTabBtn").classList.add("active");
-  }
-}
-
-function getSelectedSubnetTab() {
-  return document.getElementById("subnetSelect").value;
-}
-
-function switchSubnetCategory(val) {
-  openTab(null, val);
-}
-
-function applyDark(on) {
-  document.documentElement.classList.toggle('dark', on);
-  const darkBtn = document.getElementById('darkToggleBtn');
-  if (darkBtn) darkBtn.textContent = on ? '☀️ מצב יום' : '🌙 מצב לילה';
-}
-
-function toggleDark(){
-  const on = !document.documentElement.classList.contains('dark');
-  applyDark(on);
-  try { localStorage.setItem('subnet_lesson_dark', on ? '1' : '0'); } catch (e) {}
-}
-
-function toggleBot(evt){
-  evt.stopPropagation();
-  document.getElementById("botWidget").classList.toggle("collapsed");
-}
-
-function expandBot(evt){
-  const widget = document.getElementById("botWidget");
-  if (widget.classList.contains("collapsed")) {
-    widget.classList.remove("collapsed");
-  }
-}
-
-function checkQuiz(btn, isCorrect, qId, explanation) {
-  const container = document.getElementById(qId);
-  const options = container.querySelectorAll('.quiz-opt');
-  const feedback = container.querySelector('.quiz-feedback');
-
-  options.forEach(opt => {
-    opt.classList.remove('correct', 'wrong');
-  });
-
-  if (isCorrect) {
-    btn.classList.add('correct');
-    feedback.style.background = "var(--green-soft)";
-    feedback.style.color = "var(--green)";
-    feedback.style.border = "1.5px solid var(--green)";
-    feedback.innerHTML = "✅ <strong>תשובה נכונה!</strong> " + explanation;
-  } else {
-    btn.classList.add('wrong');
-    feedback.style.background = "rgba(185, 28, 28, 0.1)";
-    feedback.style.color = "#b91c1c";
-    feedback.style.border = "1.5px solid #b91c1c";
-    feedback.innerHTML = "❌ <strong>תשובה שגויה!</strong> " + explanation;
-  }
-
-  feedback.classList.add('show');
-}
-
-function revealTeacherAnswers() {
-  const password = prompt("אנא הזן סיסמת מורה:");
-  if (password && password.trim().toLowerCase() === "sahar") {
-    const box = document.getElementById("teacherAnswersBox");
-    box.style.display = "block";
-    box.scrollIntoView({ behavior: 'smooth' });
-  } else if (password !== null) {
-    alert("סיסמה שגויה!");
-  }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  try { applyDark(localStorage.getItem('subnet_lesson_dark') === '1'); } catch (e) {}
-});
-</script>
-
+        // ===== אתחול =====
+        document.addEventListener('DOMContentLoaded', function () {
+            try {
+                if (localStorage.getItem('net_academy_dark') === '1') {
+                    applyDark(true);
+                }
+            } catch (e) {}
+        });
+    </script>
 </body>
 </html>
